@@ -1,0 +1,12 @@
+Version 1.0.1
+12/23/2015
+
+1. added reset shake count
+2. added check if step detector is available or not on pedometer using utilsPlugin
+
+
+Version 1.2
+09/02/2016
+
+1. added Sensor Enum Sensor Delay choice for Pedometer
+1. added Sensor Enum Sensor Delay choice for Shake detector
