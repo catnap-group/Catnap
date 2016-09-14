@@ -5,6 +5,7 @@ public partial class ConstantTable {
 
 	public static readonly string serverIp = "192.168.1.70";//"192.168.119.178";// 
 	public static readonly int port = 8088;
+	public static readonly string FILEPATH = Application.persistentDataPath+"\\Catnap\\";
 	// Use this for initialization
 	public enum MsgType
 	{

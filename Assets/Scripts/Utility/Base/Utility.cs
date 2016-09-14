@@ -1407,8 +1407,38 @@ public static class UCameraUtil
 
         return null;
     }
-}
 
+}
+public  class UFileUtil
+{
+
+	public static event Action AfterScreenShot;
+	private static UFileUtil _Instance;
+	public static UFileUtil Inst
+	{
+		 get{ 
+			if (_Instance == null)
+				_Instance = new UFileUtil ();
+			return _Instance;
+		}
+	}
+	#if !UNITY_WEBPLAYER 
+	public IEnumerator SaveTextureToFile(Texture2D savedTexture){	
+		string fullPath=ConstantTable.FILEPATH; //System.IO.Directory.GetCurrentDirectory()+"\\MyCanvas\\";
+		System.DateTime date = System.DateTime.Now;
+		string fileName = "CanvasTexture.png";
+		if (!System.IO.Directory.Exists(fullPath))		
+			System.IO.Directory.CreateDirectory(fullPath);
+		var bytes = savedTexture.EncodeToPNG();
+		System.IO.File.WriteAllBytes(fullPath+fileName, bytes);
+		Debug.Log ("<color=green>Saved Successfully!</color>"+fullPath+fileName);
+		//UIManager.Ins.SetMessage ("截屏成功!");
+		if (AfterScreenShot != null)
+			AfterScreenShot ();
+		yield return null;
+	}
+	#endif
+}
 public static class UPlatformUtil
 {
     public static bool isEditor
