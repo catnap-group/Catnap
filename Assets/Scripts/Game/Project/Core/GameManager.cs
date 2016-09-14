@@ -63,7 +63,7 @@ public class GameManager : UnityAllSceneSingleton<GameManager> {
 
 		UIManager.Create();
 
-
+		CatnapWebMgr.Create ();
 	}
 	public override void OnTerminate ()
 	{
