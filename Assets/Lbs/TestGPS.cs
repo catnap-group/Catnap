@@ -33,7 +33,7 @@ public class TestGPS : MonoBehaviour {
 		// LocationService.isEnabledByUser 用户设置里的定位服务是否启用  
 		if (!Input.location.isEnabledByUser) {  
 			this.gps_info = "isEnabledByUser value is:"+Input.location.isEnabledByUser.ToString()+" Please turn on the GPS";   
-			return false;  
+			yield break; 
 		}  
 
 		// LocationService.Start() 启动位置服务的更新,最后一个位置坐标会被使用  
@@ -48,12 +48,12 @@ public class TestGPS : MonoBehaviour {
 
 		if (maxWait < 1) {  
 			this.gps_info = "Init GPS service time out";  
-			return false;  
+			yield break;   
 		}  
 
 		if (Input.location.status == LocationServiceStatus.Failed) {  
 			this.gps_info = "Unable to determine device location";  
-			return false;  
+			yield break;   
 		}   
 		else {  
 			this.gps_info = "N:" + Input.location.lastData.latitude + " E:"+Input.location.lastData.longitude;  
