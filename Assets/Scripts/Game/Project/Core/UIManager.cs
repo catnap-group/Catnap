@@ -32,10 +32,10 @@ public class UIManager : UnityAllSceneSingleton<UIManager>
     private GameObject _UIRoot;
     private GameObject _UICanvas;
     private UIData[] _UIDatas = {
-        new UIData(UIID.CatStore, "Prefabs/CatStoreUI", null),
-        new UIData(UIID.Storage, "Prefabs/StorageUI", null),
-        new UIData(UIID.Task, "Prefabs/TaskUI", null),
-        new UIData(UIID.CatHandbook, "Prefabs/CatHandbookUI", null),
+        new UIData(UIID.CatStore, "Prefabs/UI/CatStoreUI", null),
+		new UIData(UIID.Storage, "Prefabs/UI/StorageUI", null),
+		new UIData(UIID.Task, "Prefabs/UI/TaskUI", null),
+		new UIData(UIID.CatHandbook, "Prefabs/UI/CatHandbookUI", null),
     };
     private Stack<UIData> _UIStack = new Stack<UIData>();
 
