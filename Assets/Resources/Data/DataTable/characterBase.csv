@@ -1,0 +1,4 @@
+id,level,name,desp,type,idle_list,prefab
+uint32,uint8,vchar,vchar,uint8,vchar,vchar
+定义ID,等级,名字,描述,类型,idle动画队列,模型路径
+101,1,demo猫,demo猫,1,Howl;Howl,Prefabs/Gorilla/Prefab/Gorilla

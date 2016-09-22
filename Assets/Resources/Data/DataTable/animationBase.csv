@@ -1,0 +1,4 @@
+id,unit_id,name,speed_rate,move_speed
+uint16,uint16,vchar,float,float
+,,名字,播放速度/秒,移动速度/秒
+1,101,Howl,1,0
