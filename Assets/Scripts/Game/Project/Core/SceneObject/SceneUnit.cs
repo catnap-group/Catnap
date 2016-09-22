@@ -18,6 +18,7 @@ public class SceneUnit : MonoBehaviour {
 		BaseInit(baseID);
 	}
 
+	public virtual characterBase GetBaseData() { return null; }
 	protected void BaseInit(int baseID)
 	{
 		thisObj = gameObject;
@@ -48,6 +49,7 @@ public class SceneUnit : MonoBehaviour {
 		public string name;
 		public float itv;
 	}
+
 	public virtual void PlayAnimationSeq(params object[] list)//1.name 2.leap
 	{
 		List<AniInterval> anis = new List<AniInterval>();
@@ -79,7 +81,7 @@ public class SceneUnit : MonoBehaviour {
 	}
 	public string[] GetIdleAnimationList()
 	{
-		return new string[]{""};//idle aniamtions，从表格里读，先写死
+		return GetBaseData ().idle_list;//idle aniamtions，从表格里读，先写死
 	}
 
 
@@ -151,7 +153,7 @@ public class SceneUnit : MonoBehaviour {
 	protected GameObject _PresentationObject = null;
 
 	public GameObject GetPresentObject() { return _PresentationObject; }
-	public virtual string GetPrefab() { return "";}//角色的prefab//GetBaseData().prefab; }
+	public virtual string GetPrefab() { return GetBaseData().prefab;}//角色的prefab//GetBaseData().prefab; }
 	public void RefreshPresentation()
 	{
 		OnPresentObjectReady(MemoryDataManager.Instance.LoadGameObject(GetPrefab()));

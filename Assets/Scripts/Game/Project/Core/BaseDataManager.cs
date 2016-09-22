@@ -26,18 +26,6 @@ public class ObjectBaseData
 		desp = strDesp;
 	}
 }
-public enum PartClassType
-{
-	Part1,
-
-}
-public enum PlanetClassType
-{
-	PlanetMete,
-	PlanetAsteroid,
-	PlanetLive,
-
-}
 public class soundBase
 {
 	public readonly int sound_id;
@@ -65,18 +53,24 @@ public class characterBase
 
 	public readonly string desp;
 
+	public readonly string[] idle_list = null;
+
+	public readonly string prefab;
 	public characterBase()
 	{
 
 	}
 
-	public characterBase(int iId, int iType, string strName, string strIcon, string strDesp)
+	public characterBase(int iId, int iType, string strName, string strIcon, string strDesp, string strPrefab, string[] strIdle_list)
 	{
 		id      = iId;
 		type    = iType;
 		name    = strName;
 		icon    = strIcon;
 		desp    = strDesp;
+		idle_list = strIdle_list;
+		prefab = strPrefab;
+
 	}
 	public PetClassType GetCreepClassType()
 	{

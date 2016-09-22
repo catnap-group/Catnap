@@ -66,7 +66,6 @@ public class SceneCat : ScenePet
 
 
 	public override bool IsCat() { return true; }
-	protected characterBase _BaseData;
 	public SceneCat()
 	{
 

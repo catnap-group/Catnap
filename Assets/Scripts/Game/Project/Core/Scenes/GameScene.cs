@@ -23,7 +23,7 @@ public class GameScene : SceneBase
 		}
 		#endif
 		GameManager.Instance.SetGameState(GameState.CatPlay);
-        UIManager.Instance.PushUI(UIID.CatStore);
+        //UIManager.Instance.PushUI(UIID.CatStore);
 
 		//        if (isCreateGalaxy)
 		//            SceneBuildManager.Instance.CreateGalaxy();
@@ -60,7 +60,7 @@ public class GameScene : SceneBase
 		//		MapScene.Instance.ParseGameContent1(_GameUserData, index);
 		//
 		//
-		//MapSceneManager.Instance.CreateSceneCat(1,Vector3.zero, Quaternion.identity);
+		MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
 		yield return null;
 		//
 		//		//加载游戏场景内容
