@@ -63,10 +63,6 @@ public class MapSceneManager : UnityAllSceneSingleton<MapSceneManager>
 	}
 	public SceneCatLittle CreateSceneCatLittle(int baseID, Vector3 position, Quaternion rotation)
 	{
-
-
-
-
 		characterBase baseData = BaseDataManager.Instance.GetTableDataByID<characterBase>(baseID);
 		if (baseData == null)
 		{
