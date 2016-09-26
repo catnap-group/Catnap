@@ -23,7 +23,9 @@ public class UnitySingletonVisible<T> : MonoBehaviour
 	public  void Awake()
 	{
 		Instance = this as T;
+		OnInit ();
 	}
+	public virtual void OnInit (){}
 }
 public interface IInitClass
 {

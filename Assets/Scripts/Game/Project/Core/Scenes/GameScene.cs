@@ -23,7 +23,7 @@ public class GameScene : SceneBase
 		}
 		#endif
 		GameManager.Instance.SetGameState(GameState.CatPlay);
-        //UIManager.Instance.PushUI(UIID.CatStore);
+		UIManager.Instance.Open(UIID.CatStore);
 
 		//        if (isCreateGalaxy)
 		//            SceneBuildManager.Instance.CreateGalaxy();
@@ -49,10 +49,27 @@ public class GameScene : SceneBase
 		{
 			//reset game!!
 		}
-		//		//加载基础场景
-		//yield return StartCoroutine (MapScene.Instance.LoadBaseSceneAsync ("demo_01"));
-		//加载怪物
-		//yield return StartCoroutine (MapScene.Instance.LoadBaseMosterAsync ("free_lv1"));
+		//加载基础场景
+		//生成tango管理器
+		ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Seivice");//临时代码，这部分以后要变成class create的模式，现在为了便于调试,这个上面起作用的类是tangoserviece
+		GameObject cloudObj = ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Point Cloud");//临时代码，这部分以后要变成class create的模式，现在为了便于调试
+		yield return new WaitForEndOfFrame();
+		//生成tango镜头
+		TangoARPoseController tarPoseCon =Camera.main.gameObject.AddComponent<TangoARPoseController>();
+		tarPoseCon.m_useAreaDescriptionPose = true;
+		tarPoseCon.m_syncToARScreen = true;
+		TangoManager.Instance.m_pointCloud = cloudObj.GetComponent<TangoPointCloud> ();
+		TangoService.Instance.m_poseController = tarPoseCon;
+		//texture Method 
+		TangoService.Instance.m_tangoApplication.m_videoOverlayUseTextureMethod = true;
+		TangoService.Instance.m_tangoApplication.m_videoOverlayUseYUVTextureIdMethod = false;
+		TangoService.Instance.m_tangoApplication.m_videoOverlayUseByteBufferMethod = false;
+
+		//AreaDescriptions
+		TangoService.Instance.m_tangoApplication.m_enableAreaDescriptions = true;
+		//mode 2
+		TangoService.Instance.m_tangoApplication.m_enableDriftCorrection = false;
+		TangoService.Instance.m_tangoApplication.m_areaDescriptionLearningMode = false;
 
 		//		yield return StartCoroutine (MapScene.Instance.LoadBaseSceneAsync ("demo_01"));
 		//解析内容数据
@@ -60,7 +77,6 @@ public class GameScene : SceneBase
 		//		MapScene.Instance.ParseGameContent1(_GameUserData, index);
 		//
 		//
-		MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
 		yield return null;
 		//
 		//		//加载游戏场景内容
@@ -72,6 +88,8 @@ public class GameScene : SceneBase
 		//
 		//UIManager.Instance.ShowPage<UIGameScene>();
 		//        UIManager.Instance.ShowPage<HUD>();
+		//打开tango 探测器
+		yield return StartCoroutine(StartTangoDetect());
 		OnSceneLoaded();
 		//
 		//更新下载状态
@@ -79,13 +97,24 @@ public class GameScene : SceneBase
 	}
 	public void OnSceneLoaded()
 	{
+		
 
+		 SceneCat cat = MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
+		//投射到真实空间去
+		TangoManager.Instance.SceneUnit2ARUnit(cat);
 		//		TempAIManager.Create ();
 		//TBIniMgr.Instance.SetPlayerData("test", "我的");
 		//		MapScene.Instance.sta
 		//		TempAIManager.Instance.StartBuild ();
 	}
-
+	IEnumerator StartTangoDetect()
+	{
+		while (!TangoService.Instance.StartGame ())
+			yield return new WaitForSeconds (2);//2秒一次，直到返回列表
+		while(!TangoManager.Instance.IsTangoReady())
+			yield return new WaitForSeconds (1);//1秒一次，直到tango avaliable，这时候场景加载完毕
+			
+	}
 	public override void Unload ()
 	{
 		//if (!isSelfOpen) {
@@ -93,8 +122,8 @@ public class GameScene : SceneBase
 		//    if (ui != null)
 		//        UIManager.Instance.DetachSceneUI (ui.GetUIObjID ());
 		//}
+		TangoService.Instance.GameOver();
 		GameManager.Instance.EndGame();
-
 		//UIManager.Instance.ClosePage<HUD>();//UI dispose
 		//UIManager.Instance.ClosePage<UIGameScene>();
 		base.Unload ();

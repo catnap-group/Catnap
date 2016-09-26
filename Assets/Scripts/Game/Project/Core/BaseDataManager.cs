@@ -72,15 +72,15 @@ public class characterBase
 		prefab = strPrefab;
 
 	}
-	public PetClassType GetCreepClassType()
+	public UnitClassType GetCreepClassType()
 	{
 		switch (type)
 		{
 		case 1:
-			return PetClassType.SceneCat;
+			return UnitClassType.SceneCat;
 		
 		default:
-			return PetClassType.ScenePet;
+			return UnitClassType.ScenePet;
 		}
 
 	}

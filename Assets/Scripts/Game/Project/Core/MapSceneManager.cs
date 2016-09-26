@@ -10,31 +10,40 @@ using System.Reflection;
 using System;
 using System.Text;
 using System.Security.Permissions;
-public enum PetClassType
+public enum UnitClassType
 {
-	ScenePet =0 ,
 	SceneCat,
+	ScenePet,//以上都是pet
+	SceneCatLitter,//猫砂
+	SceneObj,//以上都是场景物件
 }
 public class MapSceneManager : UnityAllSceneSingleton<MapSceneManager>
 {
 
 	protected int _CurrentObjectID = 0;
-	Dictionary<int, ScenePet> _ScenePetList = new Dictionary<int, ScenePet>();
+	Dictionary<int, SceneUnit> _SceneUnitList = new Dictionary<int, SceneUnit>();
 	int GenerateObjectID()
 	{
 		++_CurrentObjectID;
-		while (_ScenePetList.ContainsKey(_CurrentObjectID))
+		while (_SceneUnitList.ContainsKey(_CurrentObjectID))
 			++_CurrentObjectID;
 		return _CurrentObjectID;
 	}
-	public ScenePet AddPetComponentByType(GameObject go, PetClassType type)
+	public List<SceneUnit> GetAllUnit()
 	{
+		return new List<SceneUnit>(_SceneUnitList.Values);
+	}
+	public SceneUnit AddUnitComponentByType(GameObject go, UnitClassType type)
+	{
+		SceneUnit unit = go.GetComponent<SceneUnit> ();
+		unit.m_Type = type;
 		switch (type)
 		{
 
-		case PetClassType.SceneCat:
+		case UnitClassType.SceneCat:
 			return go.AddComponent<SceneCat> ();
-
+		case UnitClassType.SceneCatLitter:
+			return go.AddComponent<SceneCatLittle> ();
 		default:
 			return go.AddComponent<ScenePet>();
 		}
@@ -46,6 +55,38 @@ public class MapSceneManager : UnityAllSceneSingleton<MapSceneManager>
 		ScenePet pet = CreateScenePet(baseID, position, rotation);
 
 		return pet as SceneCat;
+	}
+	public SceneCatLittle CreateSceneCatLittle(int baseID, Vector3 position, Quaternion rotation)
+	{
+
+
+
+
+		characterBase baseData = BaseDataManager.Instance.GetTableDataByID<characterBase>(baseID);
+		if (baseData == null)
+		{
+			//int iiii = 0;
+		}
+
+		UnitClassType classType = BaseDataManager.Instance.GetTableDataByID<characterBase>(baseID).GetCreepClassType();
+
+		GameObject go = new GameObject();
+		go.name = "catlittle";
+		SceneCatLittle catlittle = AddUnitComponentByType(go, classType) as SceneCatLittle;
+		catlittle.id = GenerateObjectID();
+
+		catlittle.Init(baseID);
+
+		go.transform.position = position;
+
+		go.transform.rotation = rotation;
+		go.transform.parent = this.transform;
+
+		//cat.OnCreated();
+
+		_SceneUnitList.Add(catlittle.id, catlittle);
+
+		return catlittle;
 	}
 	public ScenePet CreateScenePet(int baseID, Vector3 position, Quaternion rotation)
 	{
@@ -59,11 +100,11 @@ public class MapSceneManager : UnityAllSceneSingleton<MapSceneManager>
 			//int iiii = 0;
 		}
 
-		PetClassType classType = BaseDataManager.Instance.GetTableDataByID<characterBase>(baseID).GetCreepClassType();
+		UnitClassType classType = BaseDataManager.Instance.GetTableDataByID<characterBase>(baseID).GetCreepClassType();
 
 		GameObject go = new GameObject();
 		go.name = "pet";
-		ScenePet pet = AddPetComponentByType(go, classType);
+		ScenePet pet = AddUnitComponentByType(go, classType) as ScenePet;
 		pet.id = GenerateObjectID();
 
 		pet.Init(baseID);
@@ -75,13 +116,18 @@ public class MapSceneManager : UnityAllSceneSingleton<MapSceneManager>
 
 		//cat.OnCreated();
 
-		_ScenePetList.Add(pet.id, pet);
+		_SceneUnitList.Add(pet.id, pet);
 
 		return pet;
 	}
-	public bool CheckCreepsExits()
+	public bool CheckPetExits()
 	{
-		return _ScenePetList.Count <= 1;
+		int petCnt = 0;
+		for(int  i = 0 ; i < _SceneUnitList.Count ; i++){
+			if (_SceneUnitList [i].m_Type <= UnitClassType.ScenePet)
+				petCnt++;
+			}	
+		return petCnt <= 1;
 	}
 	public void RemoveSceneUnit(SceneUnit unit, bool immediatly = true)
 	{
@@ -99,14 +145,14 @@ public class MapSceneManager : UnityAllSceneSingleton<MapSceneManager>
 	public void RemoveSceneCat(int id, bool immediatly = true)
 	{
 		//
-		if (!_ScenePetList.ContainsKey(id))
+		if (!_SceneUnitList.ContainsKey(id))
 			return;
 
-		ScenePet unit = _ScenePetList[id];
+		SceneUnit unit = _SceneUnitList[id] ;
 
 		unit.OnUnInit(immediatly);
 
-		_ScenePetList.Remove(id);
+		_SceneUnitList.Remove(id);
 
 	}
 }

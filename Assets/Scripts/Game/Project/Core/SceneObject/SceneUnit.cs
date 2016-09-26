@@ -9,8 +9,15 @@ public class SceneUnit : MonoBehaviour {
 	public int id;
 	public float intimacy;//亲密度
 	public float hungry;//饱食度
+	public float m_timestamp;
 	public Transform thisT;
 	public GameObject thisObj;
+	public UnitClassType m_Type;
+	public int baseId;
+	/// <summary>
+	/// 这是游戏对象每帧对于设备的transform
+	/// </summary>
+	public Matrix4x4 m_deviceT = new Matrix4x4();
 
 	public virtual bool IsCat() { return false; }
 	public virtual void Init(int baseID)
@@ -21,6 +28,7 @@ public class SceneUnit : MonoBehaviour {
 	public virtual characterBase GetBaseData() { return null; }
 	protected void BaseInit(int baseID)
 	{
+		baseId = baseID;
 		thisObj = gameObject;
 		LoadAnimationData();
 	}
