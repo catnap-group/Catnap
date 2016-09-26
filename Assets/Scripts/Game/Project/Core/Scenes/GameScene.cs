@@ -72,9 +72,10 @@ public class GameScene : SceneBase
 		TangoService.Instance.m_tangoApplication.m_areaDescriptionLearningMode = false;
 
 		yield return null;
-
+		#if !UNITY_EDITOR
 		//打开tango 探测器
 		yield return StartCoroutine(StartTangoDetect());
+		#endif
 		OnSceneLoaded();
 		//
 		//更新下载状态
@@ -86,8 +87,10 @@ public class GameScene : SceneBase
 
 		 SceneCat cat = MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
 		cat.StartWorkRoutine ();
+		#if !UNITY_EDITOR
 		//投射到真实空间去
 		TangoManager.Instance.SceneUnit2ARUnit(cat);
+		#endif
 	}
 	IEnumerator StartTangoDetect()
 	{
