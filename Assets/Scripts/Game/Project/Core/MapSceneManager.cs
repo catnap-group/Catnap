@@ -35,18 +35,23 @@ public class MapSceneManager : UnityAllSceneSingleton<MapSceneManager>
 	}
 	public SceneUnit AddUnitComponentByType(GameObject go, UnitClassType type)
 	{
-		SceneUnit unit = go.GetComponent<SceneUnit> ();
-		unit.m_Type = type;
+		SceneUnit unit = null;
 		switch (type)
 		{
 
 		case UnitClassType.SceneCat:
-			return go.AddComponent<SceneCat> ();
+			unit = go.AddComponent<SceneCat> ();
+			break;
 		case UnitClassType.SceneCatLitter:
-			return go.AddComponent<SceneCatLittle> ();
+			unit = go.AddComponent<SceneCatLittle> ();
+			break;
 		default:
-			return go.AddComponent<ScenePet>();
+			unit = go.AddComponent<ScenePet>();
+			break;
 		}
+
+		unit.m_Type = type;
+		return unit;
 	}
 
 	public SceneCat CreateSceneCat(int baseID, Vector3 position, Quaternion rotation)
