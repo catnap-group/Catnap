@@ -17,7 +17,7 @@ public enum UnitClassType
 	SceneCatLitter,//猫砂
 	SceneObj,//以上都是场景物件
 }
-public class MapSceneManager : UnityAllSceneSingleton<MapSceneManager>
+public class MapSceneManager : UnityAllSceneSingletonVisible<MapSceneManager>
 {
 
 	protected int _CurrentObjectID = 0;
@@ -89,19 +89,15 @@ public class MapSceneManager : UnityAllSceneSingleton<MapSceneManager>
 
 		return catlittle;
 	}
-	public ScenePet CreateScenePet(int baseID, Vector3 position, Quaternion rotation)
+	public ScenePet CreateScenePet(int baseID, Vector3 position, Quaternion rotation, bool defaultLocal = true/*从表格里读，如果是false则直接设置*/)
 	{
-
-
-
-
 		characterBase baseData = BaseDataManager.Instance.GetTableDataByID<characterBase>(baseID);
 		if (baseData == null)
 		{
 			//int iiii = 0;
 		}
 
-		UnitClassType classType = BaseDataManager.Instance.GetTableDataByID<characterBase>(baseID).GetCreepClassType();
+		UnitClassType classType = baseData.GetCreepClassType();
 
 		GameObject go = new GameObject();
 		go.name = "pet";
@@ -109,10 +105,15 @@ public class MapSceneManager : UnityAllSceneSingleton<MapSceneManager>
 		pet.id = GenerateObjectID();
 
 		pet.Init(baseID);
-
 		go.transform.position = position;
 	
 		go.transform.rotation = rotation;
+
+		if (defaultLocal) {
+			go.transform.position = new Vector3(baseData.pos[0],baseData.pos[1],baseData.pos[2]);
+
+			go.transform.rotation = Quaternion.Euler(new Vector3(baseData.quaternion[0],baseData.quaternion[1],baseData.quaternion[2]));
+		}		
 		go.transform.parent = this.transform;
 
 		//cat.OnCreated();

@@ -36,7 +36,7 @@ public class soundBase
 public class animationBase
 {
 	public readonly int id;
-	public readonly int unitID;
+	public readonly int unit_id;
 	public readonly string name;
 	public readonly float speed_rate;
 	public readonly float move_speed;
@@ -55,13 +55,17 @@ public class characterBase
 
 	public readonly string[] idle_list = null;
 
+	public readonly int[] sound_list = null;
+
 	public readonly string prefab;
+	public readonly float[] pos=null;
+	public readonly float[] quaternion = null;
 	public characterBase()
 	{
-
+		
 	}
 
-	public characterBase(int iId, int iType, string strName, string strIcon, string strDesp, string strPrefab, string[] strIdle_list)
+	public characterBase(int iId, int iType, string strName, string strIcon, string strDesp, string strPrefab, string[] strIdle_list, int[] intSound_list, float[] vPos, float[] vQuaternion)
 	{
 		id      = iId;
 		type    = iType;
@@ -69,7 +73,10 @@ public class characterBase
 		icon    = strIcon;
 		desp    = strDesp;
 		idle_list = strIdle_list;
+		sound_list = intSound_list;
 		prefab = strPrefab;
+		pos = vPos;
+		quaternion = vQuaternion;
 
 	}
 	public UnitClassType GetCreepClassType()
@@ -155,6 +162,26 @@ public class BaseDataManager : UnityAllSceneSingleton<BaseDataManager>
 		}
 		//language
 	}
+	public Dictionary<int , soundBase> GetSoundBase(int baseID)
+	{
+		System.Type tableType = typeof(soundBase);
+
+		if (TableDataList.ContainsKey (tableType.Name)) {
+
+			Dictionary<int, object> datas = TableDataList[tableType.Name];
+			Dictionary<int, soundBase> filterData = new Dictionary<int, soundBase>();
+			characterBase cb = GetTableDataByID<characterBase> (baseID);
+			int[] soundIds = cb.sound_list;
+			for (int i = 0; i < soundIds.Length; i++) {
+				if (datas.ContainsKey (soundIds [i]))
+					filterData.Add (soundIds [i], datas [soundIds [i]] as soundBase );
+			}
+			return filterData;
+
+		}
+		return null;
+		
+	}
 	public Dictionary<string, animationBase> GetAnimationBase(int baseID)
 	{
 		System.Type tableType = typeof(animationBase);
@@ -168,7 +195,7 @@ public class BaseDataManager : UnityAllSceneSingleton<BaseDataManager>
 			foreach (KeyValuePair<int, object> pair in datas)
 			{
 				animationBase va = pair.Value as animationBase;
-				if (va.unitID == baseID && !filterData.ContainsKey(va.name))
+				if (va.unit_id == baseID && !filterData.ContainsKey(va.name))
 				{
 					filterData.Add(va.name, va);
 				}

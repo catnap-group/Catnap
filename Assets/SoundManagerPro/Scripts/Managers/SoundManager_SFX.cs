@@ -124,7 +124,58 @@ public partial class SoundManager : Singleton<SoundManager> {
     {
         return PlayCappedSFX(aS, clip, cappedID, Instance.volumeSFX);
     }
-	
+	/// <summary>
+	/// Plays the SFX on an owned & pooled object by clipname reference on the SoundManager, will default the location to (0,0,0), pitch to SoundManager.Instance.pitchSFX, volume to SoundManager.Instance.volumeSFX
+	/// </summary>
+	/// <returns>
+	/// The resulting <a href="http://docs.unity3d.com/ScriptReference/AudioSource.html">AudioSource</a>.
+	/// </returns>
+	/// <param name='clipName'>
+	/// Name of the clip on the SoundManager.
+	/// </param>
+	/// <param name='looping'>
+	/// Whether it is looping.
+	/// </param>
+	/// <param name='delay'>
+	/// Delay.
+	/// </param>
+	/// <param name='volume'>
+	/// Volume. If set to float.MaxValue, it will become the default volume currently set.
+	/// </param>
+	/// <param name='pitch'>
+	/// Pitch. If set to float.MaxValue, it will become the default pitch currently set.
+	/// </param>
+	/// <param name='location'>
+	/// Location.
+	/// </param>
+	/// <param name='runOnEndFunction'>
+	/// Run on end function.
+	/// </param>
+	/// <param name='duckingSetting'>
+	/// Ducking setting.
+	/// </param>
+	/// <param name='duckVolume'>
+	/// Duck volume.
+	/// </param>
+	/// <param name='duckPitch'>
+	/// Duck pitch.
+	/// </param>
+	public static AudioSource PlaySFX(string clipName, bool looping=false, float delay=0f, float volume=float.MaxValue, float pitch=float.MaxValue, Vector3 location=default(Vector3), SongCallBack runOnEndFunction=null, SoundDuckingSetting duckingSetting=SoundDuckingSetting.DoNotDuck, float duckVolume=0f, float duckPitch=1f)
+	{
+		if (Instance.offTheSFX || Instance.isPaused)
+			return null;
+
+		//if (!SoundManager.ClipNameIsValid(clipName))
+		//    return null;
+
+		if(volume == float.MaxValue)
+			volume = Instance.volumeSFX;
+
+		if(pitch == float.MaxValue)
+			pitch = Instance.pitchSFX;
+
+		return Instance.PlaySFXAt(SoundManager.Load(clipName), volume, pitch, location, false, "", looping, delay, runOnEndFunction, duckingSetting, duckVolume, duckPitch);
+	}
 	/// <summary>
 	/// Plays the SFX another audiosource of your choice, will default the looping to false, pitch to 1f, volume to 1f
 	/// </summary>

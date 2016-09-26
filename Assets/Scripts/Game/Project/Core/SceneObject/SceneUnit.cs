@@ -14,6 +14,7 @@ public class SceneUnit : MonoBehaviour {
 	public GameObject thisObj;
 	public UnitClassType m_Type;
 	public int baseId;
+	public bool dead = false;
 	/// <summary>
 	/// 这是游戏对象每帧对于设备的transform
 	/// </summary>
@@ -29,8 +30,11 @@ public class SceneUnit : MonoBehaviour {
 	protected void BaseInit(int baseID)
 	{
 		baseId = baseID;
+		thisT = transform;
 		thisObj = gameObject;
 		LoadAnimationData();
+		LoadSoundData ();
+		dead = false;
 	}
 	protected virtual AIStateManager CreateAIStateManager()
 	{
@@ -38,11 +42,15 @@ public class SceneUnit : MonoBehaviour {
 	}
 	protected Animation _animation;
 	protected Dictionary<string, animationBase> _AnimationData;
+	protected Dictionary<int, soundBase> _SoundData;
 	public void LoadAnimationData()
 	{
-		_AnimationData = BaseDataManager.Instance.GetAnimationBase(id);
+		_AnimationData = BaseDataManager.Instance.GetAnimationBase(baseId);
 	}
-
+	public void LoadSoundData()
+	{
+		_SoundData = BaseDataManager.Instance.GetSoundBase (baseId);
+	}
 	public animationBase GetAnimationBaseData(string ani)
 	{
 		if (_AnimationData == null)
@@ -101,6 +109,13 @@ public class SceneUnit : MonoBehaviour {
 			return "";
 		}
 		return idles[Random.Range(0, idles.Length)];
+	}
+	public virtual void PlaySound(int soundId)
+	{
+		if (!_SoundData.ContainsKey (soundId))
+			return;
+		SoundManager.PlaySFX (_SoundData [soundId].file_name,_SoundData [soundId].is_loop);
+
 	}
 	public virtual float PlayAnimation(string ani)
 	{
@@ -188,4 +203,17 @@ public class SceneUnit : MonoBehaviour {
 		else
 			MonoBehaviour.Destroy(gameObject);
 	}
+	public virtual void Update()
+	{
+	}
+	public virtual void FixedUpdate()
+	{
+	}
+	public virtual void Dead()
+	{
+		dead = true;
+
+
+	}
+
 }

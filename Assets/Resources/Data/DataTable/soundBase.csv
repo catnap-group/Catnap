@@ -1,4 +1,4 @@
-sound_id,file_name,is_loop,is2d
+﻿sound_id,file_name,is_loop,is2d
 uint16,vchar,uint8,uint8
 首位：0背景音乐，1 音效 后两位编号,文件名,是否循环,2d或3d声音
-101,catyell,0,1
+101,catyell,0,0

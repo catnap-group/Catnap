@@ -37,7 +37,7 @@ public class GameScene : SceneBase
 
 		//UIManager.Instance.ShowPage<WeaponUI> ();//UI
 	}
-	private byte[] _GameUserData = null;
+	//private byte[] _GameUserData = null;
 	IEnumerator LoadScene()
 	{
 		if(!GameManager.Instance.resetGame)
@@ -71,23 +71,8 @@ public class GameScene : SceneBase
 		TangoService.Instance.m_tangoApplication.m_enableDriftCorrection = false;
 		TangoService.Instance.m_tangoApplication.m_areaDescriptionLearningMode = false;
 
-		//		yield return StartCoroutine (MapScene.Instance.LoadBaseSceneAsync ("demo_01"));
-		//解析内容数据
-		//		int index = MapScene.Instance.ParseGameContent(_GameUserData);
-		//		MapScene.Instance.ParseGameContent1(_GameUserData, index);
-		//
-		//
 		yield return null;
-		//
-		//		//加载游戏场景内容
-		//		MapScene.Instance.LoadGameContent();
-		//
-		//		yield return null;
-		//		MapScene.Instance.LoadGameContent2();
-		//
-		//
-		//UIManager.Instance.ShowPage<UIGameScene>();
-		//        UIManager.Instance.ShowPage<HUD>();
+
 		//打开tango 探测器
 		yield return StartCoroutine(StartTangoDetect());
 		OnSceneLoaded();
@@ -100,12 +85,9 @@ public class GameScene : SceneBase
 		
 
 		 SceneCat cat = MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
+		cat.StartWorkRoutine ();
 		//投射到真实空间去
 		TangoManager.Instance.SceneUnit2ARUnit(cat);
-		//		TempAIManager.Create ();
-		//TBIniMgr.Instance.SetPlayerData("test", "我的");
-		//		MapScene.Instance.sta
-		//		TempAIManager.Instance.StartBuild ();
 	}
 	IEnumerator StartTangoDetect()
 	{
@@ -117,11 +99,7 @@ public class GameScene : SceneBase
 	}
 	public override void Unload ()
 	{
-		//if (!isSelfOpen) {
-		//    UIBase ui = UIManager.Instance.GetUIByType (UIManager.UIType.Game);
-		//    if (ui != null)
-		//        UIManager.Instance.DetachSceneUI (ui.GetUIObjID ());
-		//}
+
 		TangoService.Instance.GameOver();
 		GameManager.Instance.EndGame();
 		//UIManager.Instance.ClosePage<HUD>();//UI dispose
