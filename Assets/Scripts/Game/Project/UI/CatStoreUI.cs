@@ -8,7 +8,7 @@ public class CatStoreUI : MonoBehaviour
 	private int _TotalNumberGoodies = 0;
 	private int _CurrentToggleNumber = 0;
 	private Goodies _CurrentGoodies = null;
-    private bool IsHideMenu = false;
+    private bool _IsHideMenu = false;
 
 	public class GoodiesData 
 	{
@@ -43,7 +43,7 @@ public class CatStoreUI : MonoBehaviour
 			_TotalNumberToggle++;
 		}
 		InitGoodies ();
-        transform.FindChild("MenuUI").gameObject.SetActive(IsHideMenu);
+        transform.FindChild("MenuUI").gameObject.SetActive(_IsHideMenu);
 	}
 	
 	// Update is called once per frame
@@ -134,7 +134,7 @@ public class CatStoreUI : MonoBehaviour
 	public void PressBack()
 	{
 		Debug.Log ("Press Back");
-		UIManager.Instance.Close (UIID.CatStore);
+		UIManager.Instance.Close (gameObject);
 	}
 
 	public void PressGoodies(Goodies goodies)
@@ -146,7 +146,7 @@ public class CatStoreUI : MonoBehaviour
 
 	public void PressToggle(bool isOn, GameObject toggle, int toggleNum)
 	{
-		Debug.Log ("Press Menu");
+		Debug.Log ("Press Toggle");
 		_CurrentGoodies = null;
 		Text desc = transform.FindChild ("Down/Number").GetComponent<Text> ();
 		desc.text = "鱼干数：XXX";
@@ -155,7 +155,7 @@ public class CatStoreUI : MonoBehaviour
 
     public void PressMenu()
     {
-        IsHideMenu = IsHideMenu ? false : true;
-        transform.FindChild("MenuUI").gameObject.SetActive(IsHideMenu);
+        _IsHideMenu = _IsHideMenu ? false : true;
+        transform.FindChild("MenuUI").gameObject.SetActive(_IsHideMenu);
     }
 }
