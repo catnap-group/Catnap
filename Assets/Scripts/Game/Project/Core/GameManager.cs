@@ -25,6 +25,11 @@ public class GameManager : UnityAllSceneSingleton<GameManager> {
 	{
 		return _GameState;
 	}
+	private string macAddress = SystemInfo.deviceUniqueIdentifier;
+	public string GetMacAddress()
+	{
+		return macAddress;
+	}
 	public void StartGame()
 	{
 		//if game is not yet started, start it now
@@ -49,6 +54,7 @@ public class GameManager : UnityAllSceneSingleton<GameManager> {
 		Application.runInBackground = true;
 		Debug.logger.logEnabled = true;//打开log，发布正式版的时候关闭
 
+
 		//基本数据访问接口
 		BaseDataManager.Create();
 
@@ -63,7 +69,7 @@ public class GameManager : UnityAllSceneSingleton<GameManager> {
 
 		UIManager.Create();
 
-		//CatnapWebMgr.Create ();网络暂时注掉了，之后会打开
+		CatnapWebMgr.CreateSelf<CatnapWebMgr> ();//网络暂时注掉了，之后会打开
 
 		TestGPS.Create ();//打开gps
 	}

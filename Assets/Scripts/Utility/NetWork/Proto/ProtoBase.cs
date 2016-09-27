@@ -16,7 +16,7 @@ public class UJsonProtoErrorBase
 
 public class UJsonProtoBase : UProtoBase
 {
-	public UJsonProtoErrorBase error;
+	//public UJsonProtoErrorBase error;
 
 	public override bool IsSucceeded()
 	{
@@ -25,16 +25,16 @@ public class UJsonProtoBase : UProtoBase
 
 	public override string GetErrorTitle()
 	{
-		if (error != null && error.title != null)
-			return error.title;
+//		if (error != null && error.title != null)
+//			return error.title;
 
 		return string.Empty;
 	}
 
 	public override string GetErrorMessage()
 	{
-		if (error != null && error.message != null)
-			return error.message;
+//		if (error != null && error.message != null)
+//			return error.message;
 
 		return string.Empty;
 	}

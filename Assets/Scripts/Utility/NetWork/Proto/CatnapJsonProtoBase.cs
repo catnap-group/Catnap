@@ -1,13 +1,12 @@
 ﻿
 public class CatnapJsonProtoBase : UJsonProtoBase {
-
-	public bool Success;
+	
 	public int Code;
 	public string Msg;
 
 	public override bool IsSucceeded()
 	{
-		return Success;
+		return Code == 0;
 	}
 
 	public override string GetErrorMessage()
@@ -18,7 +17,5 @@ public class CatnapJsonProtoBase : UJsonProtoBase {
 
 public class LBSJPTest : CatnapJsonProtoBase
 {
-	public string valStr;
-	public int valInt;
-	public double valDouble;
+	public string[] data;
 }

@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class UNetMgr:UnityAllSceneSingleton<UNetMgr>
+public  class UNetMgr:UnityAllSceneSingleton<UNetMgr>
 {
     protected float m_TimeOutInterval = 30.0f;
 //	protected bool	m_IsInited;
@@ -15,7 +15,7 @@ public abstract class UNetMgr:UnityAllSceneSingleton<UNetMgr>
 //	}
 }
 
-public abstract class UWebMgr : UNetMgr
+public  class UWebMgr : UNetMgr
 {
     public delegate void OnWebResponse(uint id, object obj, object localArg);
     public delegate void OnWebError(uint id, string msg);
@@ -53,7 +53,7 @@ public abstract class UWebMgr : UNetMgr
 		base.Init ();
     }
 
-    public void SetSessionToken(string token)
+	public void SetSessionToken(string token="839a73c58385eabef66711a0ed06c407")
     {
         m_SessionToken = token;
 
@@ -117,10 +117,10 @@ public abstract class UWebMgr : UNetMgr
         return request;
     }
 
-    protected abstract string GetUrlRoot();
-    protected abstract string GetNetworkFailureMsg();
-    protected abstract bool IsUrlInclArgs();
-    protected abstract void ErrorMessageReporter(uint id, object data);
-    protected abstract bool IsUseSignature();
-    protected abstract string GetSalt();
+	protected virtual string GetUrlRoot(){return "";}
+	protected virtual string GetNetworkFailureMsg(){return "";}
+	protected virtual bool IsUrlInclArgs(){return false;}
+	protected virtual void ErrorMessageReporter(uint id, object data){}
+	protected virtual bool IsUseSignature(){return false;}
+	protected virtual string GetSalt(){return "";}
 }

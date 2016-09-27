@@ -25,6 +25,26 @@ public class UnityAllSceneSingleton<T> : MonoBehaviour, IManagerBase
 	{
 		get{return _Initialized;}
 	}
+	public static T CreateSelf<TB>()
+		where TB: Component
+	{
+		_instance = FindObjectOfType<TB>() as T;
+		if(_instance == null)
+		{
+			GameObject obj = new GameObject();
+			obj.name = typeof(T).ToString();
+
+			_instance = (T)obj.AddComponent(typeof(TB));
+			if(_instance.DestroyOnLoad())
+			{
+				DontDestroyOnLoad(obj);
+			}
+			obj.hideFlags = _instance.GetHideFlag();
+			_instance.Init();
+			Created = true;
+		}
+		return _instance;
+	}
 	public static T Create()
 	{
 		_instance = FindObjectOfType<T>();
@@ -43,6 +63,11 @@ public class UnityAllSceneSingleton<T> : MonoBehaviour, IManagerBase
 			Created = true;
 		}
 		return _instance;
+	}
+	public  TB CastFor<TB>()
+	where TB:class
+	{
+		return  _instance as TB;
 	}
 	private static T _instance;
 	public static T Instance

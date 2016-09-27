@@ -134,6 +134,7 @@ public abstract class UWebRequest : UNetRequest
     protected string    m_RemoteMethod;
 
     protected string    m_RemoteName;
+	protected string 	m_RemoteFolder;
     protected string    m_RuntimeClass;
     protected bool      m_isCompressed = false;
 
@@ -163,6 +164,12 @@ public abstract class UWebRequest : UNetRequest
         get { return m_RemoteName; }
         set { m_RemoteName = value; }
     }
+	public string remoteFolder
+	{
+		get { return m_RemoteFolder; }
+		set { m_RemoteFolder = value; }
+	}
+
 
     public bool isCompressed
     {

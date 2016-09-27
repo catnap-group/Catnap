@@ -12,6 +12,7 @@ public class GameScene : SceneBase
 	private Transform thisT;
 	public static float myHeight =0;
 	public static float cameraHeight = 60;
+
 	void Awake()
 	{
 		Instance = this;
@@ -91,7 +92,21 @@ public class GameScene : SceneBase
 		//投射到真实空间去
 		TangoManager.Instance.SceneUnit2ARUnit(cat);
 		#endif
-
+		//请求登录
+		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().InitCustomArgs();
+		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetSessionToken();
+//		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetCustomArg("uid", uid);
+//		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetCustomArg("lat", latitude);
+//		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetCustomArg("lon", longitude);
+		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().RequestByWRI(EWebRequestId.MSG_TEST, OnLoginResponse, OnWebError);
+	}
+	void OnLoginResponse(uint id, object obj, object localArg)
+	{
+		
+	}
+	void OnWebError(uint id, string msg)
+	{
+		Debug.Log(msg);
 	}
 	IEnumerator StartTangoDetect()
 	{

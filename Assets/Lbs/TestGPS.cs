@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TestGPS : MonoBehaviour {
+public class TestGPS : UnityAllSceneSingletonVisible<TestGPS> {
 	public string gps_info = "";  
 	public int flash_num = 1;  
 	void OnGUI () {  

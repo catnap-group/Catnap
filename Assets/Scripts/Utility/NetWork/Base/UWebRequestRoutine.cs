@@ -18,7 +18,6 @@ public class UWebRequestRoutine : MonoBehaviour
 
         public object                   m_LocalArg;
     }
-
     string      m_SessionToken;
     string      m_UrlRoot;
     string      m_PostFailureMsg;
@@ -69,9 +68,9 @@ public class UWebRequestRoutine : MonoBehaviour
         //m_Salt = salt;
     }
 
-    public void SetSessionToken(string token)
+	public void SetSessionToken(string token)
     {
-        m_SessionToken = token;
+		m_SessionToken = token;
     }
 
     public void SetHooks(UWebMgr.OnWebTextResponse responseHook, UWebMgr.OnWebError errorHook)
@@ -126,13 +125,14 @@ public class UWebRequestRoutine : MonoBehaviour
         headers["Accept-Encoding"] = "identity";
 
         //string url = m_UrlRoot + "?ctl=" + m_ActiveRequestProxy.m_Request.remoteClass + "&act=" + m_ActiveRequestProxy.m_Request.remoteMethod;
-        string url = m_UrlRoot + m_ActiveRequestProxy.m_Request.remoteName + "?";
+        string url = m_UrlRoot + m_ActiveRequestProxy.m_Request.remoteName +"/"
+			+ m_ActiveRequestProxy.m_Request.remoteFolder + "/" + m_ActiveRequestProxy.m_Request.remoteMethod + "?";
 
         if (!string.IsNullOrEmpty(m_SessionToken))
-            url += "&" + "session_token=" + m_SessionToken;
+            url += "token=" + m_SessionToken;
 
         if (!string.IsNullOrEmpty(m_ActiveRequestProxy.m_UrlArgs))
-            url += m_ActiveRequestProxy.m_UrlArgs;
+			url +="&" +  m_ActiveRequestProxy.m_UrlArgs;
 
         //if (m_isUseSignature)
         //{
