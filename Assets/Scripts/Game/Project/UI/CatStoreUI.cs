@@ -8,6 +8,7 @@ public class CatStoreUI : MonoBehaviour
 	private int _TotalNumberGoodies = 0;
 	private int _CurrentToggleNumber = 0;
 	private Goodies _CurrentGoodies = null;
+    private bool _IsHideMenu = false;
 
 	public class GoodiesData 
 	{
@@ -21,7 +22,9 @@ public class CatStoreUI : MonoBehaviour
 			IconPath = iconPath;
 		}
 	}
-	private  GoodiesData[] _GoodiesDatas = { 
+
+	private  GoodiesData[] _GoodiesDatas = 
+    { 
 		new GoodiesData("普通猫窝", 100, "UI/img_prop_bowl01"),
 		new GoodiesData("普通猫粮", 200, "UI/img_prop_house01"),
 		new GoodiesData("普通猫窝", 300, "UI/img_prop_bowl01"),
@@ -40,6 +43,7 @@ public class CatStoreUI : MonoBehaviour
 			_TotalNumberToggle++;
 		}
 		InitGoodies ();
+        transform.FindChild("MenuUI").gameObject.SetActive(_IsHideMenu);
 	}
 	
 	// Update is called once per frame
@@ -55,12 +59,12 @@ public class CatStoreUI : MonoBehaviour
 		{
 			int toggleNum = i;
 			GameObject toggle = Instantiate (Resources.Load ("Prefabs/UI/GoodiesToggle", typeof(GameObject))) as GameObject;
-			toggle.transform.SetParent (goodiesGroup.transform);
+			toggle.transform.SetParent (goodiesGroup.transform, false);
 			toggle.name = string.Format("Toggle{0}", i);
 			Toggle toggleComp = toggle.GetComponent<Toggle> ();
 			toggleComp.group = goodiesGroup.GetComponent<ToggleGroup>();
 			toggleComp.onValueChanged.AddListener (delegate(bool arg0) {
-				this.PressMenu(arg0, toggle, toggleNum);	
+				this.PressToggle(arg0, toggle, toggleNum);	
 			});
 		}
 
@@ -130,7 +134,7 @@ public class CatStoreUI : MonoBehaviour
 	public void PressBack()
 	{
 		Debug.Log ("Press Back");
-		UIManager.Instance.Close (UIID.CatStore);
+		UIManager.Instance.Close (gameObject);
 	}
 
 	public void PressGoodies(Goodies goodies)
@@ -140,12 +144,18 @@ public class CatStoreUI : MonoBehaviour
 		desc.text = string.Format("鱼干数：{0}", goodies.GetPrice ());
 	}
 
-	public void PressMenu(bool isOn, GameObject toggle, int toggleNum)
+	public void PressToggle(bool isOn, GameObject toggle, int toggleNum)
 	{
-		Debug.Log ("Press Menu");
+		Debug.Log ("Press Toggle");
 		_CurrentGoodies = null;
 		Text desc = transform.FindChild ("Down/Number").GetComponent<Text> ();
 		desc.text = "鱼干数：XXX";
 		SwitchToggle (toggleNum);
 	}
+
+    public void PressMenu()
+    {
+        _IsHideMenu = _IsHideMenu ? false : true;
+        transform.FindChild("MenuUI").gameObject.SetActive(_IsHideMenu);
+    }
 }
