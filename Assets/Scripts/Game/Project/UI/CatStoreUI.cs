@@ -55,7 +55,7 @@ public class CatStoreUI : MonoBehaviour
 		{
 			int toggleNum = i;
 			GameObject toggle = Instantiate (Resources.Load ("Prefabs/UI/GoodiesToggle", typeof(GameObject))) as GameObject;
-			toggle.transform.SetParent (goodiesGroup.transform);
+			toggle.transform.SetParent (goodiesGroup.transform, false);
 			toggle.name = string.Format("Toggle{0}", i);
 			Toggle toggleComp = toggle.GetComponent<Toggle> ();
 			toggleComp.group = goodiesGroup.GetComponent<ToggleGroup>();
