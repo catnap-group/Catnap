@@ -64,6 +64,8 @@ public class GameManager : UnityAllSceneSingleton<GameManager> {
 		UIManager.Create();
 
 		//CatnapWebMgr.Create ();网络暂时注掉了，之后会打开
+
+		TestGPS.Create ();//打开gps
 	}
 	public override void OnTerminate ()
 	{
