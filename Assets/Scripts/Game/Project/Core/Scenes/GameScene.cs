@@ -84,9 +84,7 @@ public class GameScene : SceneBase
 	}
 	public void OnSceneLoaded()
 	{
-		
-
-		 SceneCat cat = MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
+		SceneCat cat = MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
 		cat.StartWorkRoutine ();
 		#if !UNITY_EDITOR
 		//投射到真实空间去
@@ -123,6 +121,7 @@ public class GameScene : SceneBase
 
 		TangoService.Instance.GameOver();
 		GameManager.Instance.EndGame();
+		UIManager.Instance.UnloadAllUI ();
 		//UIManager.Instance.ClosePage<HUD>();//UI dispose
 		//UIManager.Instance.ClosePage<UIGameScene>();
 		base.Unload ();
