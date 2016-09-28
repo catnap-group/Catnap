@@ -24,7 +24,7 @@ public class GameScene : SceneBase
 		}
 		#endif
 		GameManager.Instance.SetGameState(GameState.CatPlay);
-		UIManager.Instance.Open(UIID.CatStore);
+		//UIManager.Instance.Open(UIID.CatStore);
 
 		//        if (isCreateGalaxy)
 		//            SceneBuildManager.Instance.CreateGalaxy();
@@ -71,6 +71,13 @@ public class GameScene : SceneBase
 		//mode 2
 		TangoService.Instance.m_tangoApplication.m_enableDriftCorrection = false;
 		TangoService.Instance.m_tangoApplication.m_areaDescriptionLearningMode = false;
+		TangoARScreen arScreen = Camera.main.gameObject.GetComponent<TangoARScreen> ();
+		arScreen.m_occlusionShader =Shader.Find( "Tango/PointCloud (Occlusion)");
+		ARCameraPostProcess postProcess = Camera.main.gameObject.AddComponent<ARCameraPostProcess> ();
+		postProcess.m_postProcessMaterial = ResourcesManager.Instance.LoadAsset<Material> ("Common\\TangoGizmos\\Materials\\ar_post_process");
+		postProcess.enabled = false;
+		TangoEnvironmentalLighting tel = Camera.main.gameObject.AddComponent<TangoEnvironmentalLighting> ();
+		tel.m_enableEnvironmentalLighting = true;
 
 		yield return null;
 		#if !UNITY_EDITOR
@@ -86,10 +93,10 @@ public class GameScene : SceneBase
 	{
 		SceneCat cat = MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
 		cat.StartWorkRoutine ();
-		#if !UNITY_EDITOR
-		//投射到真实空间去
-		TangoManager.Instance.SceneUnit2ARUnit(cat);
-		#endif
+//		#if !UNITY_EDITOR
+//		//投射到真实空间去
+//		TangoManager.Instance.SceneUnit2ARUnit(cat);
+//		#endif
 		//请求登录
 		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().InitCustomArgs();
 		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetSessionToken();
@@ -108,9 +115,18 @@ public class GameScene : SceneBase
 	{
 		Debug.Log(msg);
 	}
+//	void OnGUI()
+//	{
+//		GUI.Button(new Rect(0,0,100,100), "noNewArea")
+//		{
+//			
+//		}
+//
+//	}
 	IEnumerator StartTangoDetect()
 	{
-		while (!TangoService.Instance.StartGame ())
+		TangoService.Instance.StartGame ();
+		while(!TangoService.Instance.HasAreaDescrip())
 			yield return new WaitForSeconds (2);//2秒一次，直到返回列表
 		while(!TangoManager.Instance.IsTangoReady())
 			yield return new WaitForSeconds (1);//1秒一次，直到tango avaliable，这时候场景加载完毕

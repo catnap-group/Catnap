@@ -19,6 +19,7 @@ public class TangoService : UnitySingletonVisible<TangoService>, ITangoLifecycle
 	{
 		m_tangoApplication = GetComponent<TangoApplication> ();
 		vAreaDescription = new List<AreaDescription> ();
+		m_needNewAreaDescription = true;
 		if (m_tangoApplication != null)
 		{
 			m_tangoApplication.Register(this);
@@ -35,6 +36,11 @@ public class TangoService : UnitySingletonVisible<TangoService>, ITangoLifecycle
 	public void GameOver()
 	{
 		m_tangoApplication.Shutdown ();
+	}
+
+	public bool HasAreaDescrip()
+	{
+		return vAreaDescription.Count != 0;
 	}
 	public bool StartGame()//需要不停探测，直到打开一个区域，或者由界面打开
 	{
@@ -92,6 +98,12 @@ public class TangoService : UnitySingletonVisible<TangoService>, ITangoLifecycle
 		{
 			AndroidHelper.ShowAndroidToastMessage("需要运动跟踪和区域学习权限.");
 			//Application.Quit();//没有必要关闭应用，由玩家杀掉进程就好
+		}
+	}
+	void OnGUI()
+	{
+		for(int i = 0 ; i <vAreaDescription.Count ; i ++){
+			GUI.Label (new Rect (0, 0 + i * 10, 100, 100), vAreaDescription [i].GetMetadata ().m_name);
 		}
 	}
 	/// <summary>
