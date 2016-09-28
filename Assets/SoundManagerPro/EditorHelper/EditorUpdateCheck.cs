@@ -72,51 +72,52 @@ public class EditorUpdateCheck : MonoBehaviour {
 	}
 	
 	IEnumerator CheckUpdate(WWWForm form)
-	{
-		www = new WWW("http://www.antilunchbox.com/checkupdates-soundmanagerpro.php", form);
-		yield return www;
-		
-		if(www.error != null) 
-		{
-			if(respondInAlerts) 
-				Debug.LogWarning("Error checking SoundManagerPro for updates: " + www.error);
-			querying = false;
-			yield break;
-		}  
-		else 
-		{
-			string[] results = www.text.Split('~');
-			int count = results.Length;
-			
-			if(results[0] == "true")
-			{
-				if(respondInAlerts) 
-					Debug.Log("SoundManagerPro is up to date.");
-				if(count > 1)
-					for(int i = 1; i < count; i++)
-						Debug.Log(results[i]);
-				querying = false;
-			}
-			else if(results[0] == "false")
-			{
-				bool firstMessage = false;
-				for(int i = 1; i < count; i++)
-				{
-					if(!respondInAlerts)
-					{
-						Debug.Log(results[i]);
-						querying = false;
-					}
-					else if (!firstMessage)
-					{
-						firstMessage = true;
-						falseMessage = results[i];
-						readyForAction = true;
-						yield break;
-					}
-				}
-			}
-		}
+	{//不要升级
+		yield break;
+//		www = new WWW("http://www.antilunchbox.com/checkupdates-soundmanagerpro.php", form);
+//		yield return www;
+//		
+//		if(www.error != null) 
+//		{
+//			if(respondInAlerts) 
+//				Debug.LogWarning("Error checking SoundManagerPro for updates: " + www.error);
+//			querying = false;
+//			yield break;
+//		}  
+//		else 
+//		{
+//			string[] results = www.text.Split('~');
+//			int count = results.Length;
+//			
+//			if(results[0] == "true")
+//			{
+//				if(respondInAlerts) 
+//					Debug.Log("SoundManagerPro is up to date.");
+//				if(count > 1)
+//					for(int i = 1; i < count; i++)
+//						Debug.Log(results[i]);
+//				querying = false;
+//			}
+//			else if(results[0] == "false")
+//			{
+//				bool firstMessage = false;
+//				for(int i = 1; i < count; i++)
+//				{
+//					if(!respondInAlerts)
+//					{
+//						Debug.Log(results[i]);
+//						querying = false;
+//					}
+//					else if (!firstMessage)
+//					{
+//						firstMessage = true;
+//						falseMessage = results[i];
+//						readyForAction = true;
+//						yield break;
+//					}
+//				}
+//			}
+//		}
 	}
 	
 	public void StopChecking()
