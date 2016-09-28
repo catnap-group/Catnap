@@ -1,5 +1,4 @@
-﻿
-public class CatnapJsonProtoBase : UJsonProtoBase {
+﻿public class CatnapJsonProtoBase : UJsonProtoBase {
 	
 	public int Code;
 	public string Msg;
@@ -18,4 +17,5 @@ public class CatnapJsonProtoBase : UJsonProtoBase {
 public class LBSJPTest : CatnapJsonProtoBase
 {
 	public string[] data;
+
 }

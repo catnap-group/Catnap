@@ -102,7 +102,9 @@ public class GameScene : SceneBase
 	}
 	void OnLoginResponse(uint id, object obj, object localArg)
 	{
-		
+		Debug.Log ("id" + id);
+		LBSJPTest lbs = obj as LBSJPTest;
+		Debug.Log ("data" + lbs.data.ToString());
 	}
 	void OnWebError(uint id, string msg)
 	{
