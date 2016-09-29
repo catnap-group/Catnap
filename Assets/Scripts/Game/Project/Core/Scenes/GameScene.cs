@@ -93,10 +93,10 @@ public class GameScene : SceneBase
 	{
 		SceneCat cat = MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
 		cat.StartWorkRoutine ();
-//		#if !UNITY_EDITOR
-//		//投射到真实空间去
-//		TangoManager.Instance.SceneUnit2ARUnit(cat);
-//		#endif
+		#if !UNITY_EDITOR
+		//投射到真实空间去
+		TangoManager.Instance.SceneUnit2ARUnit(cat);
+		#endif
 		//请求登录
 		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().InitCustomArgs();
 		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetSessionToken();
