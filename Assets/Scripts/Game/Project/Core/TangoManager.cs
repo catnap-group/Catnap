@@ -6,7 +6,6 @@ using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 using Tango;
-using UnityEngine;
 using UnityEngine.EventSystems;
 //这个类就是原来的PlaceMarkerInGameController,用来游戏交互，保存数据，闭环处理，主要是unity映射到现实世界
 public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoPose, ITangoEvent, ITangoDepth {

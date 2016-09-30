@@ -24,7 +24,7 @@ public class GameScene : SceneBase
 		}
 		#endif
 		GameManager.Instance.SetGameState(GameState.CatPlay);
-		//UIManager.Instance.Open(UIID.CatStore);
+		UIManager.Instance.Open(UIID.CatStore);
 
 		//        if (isCreateGalaxy)
 		//            SceneBuildManager.Instance.CreateGalaxy();
