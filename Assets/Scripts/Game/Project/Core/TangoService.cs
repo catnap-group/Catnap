@@ -102,8 +102,10 @@ public class TangoService : UnitySingletonVisible<TangoService>, ITangoLifecycle
 	}
 	void OnGUI()
 	{
+
+		GUI.skin.button.fontSize = 28;  
 		for(int i = 0 ; i <vAreaDescription.Count ; i ++){
-			GUI.Label (new Rect (0, 0 + i * 10, 100, 100), vAreaDescription [i].GetMetadata ().m_name);
+			GUI.Label (new Rect (0, 60 + i * 10, 100, 100), vAreaDescription [i].GetMetadata ().m_name);
 		}
 	}
 	/// <summary>
