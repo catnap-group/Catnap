@@ -57,7 +57,7 @@ public class SpectrumMicrophone : MonoBehaviour
     /// </summary>
     int m_lastPosition = 0;
 
-    void OnEnable()
+    void Start()
     {
         InitData();
     }
@@ -77,7 +77,7 @@ public class SpectrumMicrophone : MonoBehaviour
         }
     }
 
-    void OnApplicationQuit()
+    void OnDestroy()
     {
         CleanUp();
     }
@@ -316,8 +316,8 @@ public class SpectrumMicrophone : MonoBehaviour
 
     void Update()
     {
-        try
-        {
+//        try
+//        {
             if (null == GetComponent<AudioSource>().clip)
             {
                 if (Application.isWebPlayer)
@@ -339,19 +339,19 @@ public class SpectrumMicrophone : MonoBehaviour
                 }
             }
 
-            if (string.IsNullOrEmpty(DeviceName))
-            {
-                return;
-            }
+//            if (string.IsNullOrEmpty(DeviceName))
+//            {
+//                return;
+//            }
 
             if (null == GetComponent<AudioSource>().clip)
             {
                 GetComponent<AudioSource>().clip = Microphone.Start(DeviceName, true, CaptureTime, SampleRate);
             }
-        }
-        catch (System.Exception ex)
-        {
-            Debug.Log(string.Format("Update exception={0}", ex));
-        }
+//        }
+//        catch (System.Exception ex)
+//        {
+//            Debug.Log(string.Format("Update exception={0}", ex));
+//        }
     }
 }

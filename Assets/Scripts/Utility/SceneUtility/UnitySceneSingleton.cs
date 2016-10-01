@@ -25,7 +25,10 @@ public class UnitySingletonVisible<T> : MonoBehaviour
 		Instance = this as T;
 		OnInit ();
 	}
+
+
 	public virtual void OnInit (){}
+	public virtual void OnDispose(){}
 }
 public interface IInitClass
 {

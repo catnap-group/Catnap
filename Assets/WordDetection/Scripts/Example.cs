@@ -104,10 +104,10 @@ public class Example : MonoBehaviour
 
                 foreach (string device in Microphone.devices)
                 {
-                    if (string.IsNullOrEmpty(device))
-                    {
-                        continue;
-                    }
+//                    if (string.IsNullOrEmpty(device))
+//                    {
+//                        continue;
+//                    }
 
                     if (GUILayout.Button(device, GUILayout.Height(60)))
                     {
@@ -333,6 +333,8 @@ public class Example : MonoBehaviour
             PlotWave();
 
             PlotSpectrum();
+
+
         }
         catch (System.Exception ex)
         {

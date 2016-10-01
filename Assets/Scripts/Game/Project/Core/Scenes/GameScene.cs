@@ -54,6 +54,7 @@ public class GameScene : SceneBase
 		//生成tango管理器
 		ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Seivice");//临时代码，这部分以后要变成class create的模式，现在为了便于调试,这个上面起作用的类是tangoserviece
 		GameObject cloudObj = ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Point Cloud");//临时代码，这部分以后要变成class create的模式，现在为了便于调试
+		ResourcesManager.Instance.LoadGameObject ("Prefabs/WordDetection/WordService");
 		yield return new WaitForEndOfFrame();
 		//生成tango镜头
 		TangoARPoseController tarPoseCon =Camera.main.gameObject.AddComponent<TangoARPoseController>();
@@ -135,7 +136,8 @@ public class GameScene : SceneBase
 	public override void Unload ()
 	{
 
-		TangoService.Instance.GameOver();
+		TangoService.Instance.OnDispose();
+		WordService.Instance.OnDispose ();
 		GameManager.Instance.EndGame();
 		UIManager.Instance.UnloadAllUI ();
 		//UIManager.Instance.ClosePage<HUD>();//UI dispose

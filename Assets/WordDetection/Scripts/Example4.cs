@@ -129,8 +129,7 @@ public class Example4 : MonoBehaviour
     protected virtual void SetupWordProfile(bool playAudio, bool isNoise, int wordIndex)
     {
         if (null == AudioWordDetection ||
-            null == Mic ||
-            string.IsNullOrEmpty(Mic.DeviceName))
+			null == Mic )//||string.IsNullOrEmpty(Mic.DeviceName)
         {
             return;
         }
@@ -203,7 +202,8 @@ public class Example4 : MonoBehaviour
             //play the audio
             if (null == details.Audio)
             {
-                details.Audio = AudioClip.Create(string.Empty, size, 1, Mic.SampleRate, false, false);
+				
+				details.Audio = AudioClip.Create(string.Empty, size, 1, Mic.SampleRate, false, false);
             }
             details.Audio.SetData(details.Wave, 0);
             GetComponent<AudioSource>().loop = false;
@@ -228,9 +228,9 @@ public class Example4 : MonoBehaviour
 
     protected virtual void SetupWordProfile(WordDetails details, bool isNoise)
     {
+		//||string.IsNullOrEmpty(Mic.DeviceName)
         if (null == AudioWordDetection ||
-            null == Mic ||
-            string.IsNullOrEmpty(Mic.DeviceName))
+            null == Mic )
         {
             return;
         }
@@ -324,9 +324,9 @@ public class Example4 : MonoBehaviour
     /// </summary>
     protected virtual void OnGUI()
     {
+		// ||string.IsNullOrEmpty(Mic.DeviceName)
         if (null == AudioWordDetection ||
-            null == Mic ||
-            string.IsNullOrEmpty(Mic.DeviceName))
+            null == Mic)
         {
             return;
         }

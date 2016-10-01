@@ -137,8 +137,9 @@ public class Example7 : Example4
     protected override void OnGUI()
     {
         if (null == AudioWordDetection ||
-            null == Mic ||
-            string.IsNullOrEmpty(Mic.DeviceName))
+            null == Mic )
+			//||
+			//string.IsNullOrEmpty(Mic.DeviceName)
         {
             return;
         }

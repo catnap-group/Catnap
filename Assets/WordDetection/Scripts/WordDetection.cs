@@ -290,8 +290,7 @@ public class WordDetection : MonoBehaviour
     /// </summary>
     private void OnGUI()
     {
-        if (null == Mic ||
-            string.IsNullOrEmpty(Mic.DeviceName))
+		if (null == Mic )//||string.IsNullOrEmpty(Mic.DeviceName)
         {
             return;
         }

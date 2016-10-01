@@ -182,9 +182,9 @@ public class Example6 : Example4
     /// </summary>
     protected override void OnGUI()
     {        
+		//||string.IsNullOrEmpty(Mic.DeviceName)
         if (null == AudioWordDetection ||
-            null == Mic ||
-            string.IsNullOrEmpty(Mic.DeviceName))
+            null == Mic )
         {
             return;
         }

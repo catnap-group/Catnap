@@ -20,13 +20,13 @@ public class Example3 : Example
 
             if (UsePlotter)
             {
-                if (null != m_plotData &&
-                    m_plotData.Length > 0)
-                {
-                    Vector2 pos = MaterialWave.mainTextureOffset;
-                    pos.x = Mic.GetPosition();
-                    RendererWave.material.mainTextureOffset = pos/(float) m_plotData.Length;
-                }
+//                if (null != m_plotData &&
+//                    m_plotData.Length > 0)
+//                {
+//                    Vector2 pos = MaterialWave.mainTextureOffset;
+//                    pos.x = Mic.GetPosition();
+//                    RendererWave.material.mainTextureOffset = pos/(float) m_plotData.Length;
+//                }
             }
         }
         catch (System.Exception ex)

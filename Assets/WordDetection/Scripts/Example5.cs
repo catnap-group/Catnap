@@ -152,10 +152,9 @@ public class Example5 : Example4
     protected override void OnGUI()
     {
         ExampleUpdate();
-
+		//||string.IsNullOrEmpty(Mic.DeviceName)
         if (null == AudioWordDetection ||
-            null == Mic ||
-            string.IsNullOrEmpty(Mic.DeviceName))
+            null == Mic )
         {
             return;
         }

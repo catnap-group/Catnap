@@ -33,7 +33,7 @@ public class TangoService : UnitySingletonVisible<TangoService>, ITangoLifecycle
 			Debug.Log("No Tango Manager found in scene.");
 		}
 	} 
-	public void GameOver()
+	public override void OnDispose ()
 	{
 		m_tangoApplication.Shutdown ();
 	}

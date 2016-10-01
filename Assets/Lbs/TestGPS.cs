@@ -7,7 +7,7 @@ public class TestGPS : UnityAllSceneSingletonVisible<TestGPS> {
 	void OnGUI () {  
 		GUI.skin.label.fontSize = 28;  
 		GUI.Label(new Rect(20,20,600,48),this.gps_info);   
-		GUI.Label(new Rect(20,50,600,48),this.flash_num.ToString());   
+		GUI.Label(new Rect(20,50,600,48),"gps flash num:" + this.flash_num.ToString());   
 
 		GUI.skin.button.fontSize = 50;  
 		if (GUI.Button(new Rect(Screen.width/2-110,200,220,85),"GPS定位"))  
