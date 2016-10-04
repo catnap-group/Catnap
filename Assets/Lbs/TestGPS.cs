@@ -10,18 +10,18 @@ public class TestGPS : UnityAllSceneSingletonVisible<TestGPS> {
 		GUI.Label(new Rect(20,50,600,48),"gps flash num:" + this.flash_num.ToString());   
 
 		GUI.skin.button.fontSize = 50;  
-		if (GUI.Button(new Rect(Screen.width/2-110,200,220,85),"GPS定位"))  
+		if (GUI.Button(new Rect(Screen.width-210,0,220,85),"GPS定位"))  
 		{  
 			// 这里需要启动一个协同程序  
 			StartCoroutine(StartGPS());  
 		}  
-		if (GUI.Button(new Rect(Screen.width/2-110,500,220,85),"刷新GPS"))  
+		if (GUI.Button(new Rect(Screen.width-210,100,220,85),"刷新GPS"))  
 		{  
 			this.gps_info = "N:" + Input.location.lastData.latitude + " E:"+Input.location.lastData.longitude;  
 			this.gps_info = this.gps_info + " Time:" + Input.location.lastData.timestamp;  
 			this.flash_num += 1;   
 		}  
-		if (GUI.Button (new Rect (Screen.width / 2 - 110, 700, 220, 85), "关闭GPS")) { 
+		if (GUI.Button (new Rect (Screen.width - 210, 200, 220, 85), "关闭GPS")) { 
 			StopGPS();
 		}
 	}  

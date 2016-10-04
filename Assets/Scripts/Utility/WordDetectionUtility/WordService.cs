@@ -10,6 +10,7 @@ public class WordService : UnitySingletonVisible<WordService>{
 	public Material MaterialSpectrumLeft = null;
 	public Material MaterialSpectrumRight = null;
 	public Material MaterialWave = null;
+	public SpectrumMicrophone Mic = null;//使用默认话筒，认为手机只有一个话筒
 
 
 	public int TextureSize = 16;
@@ -26,7 +27,6 @@ public class WordService : UnitySingletonVisible<WordService>{
 	/// </summary>
 	public bool OverrideSpectrumImag = false;
 	public float[] SpectrumImag = null;
-
 	/// <summary>
 	/// Toggle using plotter
 	/// </summary>
@@ -35,7 +35,6 @@ public class WordService : UnitySingletonVisible<WordService>{
 	private MeshRenderer RendererSpectrumLeft = null;
 	private MeshRenderer RendererSpectrumRight = null;
 	private MeshRenderer RendererWave = null;
-	private SpectrumMicrophone _Mic = null;//使用默认话筒，认为手机只有一个话筒
 
 	private GameObject planes;
 
@@ -43,9 +42,9 @@ public class WordService : UnitySingletonVisible<WordService>{
 	{
 		base.OnInit ();
 
-		_Mic = gameObject.AddComponent<SpectrumMicrophone> ();
-		_Mic.CaptureTime = 1;
-		_Mic.SampleRate = 1024;
+		Mic = gameObject.AddComponent<SpectrumMicrophone> ();
+		Mic.CaptureTime = 1;
+		Mic.SampleRate = 1024;
 
 		if (UsePlotter) {
 			planes = new GameObject ();
@@ -143,7 +142,7 @@ public class WordService : UnitySingletonVisible<WordService>{
 
 	protected virtual void GetMicData()
 	{
-		m_micData = _Mic.GetData(0);
+		m_micData = Mic.GetData(0);
 	}
 
 	void OnGUI()
@@ -200,7 +199,7 @@ public class WordService : UnitySingletonVisible<WordService>{
 				m_plotData.Length > 0)
 			{
 				Vector2 pos = MaterialWave.mainTextureOffset;
-				pos.x = _Mic.GetPosition();
+				pos.x = Mic.GetPosition();
 				RendererWave.material.mainTextureOffset = pos/(float) m_plotData.Length;
 			}
 	}
@@ -222,7 +221,7 @@ public class WordService : UnitySingletonVisible<WordService>{
 	{
 		float[] spectrumReal;
 		float[] spectrumImag;
-		_Mic.GetSpectrumData(Window, out spectrumReal, out spectrumImag);
+		Mic.GetSpectrumData(Window, out spectrumReal, out spectrumImag);
 		if (UsePlotter)
 		{
 			m_plotter.PlotGraph2(spectrumReal, m_plotData, 0, spectrumReal.Length, NormalizeGraph, m_colorsSpectrumLeft);
@@ -267,6 +266,8 @@ public class WordService : UnitySingletonVisible<WordService>{
 	public override void OnDispose ()
 	{
 		base.OnDispose ();
+		if(Mic != null)
+			Destroy(Mic);
 		CleanUp();
 		if (planes != null)
 			Destroy (planes);
