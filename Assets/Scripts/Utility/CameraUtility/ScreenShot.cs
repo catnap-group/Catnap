@@ -5,6 +5,13 @@ public class ScreenShot : MonoBehaviour
 {
 	[HideInInspector]
 	public bool CanGrab =false;
+	void OnGUI()
+	{
+		if(GUI.Button(new Rect (Screen.width - 210, 300, 220, 85), "截屏"))
+		{
+			CanGrab = true;
+		}
+	}
 	void OnPostRender()
 	{
 		if (CanGrab) {
