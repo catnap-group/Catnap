@@ -60,12 +60,13 @@ public class characterBase
 	public readonly string prefab;
 	public readonly float[] pos=null;
 	public readonly float[] quaternion = null;
+	public readonly string[] effname = null;
 	public characterBase()
 	{
 		
 	}
 
-	public characterBase(int iId, int iType, string strName, string strIcon, string strDesp, string strPrefab, string[] strIdle_list, int[] intSound_list, float[] vPos, float[] vQuaternion)
+	public characterBase(int iId, int iType, string strName, string strIcon, string strDesp, string strPrefab, string[] strIdle_list, int[] intSound_list, float[] vPos, float[] vQuaternion, string [] vEffname)
 	{
 		id      = iId;
 		type    = iType;
@@ -77,7 +78,7 @@ public class characterBase
 		prefab = strPrefab;
 		pos = vPos;
 		quaternion = vQuaternion;
-
+		effname = vEffname;
 	}
 	public UnitClassType GetCreepClassType()
 	{

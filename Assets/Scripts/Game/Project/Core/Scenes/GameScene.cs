@@ -12,7 +12,7 @@ public class GameScene : SceneBase
 	private Transform thisT;
 	public static float myHeight =0;
 	public static float cameraHeight = 60;
-
+	public GameObject playerBody;
 	void Awake()
 	{
 		Instance = this;
@@ -50,6 +50,8 @@ public class GameScene : SceneBase
 		{
 			//reset game!!
 		}
+		GamePlayer.Me.Create ();
+		GamePlayer.Me.instance.SetPlayer (playerBody.transform);
 		//加载基础场景
 		//生成tango管理器
 		ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Seivice");//临时代码，这部分以后要变成class create的模式，现在为了便于调试,这个上面起作用的类是tangoserviece
@@ -107,6 +109,8 @@ public class GameScene : SceneBase
 	public void OnSceneLoaded()
 	{
 		SceneCatLittle catLitter = MapSceneManager.Instance.CreateSceneCatLittle(102,Vector3.zero, Quaternion.identity);
+		SceneCatLittle spade = MapSceneManager.Instance.CreateSceneCatLittle(103,Vector3.zero, Quaternion.identity, false);
+		GamePlayer.Me.instance.HoldTool (spade.thisT);
 		SceneCat cat = MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
 		cat.StartWorkRoutine ();
 		#if !UNITY_EDITOR

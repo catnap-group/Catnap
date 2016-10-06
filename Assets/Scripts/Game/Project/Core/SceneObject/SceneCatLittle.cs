@@ -22,5 +22,21 @@ public class SceneCatLittle : SceneUnit
 		//刷新外形
 		RefreshPresentation();
 	}
+	public void ShowAnimation()
+	{
+		if(_BaseData.idle_list.Length > 0)
+			PlayAnimation (_BaseData.idle_list [0]);
+	}
+	public void PlayEffect()
+	{
+		int count = _BaseData.effname.Length;
+		for (int i = 0; i < count; i++) {
+			if (!string.IsNullOrEmpty (_BaseData.effname [i])) {
+			
+				Transform eff = Helper.FindChild (_BaseData.effname [i], thisT);
+				eff.gameObject.SetActive (true);
+			}
+		}
+	}
 }
 
