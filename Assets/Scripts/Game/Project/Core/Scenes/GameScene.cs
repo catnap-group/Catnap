@@ -70,7 +70,9 @@ public class GameScene : SceneBase
 		TangoService.Instance.m_tangoApplication.m_videoOverlayUseTextureMethod = true;
 		TangoService.Instance.m_tangoApplication.m_videoOverlayUseYUVTextureIdMethod = false;
 		TangoService.Instance.m_tangoApplication.m_videoOverlayUseByteBufferMethod = false;
-
+		TangoService.Instance.m_tangoApplication.m_doSlowEmulation = true;
+		//TangoService.Instance.m_tangoApplication.m_emulationEnvironment = 
+		TangoService.Instance.m_tangoApplication.m_emulationVideoOverlaySimpleLighting = true;
 		//AreaDescriptions
 		TangoService.Instance.m_tangoApplication.m_enableAreaDescriptions = true;
 		//mode 2
