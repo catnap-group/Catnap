@@ -61,7 +61,7 @@ public class MapSceneManager : UnityAllSceneSingletonVisible<MapSceneManager>
 
 		return pet as SceneCat;
 	}
-	public SceneCatLittle CreateSceneCatLittle(int baseID, Vector3 position, Quaternion rotation)
+	public SceneCatLittle CreateSceneCatLittle(int baseID, Vector3 position, Quaternion rotation, bool defaultLocal = true)
 	{
 		characterBase baseData = BaseDataManager.Instance.GetTableDataByID<characterBase>(baseID);
 		if (baseData == null)
@@ -81,6 +81,11 @@ public class MapSceneManager : UnityAllSceneSingletonVisible<MapSceneManager>
 		go.transform.position = position;
 
 		go.transform.rotation = rotation;
+		if (defaultLocal) {
+			go.transform.position = new Vector3(baseData.pos[0],baseData.pos[1],baseData.pos[2]);
+
+			go.transform.rotation = Quaternion.Euler(new Vector3(baseData.quaternion[0],baseData.quaternion[1],baseData.quaternion[2]));
+		}		
 		go.transform.parent = this.transform;
 
 		//cat.OnCreated();

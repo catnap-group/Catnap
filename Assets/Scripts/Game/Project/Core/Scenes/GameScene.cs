@@ -64,6 +64,7 @@ public class GameScene : SceneBase
 		tarPoseCon.m_useAreaDescriptionPose = true;
 		tarPoseCon.m_syncToARScreen = true;
 		TangoManager.Instance.m_pointCloud = cloudObj.GetComponent<TangoPointCloud> ();
+		TangoManager.Instance.m_pointCloud.m_useAreaDescriptionPose = true;
 		TangoService.Instance.m_poseController = tarPoseCon;
 		//texture Method 
 		TangoService.Instance.m_tangoApplication.m_videoOverlayUseTextureMethod = true;
@@ -83,11 +84,19 @@ public class GameScene : SceneBase
 		TangoEnvironmentalLighting tel = Camera.main.gameObject.AddComponent<TangoEnvironmentalLighting> ();
 		tel.m_enableEnvironmentalLighting = true;
 
+		//tango motion  gesture
+		TangoDeltaPoseController tdp = Camera.main.transform.parent.gameObject.AddComponent<TangoDeltaPoseController>();
+		tdp.m_useAreaDescriptionPose = true;
+		tdp.m_characterMotion = true;
+		TangoGestureCamera gesture = Camera.main.gameObject.AddComponent<TangoGestureCamera>();
+		gesture.m_targetFollowingObject = Camera.main.transform.parent.gameObject;
+		gesture.m_defaultCameraMode = TangoGestureCamera.CameraType.FIRST_PERSON;
+
 		yield return null;
-		#if !UNITY_EDITOR
+		//#if !UNITY_EDITOR
 		//打开tango 探测器
 		yield return StartCoroutine(StartTangoDetect());
-		#endif
+		//#endif
 		OnSceneLoaded();
 		//
 		//更新下载状态
@@ -95,6 +104,7 @@ public class GameScene : SceneBase
 	}
 	public void OnSceneLoaded()
 	{
+		SceneCatLittle catLitter = MapSceneManager.Instance.CreateSceneCatLittle(102,Vector3.zero, Quaternion.identity);
 		SceneCat cat = MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
 		cat.StartWorkRoutine ();
 		#if !UNITY_EDITOR
@@ -119,6 +129,10 @@ public class GameScene : SceneBase
 	{
 		Debug.Log(msg);
 	}
+	void OnGUI()
+	{
+		
+	}
 //	void OnGUI()
 //	{
 //		GUI.Button(new Rect(0,0,100,100), "noNewArea")
@@ -130,10 +144,14 @@ public class GameScene : SceneBase
 	IEnumerator StartTangoDetect()
 	{
 		TangoService.Instance.StartGame ();
+		#if !UNITY_EDITOR
 		while(!TangoService.Instance.HasAreaDescrip())
 			yield return new WaitForSeconds (2);//2秒一次，直到返回列表
 		while(!TangoManager.Instance.IsTangoReady())
 			yield return new WaitForSeconds (1);//1秒一次，直到tango avaliable，这时候场景加载完毕
+		#else
+		yield return null;
+		#endif
 			
 	}
 	public override void Unload ()

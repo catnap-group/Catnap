@@ -85,6 +85,8 @@ public class characterBase
 		{
 		case 1:
 			return UnitClassType.SceneCat;
+		case 2:
+			return UnitClassType.SceneCatLitter;
 		
 		default:
 			return UnitClassType.ScenePet;
@@ -172,6 +174,8 @@ public class BaseDataManager : UnityAllSceneSingleton<BaseDataManager>
 			Dictionary<int, soundBase> filterData = new Dictionary<int, soundBase>();
 			characterBase cb = GetTableDataByID<characterBase> (baseID);
 			int[] soundIds = cb.sound_list;
+			if (soundIds == null)
+				return filterData;
 			for (int i = 0; i < soundIds.Length; i++) {
 				if (datas.ContainsKey (soundIds [i]))
 					filterData.Add (soundIds [i], datas [soundIds [i]] as soundBase );
