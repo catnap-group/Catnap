@@ -156,6 +156,7 @@ public class WordService : UnitySingletonVisible<WordService>{
 
 	protected virtual void GetMicData()
 	{
+		if(Mic != null)
 		m_micData = Mic.GetData(0);
 	}
 

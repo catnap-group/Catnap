@@ -136,6 +136,18 @@ public class MapSceneManager : UnityAllSceneSingletonVisible<MapSceneManager>
 			}	
 		return petCnt <= 1;
 	}
+	public void CleanAll()
+	{
+		List<int> ids =new List<int>( _SceneUnitList.Keys);
+		for(int i = ids.Count -1; i>= 0; i--){
+		//foreach (int id in _SceneUnitList.Keys) {
+			SceneUnit unit = _SceneUnitList[ids[i]];
+
+			unit.OnUnInit(false);
+
+			_SceneUnitList.Remove(ids[i]);
+		}
+	}
 	public void RemoveSceneUnit(SceneUnit unit, bool immediatly = true)
 	{
 		if (unit == null)
@@ -146,9 +158,26 @@ public class MapSceneManager : UnityAllSceneSingletonVisible<MapSceneManager>
 			RemoveSceneCat(unit.id, immediatly);
 			return;
 		}
+		if (!unit.IsCat())
+		{
+			RemoveSceneItem(unit.id, immediatly);
+			return;
+		}
 
 	}
+	public void RemoveSceneItem(int id, bool immediatly = true)
+	{
+		//
+		if (!_SceneUnitList.ContainsKey(id))
+			return;
 
+		SceneUnit unit = _SceneUnitList[id] ;
+
+		unit.OnUnInit(immediatly);
+
+		_SceneUnitList.Remove(id);
+
+	}
 	public void RemoveSceneCat(int id, bool immediatly = true)
 	{
 		//

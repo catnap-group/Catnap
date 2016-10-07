@@ -139,7 +139,9 @@ public class GameScene : SceneBase
 	}
 	void OnGUI()
 	{
-		
+		if (GUI.Button (new Rect (0, 0, 50, 50), "gift")) {
+			CatSceneManager.Instance.SetNextScene (SceneID.Gift);
+		}
 	}
 //	void OnGUI()
 //	{
@@ -168,6 +170,7 @@ public class GameScene : SceneBase
 		TangoService.Instance.OnDispose();
 		WordService.Instance.OnDispose ();
 		WordDetectionController.Instance.OnDispose ();
+		MapSceneManager.Instance.CleanAll ();
 		GameManager.Instance.EndGame();
 		UIManager.Instance.UnloadAllUI ();
 		//UIManager.Instance.ClosePage<HUD>();//UI dispose
