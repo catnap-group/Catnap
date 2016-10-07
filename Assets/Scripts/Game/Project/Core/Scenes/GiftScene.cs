@@ -36,7 +36,7 @@ public class GiftScene : SceneBase
 	}
 	public void OnSceneLoaded()
 	{
-		
+        Debug.Log("Load");
 	}
 	public override void Unload ()
 	{
