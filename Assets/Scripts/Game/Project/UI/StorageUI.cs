@@ -27,13 +27,10 @@ public class StorageUI : MonoBehaviour
 
     private GoodiesData[] _GoodiesDatas = 
     { 
-		new GoodiesData("普通猫窝", 100, "UI/img_prop_bowl01", ""),
-		new GoodiesData("普通猫粮", 200, "UI/img_prop_house01", ""),
-		new GoodiesData("普通猫窝", 300, "UI/img_prop_bowl01", ""),
-		new GoodiesData("普通猫粮", 400, "UI/img_prop_house01", ""),
-		new GoodiesData("普通猫窝", 500, "UI/img_prop_bowl01", ""),
-		new GoodiesData("普通猫粮", 600, "UI/img_prop_house01", ""),
-		new GoodiesData("普通猫窝", 700, "UI/img_prop_bowl01", ""),
+		new GoodiesData("普通猫窝", 100, "UI/img_prop_bowl01", "Prefabs/Cat/CatHome"),
+		new GoodiesData("普通猫窝", 300, "UI/img_prop_bowl01", "Prefabs/Cat/CatHome"),
+		new GoodiesData("普通猫窝", 500, "UI/img_prop_bowl01", "Prefabs/Cat/CatHome"),
+		new GoodiesData("普通猫窝", 700, "UI/img_prop_bowl01", "Prefabs/Cat/CatHome"),
 	};
 
     // Use this for initialization
@@ -130,17 +127,18 @@ public class StorageUI : MonoBehaviour
 
     public void PressPutGoodies()
     {
-        Debug.Log("Press Put Goodies");
         if (_CurrentGoodies)
         {
-            Debug.Log(string.Format("Buy Goodies {0}", _CurrentGoodies.GetName()));
-			UIManager.UIData uiData = UIManager.Instance.Open (UIID.Main);
-        }
+            Debug.Log(string.Format("Put Goodies {0}", _CurrentGoodies.GetName()));
+			if(GameGuideManager.Instance.GetState() == GameGuideManager.GuideState.GotoStorage) {
+				GameGuideManager.Instance.SetState (GameGuideManager.GuideState.PutCatHouse);
+				UIManager.Instance.CloseTo (UIID.CatStore, 2);
+			}
+		}
     }
 
     public void PressBack()
     {
-        Debug.Log("Press Back");
         UIManager.Instance.Close(gameObject);
     }
 
@@ -153,7 +151,6 @@ public class StorageUI : MonoBehaviour
 
     public void PressToggle(bool isOn, GameObject toggle, int toggleNum)
     {
-        Debug.Log("Press Toggle");
         _CurrentGoodies = null;
         Text desc = transform.FindChild("Down/Number").GetComponent<Text>();
         desc.text = "鱼干数：XXX";

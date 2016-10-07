@@ -1,59 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Box : MonoBehaviour {
+public class CatHome : MonoBehaviour {
 
-	public enum BoxState {
+	public enum HomeState {
 		None,
 		DragBox,
-		EmptyBox,
-		FullBox,
+		PutState,
 	}
 
-	private BoxState _State;
+	private HomeState _State;
 	private bool _FirstDrag = true;
 
 	// Use this for initialization
 	void Start () 
 	{
-		_State = BoxState.DragBox;
+		SetState (HomeState.DragBox);
 		StartCoroutine(OnMouseDown());
 	}
 
-	public void SetState(BoxState state)
+	public void SetState(HomeState state)
 	{
-		Debug.Log (state);
 		_State = state;
-		if (state == BoxState.DragBox) {
-			//gameObject.GetComponent<FollowMouse> ().enabled = true;
-		} else if (state == BoxState.EmptyBox) {
-			//gameObject.GetComponent<FollowMouse> ().enabled = false;
-		} else if (state == BoxState.FullBox) {
-			//gameObject.GetComponent<FollowMouse> ().enabled = false;
-		}
 	}
 
-	public BoxState GetState()
+	public HomeState GetState()
 	{
 		return _State;
 	}
 
-	void OnMouseExit()
-	{
-		if (GetState () == BoxState.EmptyBox && GameGuideManager.Instance.GetState() == GameGuideManager.GuideState.PutGoodies) {
-			UIManager.UIData uiData = UIManager.Instance.Open (UIID.Main);
-			MainUI ui = uiData.UIObject.GetComponent<MainUI> ();
-			ui.ShowPutBtn (true);
-		}
-	}
-		
 	IEnumerator OnMouseDown()
 	{
-		if (GetState() == BoxState.DragBox) {
+		Debug.Log (GetState ());
+		if (GetState() == HomeState.DragBox) {
 			UIManager.UIData uiData = UIManager.Instance.Open (UIID.Main);
 			MainUI ui = uiData.UIObject.GetComponent<MainUI> ();
 			ui.ShowPutBtn (false);
-		
+
 			Vector3 screenPos = GetPressPosition ();
 			//将物体由世界坐标系转换为屏幕坐标系
 			Vector3 screenSpace = Camera.main.WorldToScreenPoint (transform.position);//三维物体坐标转屏幕坐标

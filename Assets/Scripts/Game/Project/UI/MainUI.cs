@@ -6,19 +6,6 @@ public class MainUI : MonoBehaviour
 {
 	private GameObject _Box;
 
-	public enum GuideState
-	{
-		None,
-		PutBox,
-		GotoStore,
-		BuyGoodies,
-		ChooseGoodies,
-		PutGoodies,
-		PutCatHouse,
-	}
-
-	private GuideState _State = GuideState.None;
-
 	void Start()
 	{
 		transform.FindChild ("CatStoreBtn").gameObject.SetActive (false);
@@ -42,17 +29,20 @@ public class MainUI : MonoBehaviour
 
 		//GameGuideManager.Instance.SetState (GameGuideManager.GuideState.FirstGuide);
 		GameObject box = GameObject.Instantiate(Resources.Load ("Prefabs/Cat/Box", typeof(GameObject))) as GameObject;
-		box.transform.localScale = new Vector3 (5, 5, 5);
-		box.transform.position = new Vector3(1, 1, 0);
+		box.transform.localScale = new Vector3 (1, 1, 1);
+		box.transform.position = new Vector3(0, 0, 1);
 		_Box = box;
 		GameGuideManager.Instance.SetState (GameGuideManager.GuideState.PutBox);
+		#if !UNITY_EDITOR
+		//投射到真实空间去
+		//TangoManager.Instance.SceneUnit2ARUnit(box);
+		#endif
 	}
 
 	void PressStore()
 	{
 		Debug.Log ("Press Store");
 		UIManager.Instance.Open (UIID.CatStore);
-		GameGuideManager.Instance.SetState (GameGuideManager.GuideState.BuyGoodies);
 	}
 
 	void PressHandbook()
@@ -63,15 +53,19 @@ public class MainUI : MonoBehaviour
 
 	void PressPut()
 	{
-		if (_State == GuideState.PutBox) {
+		if (GameGuideManager.Instance.GetState () == GameGuideManager.GuideState.PutBox) {
 			Box box = _Box.GetComponent<Box> ();
 			Debug.Log (box.GetState ());
 			box.SetState (Box.BoxState.EmptyBox);
 			ShowPutBtn (false);
 			ShowStoreBtn ();
 			GameGuideManager.Instance.SetState (GameGuideManager.GuideState.GotoStore);
-		} else if (_State == GuideState.PutCatHouse) {
-			
+		} else if (GameGuideManager.Instance.GetState () == GameGuideManager.GuideState.PutGoodies) {
+			GameGuideManager.Instance.SetState (GameGuideManager.GuideState.GotoStorage);
+			ShowPutBtn (false);
+		} else if (GameGuideManager.Instance.GetState () == GameGuideManager.GuideState.PutCatHouse) {
+			GameGuideManager.Instance.SetState (GameGuideManager.GuideState.OK);
+			ShowPutBtn (false);
 		}
 	}
 
@@ -87,7 +81,6 @@ public class MainUI : MonoBehaviour
 
 	public void ShowPutBtn(bool active)
 	{
-		Debug.Log ("Put Put");
 		transform.FindChild ("PutBtn").gameObject.SetActive (active);
 	}
 }
