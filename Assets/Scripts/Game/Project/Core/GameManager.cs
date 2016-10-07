@@ -71,7 +71,8 @@ public class GameManager : UnityAllSceneSingleton<GameManager> {
 
 		CatnapWebMgr.CreateSelf<CatnapWebMgr> ();//网络暂时注掉了，之后会打开
 
-		TestGPS.Create ();//打开gps
+		//TestGPS.Create ();//打开gps
+		GameGuideManager.Create();
 	}
 	public override void OnTerminate ()
 	{
