@@ -16,6 +16,9 @@ public class GameScene : SceneBase
 	void Awake()
 	{
 		Instance = this;
+		thisT = transform;
+		Time.timeScale = 1;
+		Application.targetFrameRate = 45;
 		#if UNITY_EDITOR
 		if(!CatSceneManager.Created)
 		{
@@ -24,19 +27,8 @@ public class GameScene : SceneBase
 		}
 		#endif
 		GameManager.Instance.SetGameState(GameState.CatPlay);
-		//UIManager.Instance.Open(UIID.CatStore);
-
-		//        if (isCreateGalaxy)
-		//            SceneBuildManager.Instance.CreateGalaxy();
-
 		ResourcesManager.Instance.LoadSystemBaseData();
-		thisT = transform;
-
-		Time.timeScale = 1;
-		Application.targetFrameRate = 45;
 		StartCoroutine(LoadScene());
-
-		//UIManager.Instance.ShowPage<WeaponUI> ();//UI
 	}
 	//private byte[] _GameUserData = null;
 	IEnumerator LoadScene()
@@ -56,7 +48,7 @@ public class GameScene : SceneBase
 		//生成tango管理器
 		ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Seivice");//临时代码，这部分以后要变成class create的模式，现在为了便于调试,这个上面起作用的类是tangoserviece
 		GameObject cloudObj = ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Point Cloud");//临时代码，这部分以后要变成class create的模式，现在为了便于调试
-		ResourcesManager.Instance.LoadGameObject ("Prefabs/WordDetection/WordService");//声音探测服务启动
+		//ResourcesManager.Instance.LoadGameObject ("Prefabs/WordDetection/WordService");//声音探测服务启动
 		/*
 		GameObject WordDecCon = new GameObject ();//声音探测控制器
 		WordDecCon.name = "WordDetectionController";

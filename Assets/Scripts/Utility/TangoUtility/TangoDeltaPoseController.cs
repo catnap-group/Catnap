@@ -222,7 +222,7 @@ public class TangoDeltaPoseController : MonoBehaviour, ITangoPose
     /// OnGUI is called for rendering and handling GUI events.
     /// </summary>
     public void OnGUI()
-    {
+    {/*
         if (!m_enableClutchUI)
         {
             return;
@@ -237,7 +237,7 @@ public class TangoDeltaPoseController : MonoBehaviour, ITangoPose
         {
             ClutchActive = buttonState;
         }
-		#endif
+		#endif*/
     }
     
     /// <summary>

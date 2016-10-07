@@ -8,7 +8,7 @@ public class CatHandbookUI : MonoBehaviour {
 	void Start () 
     {
         InitHandbook();
-        transform.FindChild("MenuUI").gameObject.SetActive(_IsHideMenu);
+		transform.FindChild("Top/MenuBtn/MenuUI").gameObject.SetActive(_IsHideMenu);
 	}
 
     public class CatData
@@ -59,7 +59,7 @@ public class CatHandbookUI : MonoBehaviour {
     {
         Debug.Log("Press Menu");
         _IsHideMenu = _IsHideMenu ? false : true;
-        transform.FindChild("MenuUI").gameObject.SetActive(_IsHideMenu);
+		transform.FindChild("Top/MenuBtn/MenuUI").gameObject.SetActive(_IsHideMenu);
     }
 
     public void PressBack()
