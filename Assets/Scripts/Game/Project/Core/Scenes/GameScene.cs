@@ -92,6 +92,7 @@ public class GameScene : SceneBase
 		TangoDeltaPoseController tdp = Camera.main.transform.parent.gameObject.AddComponent<TangoDeltaPoseController>();
 		tdp.m_useAreaDescriptionPose = true;
 		tdp.m_characterMotion = true;
+		tdp.m_enableClutchUI = true;
 		TangoGestureCamera gesture = Camera.main.gameObject.AddComponent<TangoGestureCamera>();
 		gesture.m_targetFollowingObject = Camera.main.transform.parent.gameObject;
 		gesture.m_defaultCameraMode = TangoGestureCamera.CameraType.FIRST_PERSON;
@@ -110,6 +111,7 @@ public class GameScene : SceneBase
 	{
 		SceneCatLittle catLitter = MapSceneManager.Instance.CreateSceneCatLittle(102,Vector3.zero, Quaternion.identity);
 		SceneCatLittle spade = MapSceneManager.Instance.CreateSceneCatLittle(103,Vector3.zero, Quaternion.identity, false);
+		spade.target = catLitter;
 		GamePlayer.Me.instance.HoldTool (spade.thisT);
 		SceneCat cat = MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
 		cat.StartWorkRoutine ();

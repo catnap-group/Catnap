@@ -188,6 +188,26 @@ public class GamePlayer
 			trans.transform.localRotation = Quaternion.identity;
 			curTool = trans.gameObject;
 		}
+		public void StopTool()
+		{
+			if (curTool != null) {
+				SceneCatLittle little = curTool.GetComponent<SceneCatLittle> ();
+				if (little != null && little.target != null) {
+					little.StopAnimation ();
+					little.target.StopEffect ();
+				}
+			}
+		}
+		public void UseTool()
+		{
+			if (curTool != null) {
+				SceneCatLittle little = curTool.GetComponent<SceneCatLittle> ();
+				if (little != null && little.target != null) {
+					little.ShowAnimation ();
+					little.target.PlayEffect ();
+				}
+			}
+		}
 	}
 }
 
