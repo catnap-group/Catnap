@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 public class WordService : UnitySingletonVisible<WordService>{
 	
 	public bool ShowUsePlotter = true;//always show for test
@@ -32,9 +33,9 @@ public class WordService : UnitySingletonVisible<WordService>{
 	/// </summary>
 	public bool UsePlotter = true;
 
-	private MeshRenderer RendererSpectrumLeft = null;
-	private MeshRenderer RendererSpectrumRight = null;
-	private MeshRenderer RendererWave = null;
+	private Image RendererSpectrumLeft = null;
+	private Image RendererSpectrumRight = null;
+	private Image RendererWave = null;
 
 	private GameObject planes;
 
@@ -47,36 +48,49 @@ public class WordService : UnitySingletonVisible<WordService>{
 		Mic.SampleRate = 1024;
 
 		if (UsePlotter) {
-			planes = new GameObject ();
-			planes.name = "planes";
-			GameObject planeLeft = GameObject.CreatePrimitive (PrimitiveType.Plane);
-			planeLeft.transform.position = new Vector3 (5.1f, 0, 10);
-			planeLeft.transform.parent = planes.transform;
-			planeLeft.layer = LayerMask.NameToLayer ("UI");
-			RendererSpectrumLeft = planeLeft.GetComponent<MeshRenderer> ();
-
-			GameObject planeRight = GameObject.CreatePrimitive (PrimitiveType.Plane);
-			planeRight.transform.position = new Vector3 (-5.1f, 0, 10);
-			planeRight.transform.parent = planes.transform;
-			planeRight.layer = LayerMask.NameToLayer ("UI");
-			RendererSpectrumRight = planeRight.GetComponent<MeshRenderer> ();
-
-			GameObject planeWave = GameObject.CreatePrimitive (PrimitiveType.Plane);
-			planeWave.transform.position = new Vector3 (0, 0, -1);
-			planeWave.transform.localScale = new Vector3 (2, 1, 1);
-			planeWave.transform.parent = planes.transform;
-			planeWave.layer = LayerMask.NameToLayer ("UI");
-			RendererWave = planeWave.GetComponent<MeshRenderer> ();
-
-			//planes.AddComponent<Billboard> ();
-			planes.transform.localPosition 
-			= new Vector3 (1f
-				, 3.3f
-				, 1f);
-			planes.transform.localRotation = Quaternion.Euler (100.30659f, 186.228242f, 185.8563f);
-			planes.transform.localScale = new Vector3(0.05f,0.05f,0.05f);
-			planes.transform.parent = Camera.main.transform;
-			planes.layer = LayerMask.NameToLayer ("UI");
+			UIManager.UIData data = UIManager.Instance.Open (UIID.Plotter);
+			if (data != null) {
+				GameObject plane = data.UIObject;
+				Transform plane1 =	plane.transform.FindChild ("planeLeft");
+				RendererSpectrumLeft = plane1.GetComponent<Image> ();
+				Transform plane2 =	plane.transform.FindChild ("planeRight");
+				RendererSpectrumRight = plane2.GetComponent<Image> ();
+				Transform plane3 =	plane.transform.FindChild ("planeWave");
+				RendererWave = plane3.GetComponent<Image> ();
+			}
+//			planes = new GameObject ();
+//			planes.name = "planes";
+//			GameObject planeLeft = GameObject.CreatePrimitive (PrimitiveType.Plane);
+//			planeLeft.GetComponent<Collider> ().enabled = false;
+//			planeLeft.transform.position = new Vector3 (5.1f, 0, 10);
+//			planeLeft.transform.parent = planes.transform;
+//			planeLeft.layer = LayerMask.NameToLayer ("UI");
+//			RendererSpectrumLeft = planeLeft.GetComponent<MeshRenderer> ();
+//
+//			GameObject planeRight = GameObject.CreatePrimitive (PrimitiveType.Plane);
+//			planeRight.GetComponent<Collider> ().enabled = false;
+//			planeRight.transform.position = new Vector3 (-5.1f, 0, 10);
+//			planeRight.transform.parent = planes.transform;
+//			planeRight.layer = LayerMask.NameToLayer ("UI");
+//			RendererSpectrumRight = planeRight.GetComponent<MeshRenderer> ();
+//
+//			GameObject planeWave = GameObject.CreatePrimitive (PrimitiveType.Plane);
+//			planeWave.GetComponent<Collider> ().enabled = false;
+//			planeWave.transform.position = new Vector3 (0, 0, -1);
+//			planeWave.transform.localScale = new Vector3 (2, 1, 1);
+//			planeWave.transform.parent = planes.transform;
+//			planeWave.layer = LayerMask.NameToLayer ("UI");
+//			RendererWave = planeWave.GetComponent<MeshRenderer> ();
+//
+//			//planes.AddComponent<Billboard> ();
+//			planes.transform.localPosition 
+//			= new Vector3 (1f
+//				, 3.3f
+//				, 1f);
+//			planes.transform.localRotation = Quaternion.Euler (100.30659f, 186.228242f, 185.8563f);
+//			planes.transform.localScale = new Vector3(0.05f,0.05f,0.05f);
+//			planes.transform.parent = Camera.main.transform;
+//			planes.layer = LayerMask.NameToLayer ("UI");
 		}
 
 		if (MaterialSpectrumLeft &&
@@ -142,6 +156,7 @@ public class WordService : UnitySingletonVisible<WordService>{
 
 	protected virtual void GetMicData()
 	{
+		if(Mic != null)
 		m_micData = Mic.GetData(0);
 	}
 

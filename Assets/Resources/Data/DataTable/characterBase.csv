@@ -1,5 +1,6 @@
-id,level,name,desp,type,idle_list,prefab,sound_list,pos,quaternion
-uint32,uint8,vchar,vchar,uint8,vchar,vchar,int[],float[],float[]
-定义ID,等级,名字,描述,类型,idle动画队列,模型路径,声音,位置,朝向
-101,1,demo猫,demo猫,1,Howl;Howl,Prefabs/Gorilla/Prefab/Gorilla,101;102,0;0;10,0;180;0
-102,1,小猫,小猫,1,cat_action,Prefabs/Cat/Cat,101;102,0;0;10,0;180;0
+id,level,name,desp,type,idle_list,prefab,sound_list,pos,quaternion,effname
+uint32,uint8,vchar,vchar,uint8,vchar[],vchar,int[],float[],float[],vchar[]
+定义ID,等级,名字,描述,类型,idle动画队列,模型路径,声音,位置,朝向,特效列表
+101,1,demo猫,demo猫,1,Howl;Howl,Prefabs/Gorilla/Prefab/Gorilla,101;102,0;0;10,0;180;0,
+102,1,猫砂,猫砂,2,,Prefabs/CatLitter/Prefab/CatLitter,,2.44;0;11.38,0;0;0,shitroll;
+103,1,铲子,铲子,2,Spader;Spader,Prefabs/CatLitter/Prefab/Spade,,0;0;0,0;0;0,

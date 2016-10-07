@@ -13,6 +13,8 @@ public enum SceneID
 	//登录界面
 	Game,
 	//游戏
+	Gift,
+	//礼物
 	Edit,
 	//编辑
 };
@@ -41,6 +43,7 @@ public class CatSceneManager : UnityAllSceneSingleton<CatSceneManager> {
 		new SceneTransitionData(SceneID.Initialize, "Initialize", false, SceneID.NULL,null), 
 		new SceneTransitionData(SceneID.Login, "LoginScene", false, SceneID.NULL,null),   
 		new SceneTransitionData(SceneID.Game, "Game", false, SceneID.NULL,null),   
+		new SceneTransitionData(SceneID.Gift, "Gift", false, SceneID.NULL,null),   
 		new SceneTransitionData(SceneID.Edit, "EditScene", false, SceneID.NULL,null), 
 
 	};

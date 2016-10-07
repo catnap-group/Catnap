@@ -89,6 +89,7 @@ public class SceneCat : ScenePet
 
 		_AIStateManager = CreateAIStateManager();
 
+
 		//SetMoveSpeed(GetData().move_speed);
 	}
 	protected override AIStateManager CreateAIStateManager()

@@ -12,7 +12,7 @@ public class GameScene : SceneBase
 	private Transform thisT;
 	public static float myHeight =0;
 	public static float cameraHeight = 60;
-
+	public GameObject playerBody;
 	void Awake()
 	{
 		Instance = this;
@@ -50,6 +50,8 @@ public class GameScene : SceneBase
 		{
 			//reset game!!
 		}
+		GamePlayer.Me.Create ();
+		GamePlayer.Me.instance.SetPlayer (playerBody.transform);
 		//加载基础场景
 		//生成tango管理器
 		ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Seivice");//临时代码，这部分以后要变成class create的模式，现在为了便于调试,这个上面起作用的类是tangoserviece
@@ -64,12 +66,15 @@ public class GameScene : SceneBase
 		tarPoseCon.m_useAreaDescriptionPose = true;
 		tarPoseCon.m_syncToARScreen = true;
 		TangoManager.Instance.m_pointCloud = cloudObj.GetComponent<TangoPointCloud> ();
+		TangoManager.Instance.m_pointCloud.m_useAreaDescriptionPose = true;
 		TangoService.Instance.m_poseController = tarPoseCon;
 		//texture Method 
 		TangoService.Instance.m_tangoApplication.m_videoOverlayUseTextureMethod = true;
 		TangoService.Instance.m_tangoApplication.m_videoOverlayUseYUVTextureIdMethod = false;
 		TangoService.Instance.m_tangoApplication.m_videoOverlayUseByteBufferMethod = false;
-
+		TangoService.Instance.m_tangoApplication.m_doSlowEmulation = true;
+		//TangoService.Instance.m_tangoApplication.m_emulationEnvironment = 
+		TangoService.Instance.m_tangoApplication.m_emulationVideoOverlaySimpleLighting = true;
 		//AreaDescriptions
 		TangoService.Instance.m_tangoApplication.m_enableAreaDescriptions = true;
 		//mode 2
@@ -83,11 +88,20 @@ public class GameScene : SceneBase
 		TangoEnvironmentalLighting tel = Camera.main.gameObject.AddComponent<TangoEnvironmentalLighting> ();
 		tel.m_enableEnvironmentalLighting = true;
 
+		//tango motion  gesture
+		TangoDeltaPoseController tdp = Camera.main.transform.parent.gameObject.AddComponent<TangoDeltaPoseController>();
+		tdp.m_useAreaDescriptionPose = true;
+		tdp.m_characterMotion = true;
+		tdp.m_enableClutchUI = true;
+		TangoGestureCamera gesture = Camera.main.gameObject.AddComponent<TangoGestureCamera>();
+		gesture.m_targetFollowingObject = Camera.main.transform.parent.gameObject;
+		gesture.m_defaultCameraMode = TangoGestureCamera.CameraType.FIRST_PERSON;
+
 		yield return null;
-		#if !UNITY_EDITOR
+		//#if !UNITY_EDITOR
 		//打开tango 探测器
 		yield return StartCoroutine(StartTangoDetect());
-		#endif
+		//#endif
 		OnSceneLoaded();
 		//
 		//更新下载状态
@@ -95,6 +109,10 @@ public class GameScene : SceneBase
 	}
 	public void OnSceneLoaded()
 	{
+		SceneCatLittle catLitter = MapSceneManager.Instance.CreateSceneCatLittle(102,Vector3.zero, Quaternion.identity);
+		SceneCatLittle spade = MapSceneManager.Instance.CreateSceneCatLittle(103,Vector3.zero, Quaternion.identity, false);
+		spade.target = catLitter;
+		GamePlayer.Me.instance.HoldTool (spade.thisT);
 		SceneCat cat = MapSceneManager.Instance.CreateSceneCat(101,Vector3.zero, Quaternion.identity);
 		cat.StartWorkRoutine ();
 		#if !UNITY_EDITOR
@@ -119,6 +137,12 @@ public class GameScene : SceneBase
 	{
 		Debug.Log(msg);
 	}
+	void OnGUI()
+	{
+		if (GUI.Button (new Rect (0, 0, 50, 50), "gift")) {
+			CatSceneManager.Instance.SetNextScene (SceneID.Gift);
+		}
+	}
 //	void OnGUI()
 //	{
 //		GUI.Button(new Rect(0,0,100,100), "noNewArea")
@@ -130,10 +154,14 @@ public class GameScene : SceneBase
 	IEnumerator StartTangoDetect()
 	{
 		TangoService.Instance.StartGame ();
+		#if !UNITY_EDITOR
 		while(!TangoService.Instance.HasAreaDescrip())
 			yield return new WaitForSeconds (2);//2秒一次，直到返回列表
 		while(!TangoManager.Instance.IsTangoReady())
 			yield return new WaitForSeconds (1);//1秒一次，直到tango avaliable，这时候场景加载完毕
+		#else
+		yield return null;
+		#endif
 			
 	}
 	public override void Unload ()
@@ -142,6 +170,7 @@ public class GameScene : SceneBase
 		TangoService.Instance.OnDispose();
 		WordService.Instance.OnDispose ();
 		WordDetectionController.Instance.OnDispose ();
+		MapSceneManager.Instance.CleanAll ();
 		GameManager.Instance.EndGame();
 		UIManager.Instance.UnloadAllUI ();
 		//UIManager.Instance.ClosePage<HUD>();//UI dispose

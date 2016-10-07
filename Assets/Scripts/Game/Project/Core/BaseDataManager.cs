@@ -60,12 +60,13 @@ public class characterBase
 	public readonly string prefab;
 	public readonly float[] pos=null;
 	public readonly float[] quaternion = null;
+	public readonly string[] effname = null;
 	public characterBase()
 	{
 		
 	}
 
-	public characterBase(int iId, int iType, string strName, string strIcon, string strDesp, string strPrefab, string[] strIdle_list, int[] intSound_list, float[] vPos, float[] vQuaternion)
+	public characterBase(int iId, int iType, string strName, string strIcon, string strDesp, string strPrefab, string[] strIdle_list, int[] intSound_list, float[] vPos, float[] vQuaternion, string [] vEffname)
 	{
 		id      = iId;
 		type    = iType;
@@ -77,7 +78,7 @@ public class characterBase
 		prefab = strPrefab;
 		pos = vPos;
 		quaternion = vQuaternion;
-
+		effname = vEffname;
 	}
 	public UnitClassType GetCreepClassType()
 	{
@@ -85,6 +86,8 @@ public class characterBase
 		{
 		case 1:
 			return UnitClassType.SceneCat;
+		case 2:
+			return UnitClassType.SceneCatLitter;
 		
 		default:
 			return UnitClassType.ScenePet;
@@ -172,6 +175,8 @@ public class BaseDataManager : UnityAllSceneSingleton<BaseDataManager>
 			Dictionary<int, soundBase> filterData = new Dictionary<int, soundBase>();
 			characterBase cb = GetTableDataByID<characterBase> (baseID);
 			int[] soundIds = cb.sound_list;
+			if (soundIds == null)
+				return filterData;
 			for (int i = 0; i < soundIds.Length; i++) {
 				if (datas.ContainsKey (soundIds [i]))
 					filterData.Add (soundIds [i], datas [soundIds [i]] as soundBase );

@@ -56,6 +56,10 @@ public class TestGPS : UnityAllSceneSingletonVisible<TestGPS> {
 			yield break;   
 		}   
 		else {  
+//			if (!Input.gyro.enabled) {
+//				Input.gyro.enabled = true; 
+//			}
+			//Input.gyro.attitude
 			this.gps_info = "N:" + Input.location.lastData.latitude + " E:"+Input.location.lastData.longitude;  
 			this.gps_info = this.gps_info + " Time:" + Input.location.lastData.timestamp;  
 			yield return new WaitForSeconds(100);  

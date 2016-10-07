@@ -142,8 +142,11 @@ public class TangoDeltaPoseController : MonoBehaviour, ITangoPose
             if (m_clutchActive && !value)
             {
                 SetPose(transform.position, transform.rotation);
+				GamePlayer.Me.instance.StopTool ();
             }
-
+			else if(!m_clutchActive && value)
+				GamePlayer.Me.instance.UseTool ();
+				
             m_clutchActive = value;
         }
     }
@@ -225,13 +228,16 @@ public class TangoDeltaPoseController : MonoBehaviour, ITangoPose
             return;
         }
 
-        bool buttonState = GUI.RepeatButton(new Rect(10, 500, 200, 200), "<size=40>CLUTCH</size>");
-
+        bool buttonState = GUI.RepeatButton(new Rect(10, 400, 1000, 100), "<size=30>CLUTCH,在pc环境下使用leftcontrol</size>");
         // OnGUI is called multiple times per frame.  Make sure to only care about the last one.
-        if (Event.current.type == EventType.Repaint)
+		#if UNITY_EDITOR
+		ClutchActive = Input.GetKey (KeyCode.LeftControl);
+		#else
+		if (Event.current.type == EventType.Repaint)
         {
             ClutchActive = buttonState;
         }
+		#endif
     }
     
     /// <summary>

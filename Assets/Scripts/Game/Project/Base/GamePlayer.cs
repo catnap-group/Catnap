@@ -152,17 +152,61 @@ public class GamePlayer
 	public class Me : GamePlayer
 	{
 		public static Me instance;
-
+		private Transform thisT;
+		private Transform handT;
+		private GameObject curTool;
 		Me()
 		{
-
-			instance = this;
+			
+			//instance = this;
 
 
 			//InitPlayerResource
 			//InitPlayerParts
 			//InitPlayerShip
 
+		}
+		public static void Create()
+		{
+			if(instance == null)
+				instance = new Me();
+		}
+		public void SetPlayer(Transform player)
+		{
+			thisT = player;
+			handT = Helper.FindChild ("HandPos", thisT);
+
+		}
+		public void HoldTool(Transform trans)
+		{ //only one tool can be hold
+			//Transform tool = handT.GetChild(0);
+			handT.DetachChildren ();
+			if(curTool != null)
+				GameObject.Destroy (curTool);
+			trans.parent = handT;
+			trans.transform.localPosition = Vector3.zero;
+			trans.transform.localRotation = Quaternion.identity;
+			curTool = trans.gameObject;
+		}
+		public void StopTool()
+		{
+			if (curTool != null) {
+				SceneCatLittle little = curTool.GetComponent<SceneCatLittle> ();
+				if (little != null && little.target != null) {
+					little.StopAnimation ();
+					little.target.StopEffect ();
+				}
+			}
+		}
+		public void UseTool()
+		{
+			if (curTool != null) {
+				SceneCatLittle little = curTool.GetComponent<SceneCatLittle> ();
+				if (little != null && little.target != null) {
+					little.ShowAnimation ();
+					little.target.PlayEffect ();
+				}
+			}
 		}
 	}
 }

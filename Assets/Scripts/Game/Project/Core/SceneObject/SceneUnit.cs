@@ -117,6 +117,17 @@ public class SceneUnit : MonoBehaviour {
 		SoundManager.PlaySFX (_SoundData [soundId].file_name,_SoundData [soundId].is_loop);
 
 	}
+	public virtual void StopAnimation(string ani)
+	{
+		if (_animation == null)
+		{
+			_animation = GetComponentInChildren<Animation>();
+		}
+		if (_animation == null)
+			return;
+
+		_animation.Stop ();
+	}
 	public virtual float PlayAnimation(string ani)
 	{
 		if (_animation == null)
@@ -125,7 +136,7 @@ public class SceneUnit : MonoBehaviour {
 		}
 		if (_animation == null)
 			return 0.0f;
-
+		
 		AnimationClip clip = _animation.GetClip(ani);
 		if (clip == null)
 		{
@@ -139,7 +150,7 @@ public class SceneUnit : MonoBehaviour {
 		{
 			_animation[ani].speed = baseData.speed_rate;
 		}
-
+		_animation.Play ();
 		_animation.CrossFade(ani);
 
 		return _animation.clip.length;
