@@ -57,9 +57,11 @@ public class GameScene : SceneBase
 		ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Seivice");//临时代码，这部分以后要变成class create的模式，现在为了便于调试,这个上面起作用的类是tangoserviece
 		GameObject cloudObj = ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Point Cloud");//临时代码，这部分以后要变成class create的模式，现在为了便于调试
 		ResourcesManager.Instance.LoadGameObject ("Prefabs/WordDetection/WordService");//声音探测服务启动
+		/*
 		GameObject WordDecCon = new GameObject ();//声音探测控制器
 		WordDecCon.name = "WordDetectionController";
 		WordDecCon.AddComponent<WordDetectionController> ();
+		*/
 		yield return new WaitForEndOfFrame();
 		//生成tango镜头
 		TangoARPoseController tarPoseCon =Camera.main.gameObject.AddComponent<TangoARPoseController>();
@@ -104,7 +106,8 @@ public class GameScene : SceneBase
 		//打开tango 探测器
 		yield return StartCoroutine(StartTangoDetect());
 		//#endif
-		OnSceneLoaded();
+		//OnSceneLoaded();
+		UIManager.Instance.Open(UIID.Main);
 		//
 		//更新下载状态
 		CatSceneManager.Instance.UpdateLoadingState(100, 100);
@@ -141,9 +144,10 @@ public class GameScene : SceneBase
 	}
 	void OnGUI()
 	{
+		/*
 		if (GUI.Button (new Rect (0, 0, 50, 50), "gift")) {
 			CatSceneManager.Instance.SetNextScene (SceneID.Gift);
-		}
+		}*/
 	}
 //	void OnGUI()
 //	{
