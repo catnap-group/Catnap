@@ -15,23 +15,25 @@ public class StorageUI : MonoBehaviour
         public int Price = 0;
         public string Name = "";
         public string IconPath = "";
-        public GoodiesData(string name, int price, string iconPath)
+		public string ModelPath = "";
+		public GoodiesData(string name, int price, string iconPath, string modelPath)
         {
             Name = name;
             Price = price;
             IconPath = iconPath;
+			ModelPath = modelPath;
         }
     }
 
     private GoodiesData[] _GoodiesDatas = 
     { 
-		new GoodiesData("普通猫窝", 100, "UI/img_prop_bowl01"),
-		new GoodiesData("普通猫粮", 200, "UI/img_prop_house01"),
-		new GoodiesData("普通猫窝", 300, "UI/img_prop_bowl01"),
-		new GoodiesData("普通猫粮", 400, "UI/img_prop_house01"),
-		new GoodiesData("普通猫窝", 500, "UI/img_prop_bowl01"),
-		new GoodiesData("普通猫粮", 600, "UI/img_prop_house01"),
-		new GoodiesData("普通猫窝", 700, "UI/img_prop_bowl01"),
+		new GoodiesData("普通猫窝", 100, "UI/img_prop_bowl01", ""),
+		new GoodiesData("普通猫粮", 200, "UI/img_prop_house01", ""),
+		new GoodiesData("普通猫窝", 300, "UI/img_prop_bowl01", ""),
+		new GoodiesData("普通猫粮", 400, "UI/img_prop_house01", ""),
+		new GoodiesData("普通猫窝", 500, "UI/img_prop_bowl01", ""),
+		new GoodiesData("普通猫粮", 600, "UI/img_prop_house01", ""),
+		new GoodiesData("普通猫窝", 700, "UI/img_prop_bowl01", ""),
 	};
 
     // Use this for initialization
@@ -132,6 +134,7 @@ public class StorageUI : MonoBehaviour
         if (_CurrentGoodies)
         {
             Debug.Log(string.Format("Buy Goodies {0}", _CurrentGoodies.GetName()));
+			UIManager.UIData uiData = UIManager.Instance.Open (UIID.Main);
         }
     }
 

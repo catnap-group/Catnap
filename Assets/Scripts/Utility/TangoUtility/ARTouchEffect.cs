@@ -28,8 +28,19 @@ public class ARTouchEffect : MonoBehaviour
     /// <summary>
     /// Callback for the animation system.
     /// </summary>
-    private void HideDone()
+    void HideDone()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
+
+	void Start()
+	{
+		Animation animation = gameObject.GetComponent<Animation> ();
+		animation.wrapMode = WrapMode.PingPong;
+	}
+
+	public void PressButton()
+	{
+		Destroy (gameObject);
+	}
 }
