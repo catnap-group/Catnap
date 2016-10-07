@@ -1,4 +1,5 @@
-ï»¿id,level,name,desp,type,idle_list,prefab,sound_list,pos,quaternion
+id,level,name,desp,type,idle_list,prefab,sound_list,pos,quaternion
 uint32,uint8,vchar,vchar,uint8,vchar,vchar,int[],float[],float[]
-å®šä¹‰ID,ç­‰çº§,åå­—,æè¿°,ç±»å‹,idleåŠ¨ç”»é˜Ÿåˆ—,æ¨¡å‹è·¯å¾„,å£°éŸ³,ä½ç½®,æœå‘
-101,1,demoçŒ«,demoçŒ«,1,Howl;Howl,Prefabs/Gorilla/Prefab/Gorilla,101;102,0;0;10,0;180;0
+¶¨ÒåID,µÈ¼¶,Ãû×Ö,ÃèÊö,ÀàĞÍ,idle¶¯»­¶ÓÁĞ,Ä£ĞÍÂ·¾¶,ÉùÒô,Î»ÖÃ,³¯Ïò
+101,1,demoÃ¨,demoÃ¨,1,Howl;Howl,Prefabs/Gorilla/Prefab/Gorilla,101;102,0;0;10,0;180;0
+102,1,Ğ¡Ã¨,Ğ¡Ã¨,1,cat_action,Prefabs/Cat/Cat,101;102,0;0;10,0;180;0

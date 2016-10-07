@@ -1,4 +1,8 @@
 id,unit_id,name,speed_rate,move_speed
 uint16,uint16,vchar,float,float
-,,åå­—,æ’­æ”¾é€Ÿåº¦/ç§’,ç§»åŠ¨é€Ÿåº¦/ç§’
+,,Ãû×Ö,²¥·ÅËÙ¶È/Ãë,ÒÆ¶¯ËÙ¶È/Ãë
 1,101,Howl,1,0
+2,102,cat-sleep4,1,0
+3,102,cat-word2,1,0
+4,102,cat-eat,1,0
+5,102,cat-run,1,0
