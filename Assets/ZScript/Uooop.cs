@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class Uooop : MonoBehaviour
 {
 
-    bool start;
+    bool start=true;
     public GameObject cube;
     public UnityEvent StopReco;
     private Transform HiARCam;
@@ -18,11 +18,6 @@ public class Uooop : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            start = true;
-        }
-
 
         if (start&&cube.activeSelf)
         {
