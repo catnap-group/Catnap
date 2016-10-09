@@ -121,8 +121,7 @@ public class GameScene : SceneBase
 		#endif
 		//请求登录
 		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().InitCustomArgs();
-		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetSessionToken();
-//		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetCustomArg("uid", uid);
+		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetCustomArg("uname", GameManager.Instance.GetMacAddress());
 //		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetCustomArg("lat", latitude);
 //		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetCustomArg("lon", longitude);
 		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().RequestByWRI(EWebRequestId.MSG_TEST, OnLoginResponse, OnWebError);
@@ -130,8 +129,15 @@ public class GameScene : SceneBase
 	void OnLoginResponse(uint id, object obj, object localArg)
 	{
 		Debug.Log ("id" + id);
+		if (obj == null) {
+			Debug.LogError ("no response data!!!");
+			return;
+		}
 		LBSJPTest lbs = obj as LBSJPTest;
-		Debug.Log ("data" + lbs.data.ToString());
+		Debug.Log ("id" + lbs.data.uid);
+		Debug.Log ("name" + lbs.data.uname);
+		GamePlayer.Me.instance.id = int.Parse( lbs.data.uid);
+		GamePlayer.Me.instance.name =  lbs.data.uname;
 	}
 	void OnWebError(uint id, string msg)
 	{

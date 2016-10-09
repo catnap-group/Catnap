@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class GamePlayer 
 {
 	GameData.Coin _gold;
-
+	public int id;
+	public string name;
 	public GameData.Coin Gold
 	{
 
