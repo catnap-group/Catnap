@@ -1,4 +1,6 @@
-﻿public class CatnapJsonProtoBase : UJsonProtoBase {
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+public class CatnapJsonProtoBase : UJsonProtoBase {
 	
 	public int Code;
 	public string Msg;
@@ -13,9 +15,12 @@
 		return Msg;
 	}
 }
-
+public class Data
+{
+	public string uid;
+	public string uname;
+}
 public class LBSJPTest : CatnapJsonProtoBase
 {
-	public string[] data;
-
+	public Data data;
 }

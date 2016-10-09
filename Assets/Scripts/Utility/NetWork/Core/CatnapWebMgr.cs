@@ -45,6 +45,9 @@ public class CatnapWebMgr : UWebMgr
 			var jp = data as CatnapJsonProtoBase;
 			if (!jp.IsSucceeded ()) {
 				//bulabula ....错误处理
+				if (jp.Code == 2001) {
+					Debug.LogError ("uid错误, 用户不存在.uid:" + GamePlayer.Me.instance.id);
+				}
 			}
 		}
 	}

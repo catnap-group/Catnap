@@ -133,6 +133,7 @@ public abstract class UWebRequest : UNetRequest
     protected string    m_RemoteClass;
     protected string    m_RemoteMethod;
 
+	protected string    m_RemoteParentName;
     protected string    m_RemoteName;
 	protected string 	m_RemoteFolder;
     protected string    m_RuntimeClass;
@@ -159,6 +160,11 @@ public abstract class UWebRequest : UNetRequest
         set { m_RemoteMethod = value; }
     }
 
+	public string remoteParentName
+	{
+		get { return m_RemoteParentName; }
+		set { m_RemoteParentName = value; }
+	}
     public string remoteName
     {
         get { return m_RemoteName; }

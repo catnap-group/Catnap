@@ -96,7 +96,8 @@ public  class UWebMgr : UNetMgr
 
     public void InitCustomArgs()
     {
-        m_CustomArgs.Clear();
+		m_CustomArgs.Clear();
+		SetSessionToken();//每次都要set
     }
 
     public void SetLocalArg(object localArg)

@@ -15,6 +15,7 @@ public class ProtoCommand : MonoBehaviour {
 			request.id = (uint)EWebRequestId.MSG_TEST;
 			request.remoteMethod = "register";
 			request.remoteFolder = "user";
+			request.remoteParentName = "catnap";
 			request.remoteName = "index.php";
 			request.runtimeClass = "LBSJPTest";
 			request.isCompressed = false;
@@ -24,5 +25,17 @@ public class ProtoCommand : MonoBehaviour {
 //			request.AddArgument("valDouble", 12.34);
 			webMgr.RegisterByWRI(EWebRequestId.MSG_TEST, request);
 		}
+		{
+			request = new UWebJsonRequest();
+			request.id = (uint)EWebRequestId.MSG_LBS_UPLOAD_LOCATION;
+			request.remoteMethod = "location";
+			request.remoteFolder = "user";
+			request.remoteParentName = "catnap";
+			request.remoteName = "index.php";
+			request.runtimeClass = "CatnapJsonProtoBase";
+			request.isCompressed = false;
+			webMgr.RegisterByWRI(EWebRequestId.MSG_LBS_UPLOAD_LOCATION, request);
+		}
+
 	}
 }
