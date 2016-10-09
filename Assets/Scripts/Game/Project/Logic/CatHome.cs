@@ -3,32 +3,11 @@ using System.Collections;
 
 public class CatHome : MonoBehaviour {
 
-	public enum HomeState {
-		None,
-		DragBox,
-		PutState,
-	}
-
-	private HomeState _State;
-	private bool _FirstDrag = true;
-
-	// Use this for initialization
 	void Start () 
 	{
-		SetState (HomeState.DragBox);
-		StartCoroutine(OnMouseDown());
 	}
-
-	public void SetState(HomeState state)
-	{
-		_State = state;
-	}
-
-	public HomeState GetState()
-	{
-		return _State;
-	}
-
+		
+	/*
 	IEnumerator OnMouseDown()
 	{
 		Debug.Log (GetState ());
@@ -70,5 +49,5 @@ public class CatHome : MonoBehaviour {
 		screenPos = Input.GetTouch(0).position;
 		#endif
 		return screenPos;
-	}
+	}*/
 }

@@ -4,3 +4,6 @@ uint32,uint8,vchar,vchar,uint8,vchar[],vchar,int[],float[],float[],vchar[]
 101,1,demo猫,demo猫,1,Howl;Howl,Prefabs/Gorilla/Prefab/Gorilla,101;102,0;0;10,0;180;0,
 102,1,猫砂,猫砂,2,,Prefabs/CatLitter/Prefab/CatLitter,,2.44;0;11.38,0;0;0,shitroll;
 103,1,铲子,铲子,2,Spader;Spader,Prefabs/CatLitter/Prefab/Spade,,0;0;0,0;0;0,
+104,1,猫,猫,1,cat-raotou,Prefabs/Cat/Cat,,0;0;0,0;0;0,
+105,1,猫盆,猫盆,2,,Prefabs/Cat/Box,,0;0;0,90;0;0,
+106,1,猫窝,猫窝,2,,Prefabs/Cat/CatHome,,0;0;0,0;0;0,
