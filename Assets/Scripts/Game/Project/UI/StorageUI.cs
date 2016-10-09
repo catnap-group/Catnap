@@ -133,6 +133,7 @@ public class StorageUI : MonoBehaviour
 			if(GameGuideManager.Instance.GetState() == GameGuideManager.GuideState.GotoStorage) {
 				GameGuideManager.Instance.SetState (GameGuideManager.GuideState.PutCatHouse);
 				UIManager.Instance.CloseTo (UIID.CatStore, 2);
+				UIManager.Instance.Open (UIID.Main);
 			}
 		}
     }

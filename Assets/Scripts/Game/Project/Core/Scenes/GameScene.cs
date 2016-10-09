@@ -98,7 +98,7 @@ public class GameScene : SceneBase
 		TangoEnvironmentalLighting tel = Camera.main.gameObject.AddComponent<TangoEnvironmentalLighting> ();
 		tel.m_enableEnvironmentalLighting = true;
 
-		UIManager.Instance.Open(UIID.Main);
+		GameGuideManager.Instance.SetState (GameGuideManager.GuideState.StartGuide);
 		//#if !UNITY_EDITOR
 		//打开tango 探测器
 		yield return StartCoroutine(StartTangoDetect());
