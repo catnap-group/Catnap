@@ -17,6 +17,8 @@ public enum SceneID
 	//礼物
 	Edit,
 	//编辑
+	Search,
+	//搜索用户
 };
 public class CatSceneManager : UnityAllSceneSingleton<CatSceneManager> {
 
@@ -45,6 +47,7 @@ public class CatSceneManager : UnityAllSceneSingleton<CatSceneManager> {
 		new SceneTransitionData(SceneID.Game, "Game", false, SceneID.NULL,null),   
 		new SceneTransitionData(SceneID.Gift, "Gift", false, SceneID.NULL,null),   
 		new SceneTransitionData(SceneID.Edit, "EditScene", false, SceneID.NULL,null), 
+		new SceneTransitionData(SceneID.Search, "Search", false, SceneID.NULL,null), 
 
 	};
 

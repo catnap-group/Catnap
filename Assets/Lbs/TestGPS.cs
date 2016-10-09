@@ -4,7 +4,9 @@ using System.Collections;
 public class TestGPS : UnityAllSceneSingletonVisible<TestGPS> {
 	public string gps_info = "";  
 	public int flash_num = 1;  
-	bool gpsInitialed = false;
+	public bool gpsInitialed = false;
+	public float latitude= 0.0f;
+	public float longitude= 0.0f;
 	bool stopGps = false;
 	void OnGUI () {  
 		GUI.skin.label.fontSize = 28;  
@@ -12,26 +14,45 @@ public class TestGPS : UnityAllSceneSingletonVisible<TestGPS> {
 		GUI.Label(new Rect(20,50,600,48),"gps flash num:" + this.flash_num.ToString());   
 
 		GUI.skin.button.fontSize = 50;  
-		if (GUI.Button(new Rect(Screen.width-210,0,220,85),"GPS定位"))  
-		{  
-			stopGps = false;
-			if (gpsInitialed)
-				return;
-			// 这里需要启动一个协同程序  
-			StartCoroutine(StartGPS());  
-			StartCoroutine(UploadGPS());  
-		}  
-		if (GUI.Button(new Rect(Screen.width-210,100,220,85),"刷新GPS"))  
-		{  
-			this.gps_info = "N:" + Input.location.lastData.latitude + " E:"+Input.location.lastData.longitude;  
-			this.gps_info = this.gps_info + " Time:" + Input.location.lastData.timestamp;  
-			this.flash_num += 1;   
-		}  
-		if (GUI.Button (new Rect (Screen.width - 210, 200, 220, 85), "关闭GPS")) { 
-			StopGPS();
-		}
+//		if (GUI.Button(new Rect(Screen.width-210,0,220,85),"GPS定位"))  
+//		{  
+//			stopGps = false;
+//			if (gpsInitialed)
+//				return;
+//			// 这里需要启动一个协同程序  
+//			StartCoroutine(StartGPS());  
+//			StartCoroutine(UploadGPS());  
+//		}  
+//		if (GUI.Button(new Rect(Screen.width-210,100,220,85),"刷新GPS"))  
+//		{  
+//			this.gps_info = "N:" + Input.location.lastData.latitude + " E:"+Input.location.lastData.longitude;  
+//			this.gps_info = this.gps_info + " Time:" + Input.location.lastData.timestamp;  
+//			this.flash_num += 1;   
+//		}  
+//		if (GUI.Button (new Rect (Screen.width - 210, 200, 220, 85), "关闭GPS")) { 
+//			StopGPS();
+//		}
 	}  
-	void StopGPS () {  
+//	public override void OnInit ()
+//	{
+//		base.OnInit ();
+//		StartGPS ();
+//	}
+	public override void OnTerminate ()
+	{
+		base.OnTerminate ();
+		StopGPS ();
+	}
+	public void StartGPS()
+	{
+		stopGps = false;
+		if (gpsInitialed)
+			return;
+		// 这里需要启动一个协同程序  
+		StartCoroutine(TryGPS());  
+		StartCoroutine(UploadGPS());  
+	}
+	public	void StopGPS () {  
 		stopGps = true;
 		Input.location.Stop();  
 		gpsInitialed = false;
@@ -43,8 +64,8 @@ public class TestGPS : UnityAllSceneSingletonVisible<TestGPS> {
 		while (!stopGps) {
 			CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().InitCustomArgs();
 			CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetCustomArg("uid", GamePlayer.Me.instance.id);
-			CatnapWebMgr.Instance.CastFor<CatnapWebMgr> ().SetCustomArg ("longitude",  Input.location.lastData.latitude);
-			CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetCustomArg("latitude", Input.location.lastData.longitude);
+			CatnapWebMgr.Instance.CastFor<CatnapWebMgr> ().SetCustomArg ("longitude",  latitude);
+			CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetCustomArg("latitude", longitude);
 			CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().RequestByWRI(EWebRequestId.MSG_LBS_UPLOAD_LOCATION, OnUploadResponse, OnWebError);
 			yield return new WaitForSeconds(1); 
 		}	
@@ -61,7 +82,7 @@ public class TestGPS : UnityAllSceneSingletonVisible<TestGPS> {
 	{
 		Debug.Log(msg);
 	}
-	IEnumerator StartGPS () {  
+	IEnumerator TryGPS () {  
 //		#if UNITY_EDITOR
 //			gpsInitialed = true;
 //			yield break; 
@@ -98,6 +119,8 @@ public class TestGPS : UnityAllSceneSingletonVisible<TestGPS> {
 				//Input.gyro.attitude
 				this.gps_info = "N:" + Input.location.lastData.latitude + " E:" + Input.location.lastData.longitude;  
 				this.gps_info = this.gps_info + " Time:" + Input.location.lastData.timestamp;  
+				latitude = Input.location.lastData.latitude;
+				longitude = Input.location.lastData.longitude;
 				gpsInitialed = true;
 				yield return new WaitForSeconds (100);  
 			}  

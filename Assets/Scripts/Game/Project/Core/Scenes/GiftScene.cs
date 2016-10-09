@@ -27,6 +27,9 @@ public class GiftScene : SceneBase
 		if (GUI.Button (new Rect (0, 0, 100, 150),  "<size=20>back to game</size>")) {
 			CatSceneManager.Instance.SetNextScene (SceneID.Game);
 		}
+		if (GUI.Button (new Rect (0, 200, 100, 150),  "<size=20>search</size>")) {
+			CatSceneManager.Instance.SetNextScene (SceneID.Search);
+		}
 	}
 	IEnumerator LoadScene()
 	{

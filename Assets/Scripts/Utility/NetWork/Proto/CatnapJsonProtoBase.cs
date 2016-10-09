@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 public class CatnapJsonProtoBase : UJsonProtoBase {
 	
 	public int Code;
@@ -23,4 +23,16 @@ public class Data
 public class LBSJPTest : CatnapJsonProtoBase
 {
 	public Data data;
+}
+public class PlayerData
+{
+	public int uid{ get; set;}
+	public string uname{ get; set;}
+	public float longitude{ get; set;}
+	public float latitude{ get; set;}
+	public int distance{ get; set;}
+}
+public class NearByPlayer:  CatnapJsonProtoBase
+{
+	public List<PlayerData> data;
 }

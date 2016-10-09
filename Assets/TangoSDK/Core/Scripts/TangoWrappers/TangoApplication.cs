@@ -101,7 +101,7 @@ namespace Tango
         /// If true, use the more performance-demanding aspects of tango emulation
         /// (Currently, depth and color camera).
         /// </summary>
-        public bool m_doSlowEmulation;
+        public bool m_doSlowEmulation; 
 
         /// <summary>
         /// Whether the emulation environment mesh should be lit

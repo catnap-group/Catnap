@@ -5,6 +5,7 @@ public enum EWebRequestId
 {
 	MSG_TEST = 10000,
 	MSG_LBS_UPLOAD_LOCATION = 10001,
+	MSG_GET_NEAR_PLAYER = 10002,
 }
 public class ProtoCommand : MonoBehaviour {
 	public static void Register(CatnapWebMgr webMgr)
@@ -36,6 +37,16 @@ public class ProtoCommand : MonoBehaviour {
 			request.isCompressed = false;
 			webMgr.RegisterByWRI(EWebRequestId.MSG_LBS_UPLOAD_LOCATION, request);
 		}
-
+		{
+			request = new UWebJsonRequest();
+			request.id = (uint)EWebRequestId.MSG_GET_NEAR_PLAYER;
+			request.remoteMethod = "user";
+			request.remoteFolder = "nearby";
+			request.remoteParentName = "catnap";
+			request.remoteName = "index.php";
+			request.runtimeClass = "NearByPlayer";
+			request.isCompressed = false;
+			webMgr.RegisterByWRI(EWebRequestId.MSG_GET_NEAR_PLAYER, request);
+		}
 	}
 }
