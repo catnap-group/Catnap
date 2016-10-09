@@ -27,16 +27,27 @@ public class MainUI : MonoBehaviour
 			this.PressPut();	
 		});
 
-		//GameGuideManager.Instance.SetState (GameGuideManager.GuideState.FirstGuide);
-		GameObject box = GameObject.Instantiate(Resources.Load ("Prefabs/Cat/Box", typeof(GameObject))) as GameObject;
-		box.transform.localScale = new Vector3 (1, 1, 1);
-		box.transform.position = new Vector3(0, 0, 1);
-		_Box = box;
+		Button saveBtn = transform.FindChild ("SaveTangoDataBtn").GetComponent<Button> ();
+		saveBtn.onClick.AddListener (delegate() {
+			this.PressSaveTangoData();	
+		});
+
+		Button loadBtn = transform.FindChild ("LoadTangoDataBtn").GetComponent<Button> ();
+		loadBtn.onClick.AddListener (delegate() {
+			this.PressLoadTangoData();
+		});
+
 		GameGuideManager.Instance.SetState (GameGuideManager.GuideState.PutBox);
-		#if !UNITY_EDITOR
-		//投射到真实空间去
-		//TangoManager.Instance.SceneUnit2ARUnit(box);
-		#endif
+	}
+
+	void PressSaveTangoData()
+	{
+		TangoManager.Instance.Save ();
+	}
+
+	void PressLoadTangoData()
+	{
+		TangoManager.Instance.Load ();
 	}
 
 	void PressStore()
@@ -53,14 +64,7 @@ public class MainUI : MonoBehaviour
 
 	void PressPut()
 	{
-		if (GameGuideManager.Instance.GetState () == GameGuideManager.GuideState.PutBox) {
-			Box box = _Box.GetComponent<Box> ();
-			Debug.Log (box.GetState ());
-			box.SetState (Box.BoxState.EmptyBox);
-			ShowPutBtn (false);
-			ShowStoreBtn ();
-			GameGuideManager.Instance.SetState (GameGuideManager.GuideState.GotoStore);
-		} else if (GameGuideManager.Instance.GetState () == GameGuideManager.GuideState.PutGoodies) {
+		if (GameGuideManager.Instance.GetState () == GameGuideManager.GuideState.PutGoodies) {
 			GameGuideManager.Instance.SetState (GameGuideManager.GuideState.GotoStorage);
 			ShowPutBtn (false);
 		} else if (GameGuideManager.Instance.GetState () == GameGuideManager.GuideState.PutCatHouse) {
@@ -82,5 +86,33 @@ public class MainUI : MonoBehaviour
 	public void ShowPutBtn(bool active)
 	{
 		transform.FindChild ("PutBtn").gameObject.SetActive (active);
+	}
+
+	public void PressScreen()
+	{
+		Debug.Log (GameGuideManager.Instance.GetState ());
+		if (GameGuideManager.Instance.GetState () == GameGuideManager.GuideState.PutBox) {
+			Vector3 touchPosInScreen = GameGuideManager.Instance.GetTouchPosition ();
+			Vector3 touchPosInWorld = Camera.main.ScreenToWorldPoint (new Vector3 (touchPosInScreen.x, touchPosInScreen.y, 1));
+			SceneCatLittle box = MapSceneManager.Instance.CreateSceneCatLittle (105, Vector3.zero, Quaternion.identity, false);
+			//box.thisT.localRotation = Quaternion.Euler (90, 0, 0);
+			Quaternion quaternion = Camera.main.transform.rotation;
+			box.thisT.rotation = Quaternion.Euler(-90, 0, 0);
+			box.thisT.position = touchPosInWorld;
+			#if !UNITY_EDITOR
+			TangoManager.Instance.SceneUnit2ARUnit (box);
+			#endif
+			GameGuideManager.Instance.SetState (GameGuideManager.GuideState.GotoStore);
+		} else if (GameGuideManager.Instance.GetState () == GameGuideManager.GuideState.PutCatHouse) {
+			Vector3 touchPosInScreen = GameGuideManager.Instance.GetTouchPosition ();
+			Vector3 touchPosInWorld = Camera.main.ScreenToWorldPoint (new Vector3 (touchPosInScreen.x, touchPosInScreen.y, 1));
+			SceneCatLittle catHome = MapSceneManager.Instance.CreateSceneCatLittle (106, Vector3.zero, Quaternion.identity, false);
+			catHome.thisT.localRotation = Camera.main.transform.rotation;
+			catHome.thisT.position = touchPosInWorld;
+			#if !UNITY_EDITOR
+			TangoManager.Instance.SceneUnit2ARUnit(catHome);
+			#endif
+			GameGuideManager.Instance.SetState (GameGuideManager.GuideState.OK);
+		}
 	}
 }

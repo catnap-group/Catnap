@@ -25,13 +25,9 @@ public class CatStoreUI : MonoBehaviour
 
 	private  GoodiesData[] _GoodiesDatas = 
     { 
-		new GoodiesData("普通猫窝", 100, "UI/img_prop_bowl01"),
 		new GoodiesData("普通猫粮", 200, "UI/img_prop_house01"),
-		new GoodiesData("普通猫窝", 300, "UI/img_prop_bowl01"),
 		new GoodiesData("普通猫粮", 400, "UI/img_prop_house01"),
-		new GoodiesData("普通猫窝", 500, "UI/img_prop_bowl01"),
 		new GoodiesData("普通猫粮", 600, "UI/img_prop_house01"),
-		new GoodiesData("普通猫窝", 700, "UI/img_prop_bowl01"),
 	};
 
 	// Use this for initialization
@@ -43,7 +39,7 @@ public class CatStoreUI : MonoBehaviour
 			_TotalNumberToggle++;
 		}
 		InitGoodies ();
-        transform.FindChild("MenuUI").gameObject.SetActive(_IsHideMenu);
+		transform.FindChild("Top/MenuBtn/MenuUI").gameObject.SetActive(_IsHideMenu);
 	}
 	
 	// Update is called once per frame
@@ -125,9 +121,13 @@ public class CatStoreUI : MonoBehaviour
 	public void PressBuyGoodies()
 	{
 		Debug.Log ("Press Buy Goodies");
-		if (_CurrentGoodies) 
-		{
+		if (_CurrentGoodies) {
 			Debug.Log (string.Format ("Buy Goodies {0}", _CurrentGoodies.GetName ()));
+			Debug.Log (GameGuideManager.Instance.GetState ());
+			if (GameGuideManager.Instance.GetState () == GameGuideManager.GuideState.GotoStore) {
+				GameGuideManager.Instance.SetState (GameGuideManager.GuideState.PutGoodies);
+				PressBack ();
+			}
 		}
 	}
 
@@ -156,6 +156,6 @@ public class CatStoreUI : MonoBehaviour
     public void PressMenu()
     {
         _IsHideMenu = _IsHideMenu ? false : true;
-        transform.FindChild("MenuUI").gameObject.SetActive(_IsHideMenu);
+        transform.FindChild("Top/MenuBtn/MenuUI").gameObject.SetActive(_IsHideMenu);
     }
 }

@@ -92,6 +92,7 @@ public class TangoService : UnitySingletonVisible<TangoService>, ITangoLifecycle
 		if (permissionsGranted)
 		{
 			_PopulateList();
+			GameScene.Instance.PermissionTango = true;
 			//返回列表
 		}
 		else

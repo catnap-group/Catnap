@@ -9,10 +9,13 @@ public class Uooop : MonoBehaviour
     public GameObject cube;
     public UnityEvent StopReco;
     private Transform HiARCam;
+    private Animator giftOpenAinContr;
+
 
     void Awake()
     {
         HiARCam = GameObject.Find("HiARCamera").transform;
+        giftOpenAinContr = GetComponentInChildren<Animator>();
     }
 
 
@@ -26,6 +29,7 @@ public class Uooop : MonoBehaviour
             {
                 start = false;
                 cube.transform.SetParent(HiARCam);
+                giftOpenAinContr.SetBool("isOpen",true);
                 StopReco.Invoke();
             }
         }
