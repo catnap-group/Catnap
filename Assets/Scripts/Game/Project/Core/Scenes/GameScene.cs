@@ -12,6 +12,7 @@ public class GameScene : SceneBase
 	private Transform thisT;
 	public static float myHeight =0;
 	public static float cameraHeight = 60;
+	public bool PermissionTango = false;
 	public GameObject playerBody;
 	void Awake()
 	{
@@ -31,6 +32,16 @@ public class GameScene : SceneBase
 		StartCoroutine(LoadScene());
 	}
 
+	void InitTangoService()
+	{
+		ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Seivice");//临时代码，这部分以后要变成class create的模式，现在为了便于调试,这个上面起作用的类是tangoserviece
+	}
+
+	public void InitTango()
+	{
+		
+	}
+
 	IEnumerator LoadScene()
 	{
 		if(!GameManager.Instance.resetGame)
@@ -47,9 +58,16 @@ public class GameScene : SceneBase
 		//加载基础场景
 		//生成tango管理器
 		ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Seivice");//临时代码，这部分以后要变成class create的模式，现在为了便于调试,这个上面起作用的类是tangoserviece
-		GameObject cloudObj = ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Point Cloud");//临时代码，这部分以后要变成class create的模式，现在为了便于调试
-
 		yield return new WaitForEndOfFrame();
+
+		#if !UNITY_EDITOR
+		while(PermissionTango == false)
+		{
+			yield return null;
+		}
+		#endif 
+
+		GameObject cloudObj = ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Point Cloud");//临时代码，这部分以后要变成class create的模式，现在为了便于调试
 		//生成tango镜头
 		TangoARPoseController tarPoseCon =Camera.main.gameObject.AddComponent<TangoARPoseController>();
 		tarPoseCon.m_useAreaDescriptionPose = true;
@@ -87,6 +105,9 @@ public class GameScene : SceneBase
 		//更新下载状态
 		CatSceneManager.Instance.UpdateLoadingState(100, 100);
 	}
+
+
+
 	public void OnSceneLoaded()
 	{
 		SceneCatLittle catLitter = MapSceneManager.Instance.CreateSceneCatLittle(102,Vector3.zero, Quaternion.identity);

@@ -9,6 +9,7 @@ public class TangoService : UnitySingletonVisible<TangoService>, ITangoLifecycle
 	public bool m_enableLearningToggle;//是否开启学习模式,例子里面是个checkbox
 	public bool m_needNewAreaDescription;//是否需要生成新区域，例子里面是两个按钮，这里只要设置一个开关
 	public TangoApplication m_tangoApplication;
+
 	/// <summary>
 	/// The UUID of the selected Area Description.
 	/// </summary>
@@ -92,6 +93,7 @@ public class TangoService : UnitySingletonVisible<TangoService>, ITangoLifecycle
 		if (permissionsGranted)
 		{
 			_PopulateList();
+			GameScene.Instance.PermissionTango = true;
 			//返回列表
 		}
 		else
