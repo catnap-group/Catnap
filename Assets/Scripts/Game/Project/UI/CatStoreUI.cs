@@ -43,7 +43,7 @@ public class CatStoreUI : MonoBehaviour
 			_TotalNumberToggle++;
 		}
 		InitGoodies ();
-        transform.FindChild("MenuUI").gameObject.SetActive(_IsHideMenu);
+        transform.FindChild("Top/MenuBtn/MenuUI").gameObject.SetActive(_IsHideMenu);
 	}
 	
 	// Update is called once per frame
@@ -156,6 +156,6 @@ public class CatStoreUI : MonoBehaviour
     public void PressMenu()
     {
         _IsHideMenu = _IsHideMenu ? false : true;
-        transform.FindChild("MenuUI").gameObject.SetActive(_IsHideMenu);
+		transform.FindChild("Top/MenuBtn/MenuUI").gameObject.SetActive(_IsHideMenu);
     }
 }
