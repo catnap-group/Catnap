@@ -16,6 +16,9 @@ public class GameScene : SceneBase
 	void Awake()
 	{
 		Instance = this;
+		thisT = transform;
+		Time.timeScale = 1;
+		Application.targetFrameRate = 45;
 		#if UNITY_EDITOR
 		if(!CatSceneManager.Created)
 		{
@@ -24,21 +27,10 @@ public class GameScene : SceneBase
 		}
 		#endif
 		GameManager.Instance.SetGameState(GameState.CatPlay);
-		UIManager.Instance.Open(UIID.CatStore);
-
-		//        if (isCreateGalaxy)
-		//            SceneBuildManager.Instance.CreateGalaxy();
-
 		ResourcesManager.Instance.LoadSystemBaseData();
-		thisT = transform;
-
-		Time.timeScale = 1;
-		Application.targetFrameRate = 45;
 		StartCoroutine(LoadScene());
-
-		//UIManager.Instance.ShowPage<WeaponUI> ();//UI
 	}
-	//private byte[] _GameUserData = null;
+
 	IEnumerator LoadScene()
 	{
 		if(!GameManager.Instance.resetGame)
@@ -56,10 +48,7 @@ public class GameScene : SceneBase
 		//生成tango管理器
 		ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Seivice");//临时代码，这部分以后要变成class create的模式，现在为了便于调试,这个上面起作用的类是tangoserviece
 		GameObject cloudObj = ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Point Cloud");//临时代码，这部分以后要变成class create的模式，现在为了便于调试
-		ResourcesManager.Instance.LoadGameObject ("Prefabs/WordDetection/WordService");//声音探测服务启动
-		GameObject WordDecCon = new GameObject ();//声音探测控制器
-		WordDecCon.name = "WordDetectionController";
-		WordDecCon.AddComponent<WordDetectionController> ();
+
 		yield return new WaitForEndOfFrame();
 		//生成tango镜头
 		TangoARPoseController tarPoseCon =Camera.main.gameObject.AddComponent<TangoARPoseController>();
@@ -88,21 +77,12 @@ public class GameScene : SceneBase
 		TangoEnvironmentalLighting tel = Camera.main.gameObject.AddComponent<TangoEnvironmentalLighting> ();
 		tel.m_enableEnvironmentalLighting = true;
 
-		//tango motion  gesture
-		TangoDeltaPoseController tdp = Camera.main.transform.parent.gameObject.AddComponent<TangoDeltaPoseController>();
-		tdp.m_useAreaDescriptionPose = true;
-		tdp.m_characterMotion = true;
-		tdp.m_enableClutchUI = true;
-		TangoGestureCamera gesture = Camera.main.gameObject.AddComponent<TangoGestureCamera>();
-		gesture.m_targetFollowingObject = Camera.main.transform.parent.gameObject;
-		gesture.m_defaultCameraMode = TangoGestureCamera.CameraType.FIRST_PERSON;
-
-		yield return null;
+		UIManager.Instance.Open(UIID.Main);
 		//#if !UNITY_EDITOR
 		//打开tango 探测器
 		yield return StartCoroutine(StartTangoDetect());
 		//#endif
-		OnSceneLoaded();
+		//OnSceneLoaded();
 		//
 		//更新下载状态
 		CatSceneManager.Instance.UpdateLoadingState(100, 100);
@@ -143,20 +123,15 @@ public class GameScene : SceneBase
 	{
 		Debug.Log(msg);
 	}
+	/*
 	void OnGUI()
 	{
+		
 		if (GUI.Button (new Rect (0, 0, 50, 50), "gift")) {
 			CatSceneManager.Instance.SetNextScene (SceneID.Gift);
 		}
 	}
-//	void OnGUI()
-//	{
-//		GUI.Button(new Rect(0,0,100,100), "noNewArea")
-//		{
-//			
-//		}
-//
-//	}
+	*/
 	IEnumerator StartTangoDetect()
 	{
 		TangoService.Instance.StartGame ();
