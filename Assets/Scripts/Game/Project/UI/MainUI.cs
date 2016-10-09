@@ -47,7 +47,7 @@ public class MainUI : MonoBehaviour
 
 	void PressLoadTangoData()
 	{
-		//TangoManager.Instance.Load ();
+		TangoManager.Instance.Load ();
 	}
 
 	void PressStore()

@@ -393,8 +393,19 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 	/// </summary>
 	public void Save()
 	{
-		StartCoroutine(_DoSaveCurrentAreaDescription());
+		//StartCoroutine(_DoSaveCurrentAreaDescription());
+		string path = Application.persistentDataPath + "/1.xml";
+		Debug.Log (path);
+		_SaveUnitToDisk();
 	}
+
+	public void Load()
+	{
+		string path = Application.persistentDataPath + "/1.xml";
+		Debug.Log (path);
+		_LoadUnitFromDisk ();
+	}
+
 	/// <summary>
 	/// 保存区域描述.
 	/// </summary>
@@ -468,8 +479,8 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 	private void _LoadUnitFromDisk()
 	{
 		// Attempt to load the exsiting markers from storage.
-		string path = Application.persistentDataPath + "/" + m_curAreaDescription.m_uuid + ".xml";
-
+		//string path = Application.persistentDataPath + "/" + m_curAreaDescription.m_uuid + ".xml";
+		string path = Application.persistentDataPath + "/1.xml";
 		var serializer = new XmlSerializer(typeof(List<UnitData>));
 		var stream = new FileStream(path, FileMode.Open);
 
@@ -487,7 +498,7 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 			if(unit.m_type <(int) UnitClassType.SceneObj 
 				&& unit.m_type>(int)UnitClassType.ScenePet)//不是宠物，自带的宠物在gamescene内生成并且映射过去,这里只是场景物件
 				//如猫砂盘
-				MapSceneManager.Instance.CreateSceneCatLittle(unit.m_id, unit.m_position, unit.m_orientation);
+				MapSceneManager.Instance.CreateSceneCatLittle(unit.m_id, unit.m_position, unit.m_orientation, false);
 			
 		}
 	}
@@ -547,7 +558,7 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 				// useful when the next time Tango Service is connected. The timestamp is only used for loop closure pose
 				// correction in current Tango connection.
 				UnitData temp = new UnitData ();
-				temp.m_id = unit.id;
+				temp.m_id = unit.baseId;
 				temp.m_type = (int)unit.m_Type;
 				temp.m_position = unit.thisT.position;
 				temp.m_orientation = unit.thisT.rotation;
@@ -555,7 +566,8 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 			}
 		}
 
-		string path = Application.persistentDataPath + "/" + m_curAreaDescription.m_uuid + ".xml";
+		//string path = Application.persistentDataPath + "/" + m_curAreaDescription.m_uuid + ".xml";
+		string path = Application.persistentDataPath + "/1.xml";
 		var serializer = new XmlSerializer(typeof(List<UnitData>));
 		using (var stream = new FileStream(path, FileMode.Create))
 		{
