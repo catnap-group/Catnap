@@ -43,7 +43,7 @@ public class ARMange : MonoBehaviour {
 			newPlace.transform.LookAt (this.transform);
 			newPlace.transform.Rotate (new Vector3 (0f, 180f, 0f));
 			newPlace.gameObject.GetComponentsInChildren<Text> ()[0].text = places [i].Name;
-			newPlace.gameObject.GetComponentsInChildren<Text> ()[1].text = places [i].Distance.ToString();
+			newPlace.gameObject.GetComponentsInChildren<Text> ()[1].text = places [i].Distance.ToString() + "m";
 		}
 	}
 
