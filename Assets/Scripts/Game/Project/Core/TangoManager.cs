@@ -393,10 +393,10 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 	/// </summary>
 	public void Save()
 	{
-		//StartCoroutine(_DoSaveCurrentAreaDescription());
-		string path = Application.persistentDataPath + "/1.xml";
-		Debug.Log (path);
-		_SaveUnitToDisk();
+		StartCoroutine(_DoSaveCurrentAreaDescription());
+		//string path = Application.persistentDataPath + "/1.xml";
+		//Debug.Log (path);
+		//_SaveUnitToDisk();
 	}
 
 	public void Load()

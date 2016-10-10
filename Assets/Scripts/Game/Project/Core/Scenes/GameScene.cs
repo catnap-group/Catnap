@@ -29,10 +29,16 @@ public class GameScene : SceneBase
 		#endif
 		GameManager.Instance.SetGameState(GameState.CatPlay);
 		ResourcesManager.Instance.LoadSystemBaseData();
-		StartCoroutine(LoadScene());
+		UIManager.Instance.Open (UIID.CatHandbook);
+		//StartCoroutine(LoadScene());
+	}
+
+	public void StartTango(bool needNewAreaDescription)
+	{
+		StartCoroutine(LoadScene(needNewAreaDescription));
 	}
 	
-	IEnumerator LoadScene()
+	IEnumerator LoadScene(bool needNewAreaDescription)
 	{
 		if(!GameManager.Instance.resetGame)
 		{
@@ -57,14 +63,16 @@ public class GameScene : SceneBase
 		}
 		#endif 
 
+		TangoService.Instance.m_needNewAreaDescription = needNewAreaDescription;
 		GameObject cloudObj = ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Point Cloud");//临时代码，这部分以后要变成class create的模式，现在为了便于调试
 		//生成tango镜头
 		TangoARPoseController tarPoseCon =Camera.main.gameObject.AddComponent<TangoARPoseController>();
 		tarPoseCon.m_useAreaDescriptionPose = true;
 		tarPoseCon.m_syncToARScreen = true;
+		TangoService.Instance.m_poseController = tarPoseCon;
+
 		TangoManager.Instance.m_pointCloud = cloudObj.GetComponent<TangoPointCloud> ();
 		TangoManager.Instance.m_pointCloud.m_useAreaDescriptionPose = true;
-		TangoService.Instance.m_poseController = tarPoseCon;
 		//texture Method 
 		TangoService.Instance.m_tangoApplication.m_videoOverlayUseTextureMethod = true;
 		TangoService.Instance.m_tangoApplication.m_videoOverlayUseYUVTextureIdMethod = false;
@@ -88,7 +96,6 @@ public class GameScene : SceneBase
 		TangoEnvironmentalLighting tel = Camera.main.gameObject.AddComponent<TangoEnvironmentalLighting> ();
 		tel.m_enableEnvironmentalLighting = true;
 
-		UIManager.Instance.Open (UIID.CatHandbook);
 		//GameGuideManager.Instance.SetState (GameGuideManager.GuideState.StartGuide);
 		//#if !UNITY_EDITOR
 		//打开tango 探测器
