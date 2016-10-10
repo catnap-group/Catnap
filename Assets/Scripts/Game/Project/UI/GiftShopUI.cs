@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class GiftUI : MonoBehaviour 
+public class GiftShopUI : MonoBehaviour 
 {
     private HiAREngineBehaviour hiarEnginBehaviour;
     private Button ScanBtn;
@@ -28,13 +28,14 @@ public class GiftUI : MonoBehaviour
 
     void StartScan()
     {
-        hiarEnginBehaviour.StartRecognition();
-    
+        //hiarEnginBehaviour.StartRecognition();
+
+		UIManager.Instance.Open (UIID.GetGiftUI);
     }
 	
     void BackWard()
     {
-		UIManager.Instance.Close (UIID.GiftUI);
+		UIManager.Instance.Close (UIID.GiftShopUI);
 		UIManager.Instance.Open (UIID.Task);
     }
 

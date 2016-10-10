@@ -19,6 +19,7 @@ public class GiftGetUI : MonoBehaviour
 	}
 	public void PressHello()
 	{
+		UIManager.Instance.Close (gameObject);
 		CatSceneManager.Instance.SetNextScene (SceneID.Search);
 	}
 	public void PressCancle()

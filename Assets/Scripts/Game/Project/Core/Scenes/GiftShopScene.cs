@@ -4,10 +4,10 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-public class GiftScene : SceneBase
+public class GiftShopScene : SceneBase
 {
 
-	static public GiftScene Instance = null;
+	static public GiftShopScene Instance = null;
 	private Transform thisT;
 	void Awake()
 	{
@@ -40,13 +40,13 @@ public class GiftScene : SceneBase
 	}
 	public void OnSceneLoaded()
 	{
-		UIManager.Instance.Open(UIID.GiftUI);
+		UIManager.Instance.Open(UIID.GiftShopUI);
 
 	}
 	public override void Unload ()
 	{
 		base.Unload ();
-		UIManager.Instance.Close(UIID.GiftUI);
+		UIManager.Instance.Close(UIID.GiftShopUI);
         Resources.UnloadUnusedAssets();
 	}
 
