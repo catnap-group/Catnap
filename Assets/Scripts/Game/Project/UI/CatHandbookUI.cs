@@ -40,7 +40,7 @@ public class CatHandbookUI : MonoBehaviour
 		new CatData("喵小白", "睡觉ing~zzz", "幼猫 7周 800克", 0.5f),
 		new CatData("喵大白", "玩耍ing", "幼猫 10周 1800克", 1.0f),
 	};
-		
+
     public void InitTangoScene()
     {
 		string prefabPath = "Prefabs/UI/SceneUI";
@@ -93,7 +93,10 @@ public class CatHandbookUI : MonoBehaviour
 		SetScene ();
 		PressSceneMenu ();
 		AreaDescription desc = _AreaDescription [pos];
-		//TangoService.Instance.m_curAreaDescriptionUUID = 
+		TangoService.Instance.m_curAreaDescriptionUUID = desc.m_uuid;
+		GameScene.Instance.StartTango (false);
+		UIManager.Instance.Close(gameObject);
+		UIManager.Instance.Open (UIID.Main);
 		//desc.GetMetadata().
 	}
 
@@ -101,7 +104,7 @@ public class CatHandbookUI : MonoBehaviour
     {
         Debug.Log("Press AR");
 		GameScene.Instance.StartTango (true);
-		UIManager.Instance.UnloadAllUI ();
+		UIManager.Instance.Close(gameObject);
 		UIManager.Instance.Open (UIID.Main);
     }
 

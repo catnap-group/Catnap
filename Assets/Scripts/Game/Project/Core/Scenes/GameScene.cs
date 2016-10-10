@@ -29,16 +29,28 @@ public class GameScene : SceneBase
 		#endif
 		GameManager.Instance.SetGameState(GameState.CatPlay);
 		ResourcesManager.Instance.LoadSystemBaseData();
-		UIManager.Instance.Open (UIID.CatHandbook);
-		//StartCoroutine(LoadScene());
+		StartCoroutine(LoadScene());
 	}
 
 	public void StartTango(bool needNewAreaDescription)
 	{
-		StartCoroutine(LoadScene(needNewAreaDescription));
+		StartCoroutine(StartScene(needNewAreaDescription));
+	}
+
+	IEnumerator StartScene(bool needNewAreaDescription)
+	{
+		#if !UNITY_EDITOR
+		while(PermissionTango == false)
+		{
+		yield return null;
+		}
+		#endif 
+		
+		TangoService.Instance.m_needNewAreaDescription = needNewAreaDescription;
+		yield return StartCoroutine(StartTangoDetect());
 	}
 	
-	IEnumerator LoadScene(bool needNewAreaDescription)
+	IEnumerator LoadScene()
 	{
 		if(!GameManager.Instance.resetGame)
 		{
@@ -52,19 +64,16 @@ public class GameScene : SceneBase
 		GamePlayer.Me.Create ();
 		GamePlayer.Me.instance.SetPlayer (playerBody.transform);
 		//加载基础场景
-		//生成tango管理器
+		//生成tango管理器	
 		ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Seivice");//临时代码，这部分以后要变成class create的模式，现在为了便于调试,这个上面起作用的类是tangoserviece
-		yield return new WaitForEndOfFrame();
-
 		#if !UNITY_EDITOR
 		while(PermissionTango == false)
 		{
-			yield return null;
+		yield return null;
 		}
 		#endif 
-
-		TangoService.Instance.m_needNewAreaDescription = needNewAreaDescription;
 		GameObject cloudObj = ResourcesManager.Instance.LoadGameObject ("Prefabs/Tango/Tango Point Cloud");//临时代码，这部分以后要变成class create的模式，现在为了便于调试
+
 		//生成tango镜头
 		TangoARPoseController tarPoseCon =Camera.main.gameObject.AddComponent<TangoARPoseController>();
 		tarPoseCon.m_useAreaDescriptionPose = true;
@@ -96,19 +105,12 @@ public class GameScene : SceneBase
 		TangoEnvironmentalLighting tel = Camera.main.gameObject.AddComponent<TangoEnvironmentalLighting> ();
 		tel.m_enableEnvironmentalLighting = true;
 
-		//GameGuideManager.Instance.SetState (GameGuideManager.GuideState.StartGuide);
-		//#if !UNITY_EDITOR
-		//打开tango 探测器
-		yield return StartCoroutine(StartTangoDetect());
-		//#endif
 		//OnSceneLoaded();
-		//
+		UIManager.Instance.Open (UIID.CatHandbook);
 		//更新下载状态
 		CatSceneManager.Instance.UpdateLoadingState(100, 100);
 	}
-
-
-
+		
 	public void OnSceneLoaded()
 	{
 		SceneCatLittle catLitter = MapSceneManager.Instance.CreateSceneCatLittle(102,Vector3.zero, Quaternion.identity);
