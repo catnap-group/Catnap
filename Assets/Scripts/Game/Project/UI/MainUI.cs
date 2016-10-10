@@ -68,7 +68,8 @@ public class MainUI : MonoBehaviour
 			Vector3 touchPosInWorld = Camera.main.ScreenToWorldPoint (new Vector3 (touchPosInScreen.x, touchPosInScreen.y, 1));
 			SceneCatLittle little = MapSceneManager.Instance.CreateSceneCatLittle (StorageUI.CurrentGoodiesData.GoodiesID, Vector3.zero, Quaternion.identity, false);
 			if (StorageUI.CurrentGoodiesData.GoodiesID == 105) {
-				little.thisT.rotation = new Quaternion (Camera.main.transform.rotation.x + Quaternion.Euler (-90, 0, 0).x, Camera.main.transform.rotation.y, Camera.main.transform.rotation.z, Camera.main.transform.rotation.w);
+			//	little.thisT.rotation = new Quaternion (Camera.main.transform.rotation.x + Quaternion.Euler (-90, 0, 0).x, Camera.main.transform.rotation.y, Camera.main.transform.rotation.z, Camera.main.transform.rotation.w);
+				little.thisT.rotation = Camera.main.transform.rotation;
 			} else {
 				little.thisT.rotation = Camera.main.transform.rotation;
 			}
