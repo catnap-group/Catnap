@@ -62,7 +62,7 @@ public class MainUI : MonoBehaviour
 
 	public void PressScreen()
 	{
-		if (StorageUI.CurrentGoodiesData != null) {
+		if (StorageUI.CurrentGoodiesData != null && StorageUI.CurrentGoodiesData.GoodiesID != 0) {
 			Vector3 touchPosInScreen = GameGuideManager.Instance.GetTouchPosition ();
 			Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position); 
 			Vector3 touchPosInWorld = Camera.main.ScreenToWorldPoint (new Vector3 (touchPosInScreen.x, touchPosInScreen.y, 1));
@@ -92,5 +92,10 @@ public class MainUI : MonoBehaviour
 	{
 		_IsHideMenu = _IsHideMenu ? false : true;
 		transform.FindChild("MenuBtn/MenuUI").gameObject.SetActive(_IsHideMenu);
+	}
+
+	public void PressSound()
+	{
+		EventListener.Broadcast (ObjectEvent.CallCat, Camera.main.gameObject);
 	}
 }
