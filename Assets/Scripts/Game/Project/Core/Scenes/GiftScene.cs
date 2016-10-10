@@ -30,9 +30,9 @@ public class GiftScene : SceneBase
 //		if (GUI.Button (new Rect (0, 0, 100, 150),  "<size=20>back to game</size>")) {
 //			CatSceneManager.Instance.SetNextScene (SceneID.Game);
 //		}
-		if (GUI.Button (new Rect (0, 200, 100, 150),  "<size=20>search</size>")) {
-			CatSceneManager.Instance.SetNextScene (SceneID.Search);
-		}
+//		if (GUI.Button (new Rect (0, 200, 100, 150),  "<size=20>search</size>")) {
+//			CatSceneManager.Instance.SetNextScene (SceneID.Search);
+//		}
 	}
 	IEnumerator LoadScene()
 	{
@@ -42,13 +42,12 @@ public class GiftScene : SceneBase
 	}
 	public void OnSceneLoaded()
 	{
-        UIManager.Instance.Open(UIID.GiftUI);
-
+		UIManager.Instance.Open(UIID.GetGiftUI);
 	}
 	public override void Unload ()
 	{
 		base.Unload ();
-        UIManager.Instance.Close(UIID.GiftUI);
+		UIManager.Instance.Close(UIID.GetGiftUI);
         Resources.UnloadUnusedAssets();
 	}
 

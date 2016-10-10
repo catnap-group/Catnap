@@ -140,7 +140,7 @@ public class GameScene : SceneBase
 	{
 		Debug.Log(msg);
 	}
-	/*
+
 	void OnGUI()
 	{
 		
@@ -148,7 +148,7 @@ public class GameScene : SceneBase
 			CatSceneManager.Instance.SetNextScene (SceneID.Gift);
 		}
 	}
-	*/
+
 	IEnumerator StartTangoDetect()
 	{
 		TangoService.Instance.StartGame ();

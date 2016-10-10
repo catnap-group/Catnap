@@ -42,6 +42,15 @@ public class SearchScene : SceneBase
 		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().SetCustomArg("latitude",22.5f); //TestGPS.Instance.latitude);
 		CatnapWebMgr.Instance.CastFor<CatnapWebMgr>().RequestByWRI(EWebRequestId.MSG_GET_NEAR_PLAYER, OnLoginResponse, OnWebError);
 
+//		UIManager.UIData data = UIManager.Instance.Open (UIID.PlaceDetail);
+//		GameObject obj = data.UIObject;
+//		if (obj != null) {
+//			PlaceDetailUI pdui = obj.GetComponent<PlaceDetailUI> ();
+//			PlaceInfo info = new PlaceInfo ();
+//			info.Name = "马古斯";
+//			info.Distance = 1000;
+//			pdui.SetPlace (info);
+//		}
 	}
 	void OnLoginResponse(uint id, object obj, object localArg)
 	{
