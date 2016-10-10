@@ -34,7 +34,8 @@ public class GiftUI : MonoBehaviour
 	
     void BackWard()
     {
-        CatSceneManager.Instance.SetNextScene (SceneID.Game);
+		UIManager.Instance.Close (UIID.GiftUI);
+		UIManager.Instance.Open (UIID.GetGiftUI);
     }
 
 }
