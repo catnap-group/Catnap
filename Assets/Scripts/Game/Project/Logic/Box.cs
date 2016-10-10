@@ -36,10 +36,17 @@ public class Box : MonoBehaviour {
 	void Update()
 	{
 		if (Input.GetMouseButton (0)) {
-			if (GetState () == BoxState.EmptyBox && GameGuideManager.Instance.GetState () == GameGuideManager.GuideState.PutGoodies) {
-				GameObject mainUI = GameGuideManager.Instance.MainUI;
-				MainUI ui = mainUI.GetComponent<MainUI> ();
-				ui.ShowPutBtn (true);
+			if (GetState () == BoxState.EmptyBox && StorageUI.CurrentGoodiesData != null) {
+				if (StorageUI.CurrentGoodiesData.GoodiesID == 0) {
+					SetState (BoxState.FullBox);
+
+					SceneCat cat = MapSceneManager.Instance.CreateSceneCat (107, Vector3.zero, Quaternion.identity);
+					#if !UNITY_EDITOR
+					TangoManager.Instance.SceneUnit2ARUnit(cat);
+					#endif
+
+					EventListener.Broadcast (ObjectEvent.CallEat, gameObject);
+				}
 			}
 		}
 	}
