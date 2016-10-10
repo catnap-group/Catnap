@@ -12,7 +12,7 @@ public class TangoService : UnitySingletonVisible<TangoService>, ITangoLifecycle
 	/// <summary>
 	/// The UUID of the selected Area Description.
 	/// </summary>
-	private string m_curAreaDescriptionUUID;
+	public string m_curAreaDescriptionUUID;
 	private List<AreaDescription> vAreaDescription;
 
 	public override void OnInit ()
@@ -132,7 +132,9 @@ public class TangoService : UnitySingletonVisible<TangoService>, ITangoLifecycle
 		{
 			return;
 		}
+
 		for (int i = 0; i < areaDescriptionList.Length; i++) {
+			Debug.Log (areaDescriptionList [i].GetMetadata().m_name);
 			vAreaDescription.Add (areaDescriptionList [i]);//保存所有的描述
 		}
 //		if (vAreaDescription.Count > 0){
