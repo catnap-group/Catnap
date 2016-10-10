@@ -4,9 +4,11 @@ using System.Collections;
 
 public class Goodies : MonoBehaviour 
 {
+	public StorageUI.GoodiesData Data;
 	private int Price = 0;
 	private string Name = "";
 	private string IconPath = "";
+	private int GoodiesID = 0;
 
 	// Use this for initialization
 	void Start () 
@@ -33,6 +35,11 @@ public class Goodies : MonoBehaviour
 	public int GetPrice()
 	{
 		return Price;
+	}
+
+	public int GetGoodiesID()
+	{
+		return GoodiesID;
 	}
 
 	public void SetIconPath(string iconPath)

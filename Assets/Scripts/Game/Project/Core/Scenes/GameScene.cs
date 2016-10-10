@@ -88,7 +88,8 @@ public class GameScene : SceneBase
 		TangoEnvironmentalLighting tel = Camera.main.gameObject.AddComponent<TangoEnvironmentalLighting> ();
 		tel.m_enableEnvironmentalLighting = true;
 
-		GameGuideManager.Instance.SetState (GameGuideManager.GuideState.StartGuide);
+		UIManager.Instance.Open (UIID.CatHandbook);
+		//GameGuideManager.Instance.SetState (GameGuideManager.GuideState.StartGuide);
 		//#if !UNITY_EDITOR
 		//打开tango 探测器
 		yield return StartCoroutine(StartTangoDetect());
@@ -165,8 +166,8 @@ public class GameScene : SceneBase
 	{
 
 		TangoService.Instance.OnDispose();
-		WordService.Instance.OnDispose ();
-		WordDetectionController.Instance.OnDispose ();
+		//WordService.Instance.OnDispose ();
+		//WordDetectionController.Instance.OnDispose ();
 		MapSceneManager.Instance.CleanAll ();
 		GameManager.Instance.EndGame();
 		UIManager.Instance.UnloadAllUI ();

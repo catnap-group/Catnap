@@ -15,19 +15,21 @@ public class CatStoreUI : MonoBehaviour
 		public int Price = 0;
 		public string Name = "";
 		public string IconPath = "";
-		public GoodiesData(string name, int price, string iconPath)
+		public int GoodiesID;
+		public GoodiesData(string name, int price, string iconPath, int goodiesID)
 		{
 			Name = name;
 			Price = price;
 			IconPath = iconPath;
+			GoodiesID = goodiesID;
 		}
 	}
 
 	private  GoodiesData[] _GoodiesDatas = 
     { 
-		new GoodiesData("普通猫粮", 200, "UI/img_prop_house01"),
-		new GoodiesData("普通猫粮", 400, "UI/img_prop_house01"),
-		new GoodiesData("普通猫粮", 600, "UI/img_prop_house01"),
+		new GoodiesData("普通猫粮", 100, "UI/Goodies/img_cat_box", 0),
+		new GoodiesData("普通猫盆", 100, "UI/Goodies/img_cat_bowl01", 105),
+		new GoodiesData("普通猫窝", 100, "UI/Goodies/img_cat_house", 106),
 	};
 
 	// Use this for initialization

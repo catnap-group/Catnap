@@ -9,28 +9,28 @@ public class StorageUI : MonoBehaviour
     private int _CurrentToggleNumber = 0;
     private Goodies _CurrentGoodies = null;
     private bool _IsHideMenu = false;
+	public static GoodiesData CurrentGoodiesData = null;
 
     public class GoodiesData
     {
         public int Price = 0;
         public string Name = "";
         public string IconPath = "";
-		public string ModelPath = "";
-		public GoodiesData(string name, int price, string iconPath, string modelPath)
+		public int GoodiesID = 0;
+		public GoodiesData(string name, int price, string iconPath, int goodiesID)
         {
             Name = name;
             Price = price;
             IconPath = iconPath;
-			ModelPath = modelPath;
+			GoodiesID = goodiesID;
         }
     }
 
     private GoodiesData[] _GoodiesDatas = 
     { 
-		new GoodiesData("普通猫窝", 100, "UI/img_prop_bowl01", "Prefabs/Cat/CatHome"),
-		new GoodiesData("普通猫窝", 300, "UI/img_prop_bowl01", "Prefabs/Cat/CatHome"),
-		new GoodiesData("普通猫窝", 500, "UI/img_prop_bowl01", "Prefabs/Cat/CatHome"),
-		new GoodiesData("普通猫窝", 700, "UI/img_prop_bowl01", "Prefabs/Cat/CatHome"),
+		new GoodiesData("普通猫粮", 100, "UI/Goodies/img_cat_box", 0),
+		new GoodiesData("普通猫盆", 100, "UI/Goodies/img_cat_bowl01", 105),
+		new GoodiesData("普通猫窝", 100, "UI/Goodies/img_cat_house", 106),
 	};
 
     // Use this for initialization
@@ -113,6 +113,7 @@ public class StorageUI : MonoBehaviour
             colors.highlightedColor = new UnityEngine.Color(225.0f / 255.0f, 75.0f / 255.0f, 75.0f / 255.0f, 1.0f);
             btn.colors = colors;
 
+			goodiesComp.Data = data;
             goodiesComp.SetName(data.Name);
             goodiesComp.SetPrice(data.Price);
             goodiesComp.SetIconPath(data.IconPath);
@@ -129,12 +130,16 @@ public class StorageUI : MonoBehaviour
     {
         if (_CurrentGoodies)
         {
+			CurrentGoodiesData = _CurrentGoodies.Data;
             Debug.Log(string.Format("Put Goodies {0}", _CurrentGoodies.GetName()));
+			UIManager.Instance.UnloadAllUI ();
+			UIManager.Instance.Open (UIID.Main);
+		/*
 			if(GameGuideManager.Instance.GetState() == GameGuideManager.GuideState.GotoStorage) {
 				GameGuideManager.Instance.SetState (GameGuideManager.GuideState.PutCatHouse);
 				UIManager.Instance.CloseTo (UIID.CatStore, 2);
 				UIManager.Instance.Open (UIID.Main);
-			}
+			}*/
 		}
     }
 
