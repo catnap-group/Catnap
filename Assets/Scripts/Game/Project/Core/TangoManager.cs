@@ -92,54 +92,15 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 	/// 主要处理触摸事件和放置 marker.
 	/// </summary>
 	public void Update()
-	{
+	{/*
 		if (m_saveThread != null && m_saveThread.ThreadState != ThreadState.Running)
 		{
 			// 由闭环更新 marker.
 			_UpdateUnitsForLoopClosures();
 			// 保存 sceneUit.
 			_SaveUnitToDisk();
-			// 重新加载场景来重启游戏.
-			#pragma warning disable 618
-			CatSceneManager.Instance.SetNextScene (SceneID.Initialize);//切回初始场景
-			#pragma warning restore 618
-			#if UNITY_EDITOR
-			if (Input.GetKey(KeyCode.Escape))
-			{
-				#pragma warning disable 618
-				CatSceneManager.Instance.SetNextScene (SceneID.Initialize);//切回初始场景
-				#pragma warning restore 618
-			}
-			#endif
-			if (!m_tangoReady)
-				return;
-			//确保没有点在ui上
-			if (EventSystem.current.IsPointerOverGameObject (0) || GUIUtility.hotControl != 0)
-				return;
-			if (Input.touchCount == 1) {
-				Touch t = Input.GetTouch(0);
-				Vector2 guiPosition = new Vector2(t.position.x, Screen.height - t.position.y);
-				Camera cam = Camera.main;
-				RaycastHit hitInfo;
-
-				if (t.phase != TouchPhase.Began)
-				{
-					return;
-				}
-
-				if (m_selectedRect.Contains(guiPosition))
-				{
-					// 不用处理, 由“隐藏" 按钮处理.这是因为点在了UI上，这个UI由gui画出来
-				}
-				else if (Physics.Raycast(cam.ScreenPointToRay(t.position), out hitInfo))
-				{
-					// 查找一个 unit, 选中它.
-					GameObject tapped = hitInfo.collider.gameObject;
-					m_selectedUnit = tapped.GetComponent<SceneUnit>();
-				}
-			}
-
-		}
+	
+		}*/
 	}
 	public void ScreenPoint2ARUnit(SceneUnit unit, Vector2 screenPos)//对于屏幕上一点,放置某个物体
 	{
@@ -379,7 +340,7 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 					Debug.Log("AndroidInGameController.OnTangoPoseAvailable(): m_curAreaDescription is null");
 					return;
 				}
-
+				Debug.Log (m_curAreaDescription.GetMetadata ().m_name);
 				_LoadUnitFromDisk();
 			}
 		}
@@ -393,17 +354,12 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 	/// </summary>
 	public void Save()
 	{
-		//StartCoroutine(_DoSaveCurrentAreaDescription());
-		string path = Application.persistentDataPath + "/1.xml";
-		Debug.Log (path);
-		_SaveUnitToDisk();
+		StartCoroutine(_DoSaveCurrentAreaDescription());
 	}
 
 	public void Load()
 	{
-		string path = Application.persistentDataPath + "/1.xml";
-		Debug.Log (path);
-		_LoadUnitFromDisk ();
+		
 	}
 
 	/// <summary>
@@ -449,28 +405,16 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 			UIManager.Instance.ShowMessage ("Saving...");
 			if (m_tangoApplication.m_areaDescriptionLearningMode) // 学习模式, 保存当前区域描述.
 			{
-				m_saveThread = new Thread(delegate ()
-					{
-						// 启动一个保存线程.
-						m_curAreaDescription = AreaDescription.SaveCurrent();
-						AreaDescription.Metadata metadata = m_curAreaDescription.GetMetadata();
-						#if UNITY_EDITOR
-						metadata.m_name = m_guiTextInputContents;
-						#else
-						metadata.m_name = kb.text;
-						#endif
-						m_curAreaDescription.SaveMetadata(metadata);
-					});
-				m_saveThread.Start();
+				m_curAreaDescription = AreaDescription.SaveCurrent();
+				AreaDescription.Metadata metadata = m_curAreaDescription.GetMetadata();
+				#if UNITY_EDITOR
+				metadata.m_name = m_guiTextInputContents;
+				#else
+				metadata.m_name = kb.text;
+				#endif
+				m_curAreaDescription.SaveMetadata(metadata);
 			}
-			else // 保存 marker.
-			{
-				_SaveUnitToDisk();
-				#pragma warning disable 618
-				CatSceneManager.Instance.SetNextScene (SceneID.Initialize);
-				//Application.LoadLevel(Application.loadedLevel);
-				#pragma warning restore 618
-			}
+			_SaveUnitToDisk();
 		}
 	}
 	/// <summary>
@@ -479,13 +423,11 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 	private void _LoadUnitFromDisk()
 	{
 		// Attempt to load the exsiting markers from storage.
-		//string path = Application.persistentDataPath + "/" + m_curAreaDescription.m_uuid + ".xml";
-		string path = Application.persistentDataPath + "/1.xml";
+		string path = Application.persistentDataPath + "/" + m_curAreaDescription.m_uuid + ".xml";
 		var serializer = new XmlSerializer(typeof(List<UnitData>));
 		var stream = new FileStream(path, FileMode.Open);
 
 		List<UnitData> xmlDataList = serializer.Deserialize(stream) as List<UnitData>;
-
 		if (xmlDataList == null)
 		{
 			Debug.Log("AndroidInGameController._LoadMarkerFromDisk(): xmlDataList is null");
@@ -565,9 +507,8 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 				xmlDataList.Add (temp);
 			}
 		}
-
-		//string path = Application.persistentDataPath + "/" + m_curAreaDescription.m_uuid + ".xml";
-		string path = Application.persistentDataPath + "/1.xml";
+			
+		string path = Application.persistentDataPath + "/" + m_curAreaDescription.m_uuid + ".xml";
 		var serializer = new XmlSerializer(typeof(List<UnitData>));
 		using (var stream = new FileStream(path, FileMode.Create))
 		{
