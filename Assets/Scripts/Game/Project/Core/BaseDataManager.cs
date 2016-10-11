@@ -204,8 +204,8 @@ public class BaseDataManager : UnityAllSceneSingleton<BaseDataManager>
 				{
 					filterData.Add(va.name, va);
 				}
-
 			}
+
 			return filterData;
 
 		}

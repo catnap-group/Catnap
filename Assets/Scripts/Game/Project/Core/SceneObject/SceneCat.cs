@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class CatIdleAIState : PetAIState
 {
@@ -26,40 +27,183 @@ public class CatIdleAIState : PetAIState
 	}
 
 }
-class SceneCatAIStateManager : ScenePetBaseAIStateManager<SceneCat>
+
+public class CatRunMaiMenState : PetAIState
 {
-	public SceneCatAIStateManager(SceneCat creep)
-		:base(creep)
+	AIObjectParam Param;
+	public override void SetUserData(AIParam data) { Param = data as AIObjectParam; }
+	public override AIParam GetUserData() { return Param; }
+	
+	protected override void OnExecute()
+	{
+		Parent.PlayAnimation ("cat-run");
+
+		Vector3 vec1 = Parent.transform.position;
+		Vector3 vec2 = Param.gameObject.transform.position;
+		Vector3 off = new Vector3 (0.3f, 0, 0);
+		if (vec1.x > vec2.x) {
+			off.x = vec2.x + off.x;
+		} else {
+			off.x = vec2.x - off.x;
+		}
+		off.y = off.x / (vec2.x - vec1.x) * (vec2.y - vec1.y) + vec1.y;
+		off.z = off.x / (vec2.x - vec1.x) * (vec2.z - vec1.z) + vec1.z;
+
+
+		Parent.transform.DOLookAt (Param.gameObject.transform.position, 0);
+		Parent.transform.DOMove (Param.gameObject.transform.position, 4).OnComplete (delegate() {
+			_RuningState = AIRuningState.DefaultOver;
+			Manager.Check();
+		});
+	}
+
+	protected override void OnCheck()
+	{
+		
+	}
+}
+
+public class CatRunEatState : PetAIState
+{
+	AIObjectParam Param;
+	public override void SetUserData(AIParam data) { Param = data as AIObjectParam; }
+	public override AIParam GetUserData() { return Param; }
+
+	protected override void OnExecute()
+	{
+		Parent.PlayAnimation ("cat-run");
+
+		Vector3 vec1 = Parent.transform.position;
+		Vector3 vec2 = Param.gameObject.transform.position;
+		Vector3 off = new Vector3 (0.2f, 0, 0);
+		if (vec1.x > vec2.x) {
+			off.x = vec2.x + off.x;
+		} else {
+			off.x = vec2.x - off.x;
+		}
+		off.y = off.x / (vec2.x - vec1.x) * (vec2.y - vec1.y) + vec1.y;
+		off.z = off.x / (vec2.x - vec1.x) * (vec2.z - vec1.z) + vec1.z;
+
+		Parent.transform.DOLookAt (off, 0);
+		Parent.transform.DOMove (off, 4).OnComplete (delegate() {
+			_RuningState = AIRuningState.DefaultOver;
+			Manager.Check();
+		});
+	}
+
+	protected override void OnCheck()
 	{
 
 	}
+}
+
+public class CatStandState : PetAIState
+{
+	protected override void OnExecute()
+	{
+		Parent.PlayAnimation ("cat-stand");
+	}
+
+	protected override void OnCheck()
+	{
+
+	}
+}
+
+public class CatEatState : PetAIState
+{
+	protected override void OnExecute()
+	{
+		Parent.PlayAnimation ("cat-eat");
+	}
+
+	protected override void OnCheck()
+	{
+
+	}
+}
+
+public class CatMaiMenState : PetAIState
+{
+	protected override void OnExecute()
+	{
+		Parent.PlayAnimation ("cat-maimen");
+	}
+
+	protected override void OnCheck()
+	{
+
+	}
+}
+
+public class AIObjectParam : AIParam
+{
+	public GameObject gameObject;
+	public AIObjectParam(GameObject game)
+	{
+		gameObject = game;
+	}
+}
+
+enum ObjectEvent
+{
+	CallCat,
+	CallEat,
+}
+
+class SceneCatAIStateManager : ScenePetBaseAIStateManager<SceneCat>
+{
+	private bool _CallCat = false;
+	private bool _CallEat = false;
+	
+	public SceneCatAIStateManager(SceneCat creep)
+		:base(creep)
+	{
+		EventListener.AddListener (ObjectEvent.CallCat, delegate(GameObject gameObject) {
+			AIObjectParam param = new AIObjectParam(gameObject);
+			SetState<CatRunMaiMenState>(param);
+			_CallCat = true;
+		});
+
+		EventListener.AddListener (ObjectEvent.CallEat, delegate(GameObject gameObject) {
+			if(_CallCat == false && _CallEat == false) 
+			{
+				AIObjectParam param = new AIObjectParam(gameObject);
+				SetState<CatRunEatState>(param);
+				_CallEat = true;
+			}
+		});
+		
+	}
 	public override void LoadAIStates()
 	{
-		AddState(new CatIdleAIState());
+		//AddState(new CatIdleAIState());
+		AddState (new CatRunMaiMenState ());
+		AddState (new CatRunEatState ());
+		AddState (new CatStandState ());
+		AddState (new CatMaiMenState ());
+		AddState (new CatEatState ());
 	}
 
 	public override void Check()
 	{
 		if (_CurrentState == null)
 		{
-			SetState<CatIdleAIState>();
+			SetState<CatStandState>();
 		}
 		else
 		{
 			_CurrentState.Check();
 		}
-
+			
 		if (_CurrentState.GetRunningState() == AIRuningState.Running)
 			return;
 
-		if (_CurrentState.IsKind<CatIdleAIState>() )
-		{
-			//SetState<CatIdleAIState>();
-		}//做其他事情
-//		else if (_CurrentState.IsKind<MoveToTargetAIState>())
-//		{
-//			SetState<CatIdleAIState>();
-//		}       
+		if (_CurrentState.IsKind<CatRunMaiMenState> ()) {
+			SetState<CatMaiMenState> ();
+		} else if (_CurrentState.IsKind<CatRunEatState> ()) {
+			SetState<CatEatState> ();
+		}    
 	}
 }
 

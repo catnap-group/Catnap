@@ -31,6 +31,7 @@ public class StorageUI : MonoBehaviour
 		new GoodiesData("普通猫粮", 100, "UI/Goodies/img_cat_box", 0),
 		new GoodiesData("普通猫盆", 100, "UI/Goodies/img_cat_bowl01", 105),
 		new GoodiesData("普通猫窝", 100, "UI/Goodies/img_cat_house", 106),
+		new GoodiesData("猫", 100, "UI/img_head_01", 107),
 	};
 
     // Use this for initialization
@@ -152,14 +153,14 @@ public class StorageUI : MonoBehaviour
     {
         _CurrentGoodies = goodies;
         Text desc = transform.FindChild("Down/Number").GetComponent<Text>();
-        desc.text = string.Format("鱼干数：{0}", goodies.GetPrice());
+        desc.text = string.Format("数量：{0}", goodies.GetPrice());
     }
 
     public void PressToggle(bool isOn, GameObject toggle, int toggleNum)
     {
         _CurrentGoodies = null;
         Text desc = transform.FindChild("Down/Number").GetComponent<Text>();
-        desc.text = "鱼干数：XXX";
+        desc.text = "数量：100";
         SwitchToggle(toggleNum);
     }
 

@@ -27,9 +27,11 @@ public class CatStoreUI : MonoBehaviour
 
 	private  GoodiesData[] _GoodiesDatas = 
     { 
-		new GoodiesData("普通猫粮", 100, "UI/Goodies/img_cat_box", 0),
 		new GoodiesData("普通猫盆", 100, "UI/Goodies/img_cat_bowl01", 105),
 		new GoodiesData("普通猫窝", 100, "UI/Goodies/img_cat_house", 106),
+		new GoodiesData("普通猫粮", 100, "UI/Goodies/img_cat_box", 0),
+		new GoodiesData("高级猫粮", 100, "UI/Goodies/img_cat_box", 0),
+		new GoodiesData("高级猫窝", 100, "UI/Goodies/img_cat_house", 106),
 	};
 
 	// Use this for initialization

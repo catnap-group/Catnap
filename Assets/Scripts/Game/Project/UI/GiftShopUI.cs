@@ -36,7 +36,7 @@ public class GiftShopUI : MonoBehaviour
 	
     void BackWard()
     {
-		UIManager.Instance.Close (UIID.GiftShopUI);
+		UIManager.Instance.Close (gameObject);
 		UIManager.Instance.Open (UIID.Task);
     }
 
