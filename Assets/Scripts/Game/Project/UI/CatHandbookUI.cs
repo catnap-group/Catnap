@@ -46,6 +46,8 @@ public class CatHandbookUI : MonoBehaviour
 		string prefabPath = "Prefabs/UI/SceneUI";
 		GameObject content = transform.FindChild ("Top/SceneBtn/Scroll View/Viewport/Content").gameObject;
 		AreaDescription[] areaDescriptionList = AreaDescription.GetList();
+		if (areaDescriptionList == null)
+			return;
 		for (int i = 0; i < areaDescriptionList.Length; i++) {
 			AreaDescription desc = areaDescriptionList [i];
 			_AreaDescription.Add (desc);//保存所有的描述

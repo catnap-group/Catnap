@@ -28,9 +28,10 @@ public class GiftShopUI : MonoBehaviour
 
     void StartScan()
     {
+		GiftShopScene.Instance.DropDown ();
         //hiarEnginBehaviour.StartRecognition();
 
-		UIManager.Instance.Open (UIID.GetGiftUI);
+		//UIManager.Instance.Open (UIID.GetGiftUI);
     }
 	
     void BackWard()

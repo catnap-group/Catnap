@@ -8,6 +8,7 @@ public class GiftShopScene : SceneBase
 {
 
 	static public GiftShopScene Instance = null;
+	public GameObject giftbox;
 	private Transform thisT;
 	void Awake()
 	{
@@ -37,6 +38,20 @@ public class GiftShopScene : SceneBase
 
 		yield return null;
 		OnSceneLoaded();
+	}
+	public void DropDown()
+	{
+		Animation ani = giftbox.GetComponentInChildren<Animation> ();
+		ani.Play ();
+		giftbox.SetActive (true);
+		StartCoroutine (delayPlay (2));
+	}
+	IEnumerator delayPlay(float time)
+	{
+		yield return new WaitForSeconds (time);
+		giftbox.SetActive (false);
+		UIManager.Instance.Close(UIID.GiftShopUI);
+		UIManager.Instance.Open(UIID.GetGiftUI);
 	}
 	public void OnSceneLoaded()
 	{
