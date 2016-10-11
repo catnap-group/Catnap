@@ -9,3 +9,5 @@ uint32,uint8,vchar,vchar,uint8,vchar[],vchar,int[],float[],float[],vchar[]
 106,1,Ã¨ÎÑ,Ã¨ÎÑ,2,,Prefabs/Cat/CatHome,,0;0;0,0;0;0,
 107,1,ºÚÃ¨,ºÚÃ¨,1,cat-stand;cat-run;cat-eat;cat-maimen,Prefabs/Cat/Cat2,,0;0;0,0;0;0,
 108,1,Ð¡Ã¨,Ð¡Ã¨,1,cat-stand;cat-run;cat-eat;cat-maimen,Prefabs/Cat/Cat3,,0;0;0,0;0;0,
+109,1,Ã¨É°,Ã¨É°,2,,Prefabs/Cat/maosha,,0;0;0,0;0;0,
+110,1,Ã¨µæ,Ã¨µæ,2,,Prefabs/Cat/maodian,,0;0;0,0;0;0,

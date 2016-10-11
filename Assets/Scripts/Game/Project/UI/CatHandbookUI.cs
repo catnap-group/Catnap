@@ -14,10 +14,10 @@ public class CatHandbookUI : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-		SetScene ();
-		InitTangoScene ();
 		transform.FindChild("Top/MenuBtn/MenuUI").gameObject.SetActive(_IsHideMenu);
 		transform.FindChild ("Top/SceneBtn/Scroll View").gameObject.SetActive (_IsHideSceneMenu);
+		SetScene ();
+		InitTangoScene ();
 	}
 		
 	public class CatData

@@ -51,7 +51,7 @@ public class CatRunMaiMenState : PetAIState
 
 
 		Parent.transform.DOLookAt (Param.gameObject.transform.position, 0);
-		Parent.transform.DOMove (Param.gameObject.transform.position, 4).OnComplete (delegate() {
+		Parent.transform.DOMove (Param.gameObject.transform.position, 2).OnComplete (delegate() {
 			_RuningState = AIRuningState.DefaultOver;
 			Manager.Check();
 		});
@@ -84,8 +84,8 @@ public class CatRunEatState : PetAIState
 		off.y = off.x / (vec2.x - vec1.x) * (vec2.y - vec1.y) + vec1.y;
 		off.z = off.x / (vec2.x - vec1.x) * (vec2.z - vec1.z) + vec1.z;
 
-		Parent.transform.DOLookAt (off, 0);
-		Parent.transform.DOMove (off, 4).OnComplete (delegate() {
+		Parent.transform.DOLookAt (Param.gameObject.transform.position, 0);
+		Parent.transform.DOMove (Param.gameObject.transform.position, 2).OnComplete (delegate() {
 			_RuningState = AIRuningState.DefaultOver;
 			Manager.Check();
 		});
@@ -149,6 +149,7 @@ enum ObjectEvent
 {
 	CallCat,
 	CallEat,
+	SendSound,
 }
 
 class SceneCatAIStateManager : ScenePetBaseAIStateManager<SceneCat>
@@ -166,12 +167,9 @@ class SceneCatAIStateManager : ScenePetBaseAIStateManager<SceneCat>
 		});
 
 		EventListener.AddListener (ObjectEvent.CallEat, delegate(GameObject gameObject) {
-			if(_CallCat == false && _CallEat == false) 
-			{
-				AIObjectParam param = new AIObjectParam(gameObject);
-				SetState<CatRunEatState>(param);
-				_CallEat = true;
-			}
+			AIObjectParam param = new AIObjectParam(gameObject);
+			SetState<CatRunEatState>(param);
+			_CallEat = true;
 		});
 		
 	}
