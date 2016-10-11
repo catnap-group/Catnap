@@ -71,13 +71,15 @@ public class MainUI : MonoBehaviour
 				SceneCatLittle little = MapSceneManager.Instance.CreateSceneCatLittle (StorageUI.CurrentGoodiesData.GoodiesID, Vector3.zero, Quaternion.identity, false);
 				little.thisT.rotation = Camera.main.transform.rotation;
 				little.thisT.position = touchPosInWorld;
+				little.thisT.gameObject.SetActive (false);
 				#if !UNITY_EDITOR
 				TangoManager.Instance.SceneUnit2ARUnit (little);
 				#endif
-			} else if (StorageUI.CurrentGoodiesData.GoodiesID == 107) {
+			} else if (StorageUI.CurrentGoodiesData.GoodiesID == 107 || StorageUI.CurrentGoodiesData.GoodiesID == 108) {
 				SceneCat little = MapSceneManager.Instance.CreateSceneCat (StorageUI.CurrentGoodiesData.GoodiesID, Vector3.zero, Quaternion.identity);
 				little.thisT.rotation = Camera.main.transform.rotation;
 				little.thisT.position = touchPosInWorld;
+				little.thisT.gameObject.SetActive (false);
 				#if !UNITY_EDITOR
 				TangoManager.Instance.SceneUnit2ARUnit (little);
 				#endif
@@ -85,6 +87,7 @@ public class MainUI : MonoBehaviour
 				SceneCatLittle little = MapSceneManager.Instance.CreateSceneCatLittle (StorageUI.CurrentGoodiesData.GoodiesID, Vector3.zero, Quaternion.identity, false);
 				little.thisT.rotation = Camera.main.transform.rotation;
 				little.thisT.position = touchPosInWorld;
+				little.thisT.gameObject.SetActive (false);
 				#if !UNITY_EDITOR
 				TangoManager.Instance.SceneUnit2ARUnit (little);
 				#endif

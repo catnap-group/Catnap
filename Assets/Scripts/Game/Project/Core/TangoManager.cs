@@ -181,7 +181,7 @@ public class TangoManager : UnityAllSceneSingletonVisible<TangoManager>, ITangoP
 //			Quaternion.LookRotation(forward, up)) as GameObject;
 		unit.thisT.position = planeCenter;
 		unit.thisT.rotation = Quaternion.LookRotation (forward, up);
-
+		unit.thisT.gameObject.SetActive (true);
 		unit.m_timestamp = (float)m_poseController.m_poseTimestamp;
 
 		Matrix4x4 uwTDevice = Matrix4x4.TRS(m_poseController.m_tangoPosition,
