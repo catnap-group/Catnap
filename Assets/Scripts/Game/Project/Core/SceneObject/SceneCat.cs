@@ -28,7 +28,7 @@ public class CatIdleAIState : PetAIState
 
 }
 
-public class CatRunMaiMenState : PetAIState
+public class CatRunRaoTouState : PetAIState
 {
 	AIObjectParam Param;
 	public override void SetUserData(AIParam data) { Param = data as AIObjectParam; }
@@ -136,6 +136,21 @@ public class CatMaiMenState : PetAIState
 	}
 }
 
+
+public class CatRaoTouState : PetAIState
+{
+	protected override void OnExecute()
+	{
+		Parent.PlayAnimation ("cat-raotou");
+		Parent.transform.DOLookAt (Camera.main.transform.position, 0);
+	}
+
+	protected override void OnCheck()
+	{
+
+	}
+}
+
 public class AIObjectParam : AIParam
 {
 	public GameObject gameObject;
@@ -156,13 +171,14 @@ class SceneCatAIStateManager : ScenePetBaseAIStateManager<SceneCat>
 {
 	private bool _CallCat = false;
 	private bool _CallEat = false;
+	private bool _IsAt = false;
 	
 	public SceneCatAIStateManager(SceneCat creep)
 		:base(creep)
 	{
 		EventListener.AddListener (ObjectEvent.CallCat, delegate(GameObject gameObject) {
 			AIObjectParam param = new AIObjectParam(gameObject);
-			SetState<CatRunMaiMenState>(param);
+			SetState<CatRunRaoTouState>(param);
 			_CallCat = true;
 		});
 
@@ -176,11 +192,13 @@ class SceneCatAIStateManager : ScenePetBaseAIStateManager<SceneCat>
 	public override void LoadAIStates()
 	{
 		//AddState(new CatIdleAIState());
-		AddState (new CatRunMaiMenState ());
+		AddState (new CatRunRaoTouState ());
 		AddState (new CatRunEatState ());
 		AddState (new CatStandState ());
 		AddState (new CatMaiMenState ());
 		AddState (new CatEatState ());
+		AddState (new CatRaoTouState ());
+		Check ();
 	}
 
 	public override void Check()
@@ -197,11 +215,25 @@ class SceneCatAIStateManager : ScenePetBaseAIStateManager<SceneCat>
 		if (_CurrentState.GetRunningState() == AIRuningState.Running)
 			return;
 
-		if (_CurrentState.IsKind<CatRunMaiMenState> ()) {
-			SetState<CatMaiMenState> ();
+		if (_CurrentState.IsKind<CatRunRaoTouState> ()) {
+			SetState<CatRaoTouState> ();
 		} else if (_CurrentState.IsKind<CatRunEatState> ()) {
 			SetState<CatEatState> ();
-		}    
+		}
+	}
+
+	public override void Update()
+	{
+		Vector3 cameraPos = Camera.main.transform.position;
+		Vector3 catPos = GetParent ().transform.position;
+		float distance = Vector3.Distance (cameraPos, catPos);
+		Debug.Log (distance);
+		if (distance < 1.2
+			&& _CurrentState.IsKind<CatRunEatState> () == false 
+			&& _CurrentState.IsKind<CatRunRaoTouState> () == false
+			&& _CurrentState.IsKind<CatMaiMenState>() == false) {
+			SetState<CatMaiMenState> ();
+		}
 	}
 }
 

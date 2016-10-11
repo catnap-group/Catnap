@@ -31,9 +31,10 @@ public class StorageUI : MonoBehaviour
 		new GoodiesData("普通猫粮", 100, "UI/Goodies/img_cat_food", 0),
 		new GoodiesData("普通猫盆", 100, "UI/Goodies/img_cat_bowl", 105),
 		new GoodiesData("普通猫窝", 100, "UI/Goodies/img_cat_house", 106),
-		new GoodiesData("小猫", 100, "UI/img_head_01", 107),
-		new GoodiesData("普通猫砂", 100, "UI/Goodies/img_cat_bowl01", 109),
 		new GoodiesData("普通猫垫", 100, "UI/Goodies/img_cat_pillow", 110),
+		new GoodiesData("黑猫", 100, "UI/img_head_01", 107),
+		new GoodiesData("白猫", 100, "UI/img_head_01", 108),
+		new GoodiesData("普通猫砂", 100, "UI/Goodies/img_cat_bowl01", 109),
 	};
 
     // Use this for initialization
