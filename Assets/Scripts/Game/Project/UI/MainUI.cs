@@ -107,6 +107,11 @@ public class MainUI : MonoBehaviour
 
 	public void PressSound()
 	{
-		EventListener.Broadcast (ObjectEvent.CallCat, Camera.main.gameObject);
+		Invoke("SentEvent", 1);
+	}
+
+	void SentEvent()
+	{
+		EventListener.Broadcast (ObjectEvent.SendSound);
 	}
 }

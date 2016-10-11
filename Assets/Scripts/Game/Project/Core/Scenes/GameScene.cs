@@ -152,12 +152,12 @@ public class GameScene : SceneBase
 
 	void OnGUI()
 	{
-		
+		/*
 		if (GUI.Button (new Rect (0, 0, 50, 50), "gift")) {
 			CatSceneManager.Instance.SetNextScene (SceneID.Gift);
 		}if (GUI.Button (new Rect (0, 100, 50, 50), "giftShop")) {
 			CatSceneManager.Instance.SetNextScene (SceneID.GiftShop);
-		}
+		}*/
 	}
 
 	IEnumerator StartTangoDetect()
