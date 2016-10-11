@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 public class PlaceDetailUI : MonoBehaviour
 {
-	public Text name;
+	public Text playerName;
 	public Text distance;
 	// Use this for initialization
 	void Start ()
@@ -14,7 +14,7 @@ public class PlaceDetailUI : MonoBehaviour
 	public void SetPlace(PlaceInfo info)
 	{
 		_info = info;
-		name.text = _info.Name; 
+		playerName.text = _info.Name; 
 		distance.text = _info.Distance.ToString() + "m";
 	}
 	public void PressHello()

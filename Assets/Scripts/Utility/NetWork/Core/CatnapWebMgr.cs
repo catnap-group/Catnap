@@ -23,7 +23,7 @@ public class CatnapWebMgr : UWebMgr
 	protected override string GetUrlRoot ()
 	{
 		
-		return "http://" + GetIpByHost(ConstantTable.serverIp) + ":" + ConstantTable.port + "/";// "http://192.168.119.208:8088/";
+		return "http://" + ConstantTable.serverIp + "/";// "http://192.168.119.208:8088/";
 	}
 
 	protected override string GetNetworkFailureMsg()

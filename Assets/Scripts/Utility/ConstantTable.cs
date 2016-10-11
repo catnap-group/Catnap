@@ -3,7 +3,7 @@ using System.Collections;
 
 public partial class ConstantTable {
 
-	public static readonly string serverIp = "106.187.100.61";//"106.187.100.61";// 
+	public static readonly string serverIp = "catnap.top";//"106.187.100.61";//"106.187.100.61";// 
 	public static readonly int port = 8000;
 	public static readonly string FILEPATH = Application.persistentDataPath+"\\Catnap\\";
 	public static readonly string DataAssetBoundleFile = "Data.assetbundle";

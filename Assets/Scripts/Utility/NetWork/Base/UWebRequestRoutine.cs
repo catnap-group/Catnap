@@ -181,7 +181,11 @@ public class UWebRequestRoutine : MonoBehaviour
                 }
 
                 Debug.Log("Web Response:" + strData);
-
+				if (strData.Contains ("404 NOT Found")) {
+					if (m_OnPostEnd != null)
+						m_OnPostEnd(data);
+					yield break;
+				}
                 data = m_ActiveRequestProxy.m_Request.ToDataObject(strData);
 
                 if (m_ActiveRequestProxy.m_OnResponse != null)
