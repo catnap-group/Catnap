@@ -50,8 +50,8 @@ public class CatRunMaiMenState : PetAIState
 		off.z = off.x / (vec2.x - vec1.x) * (vec2.z - vec1.z) + vec1.z;
 
 
-		Parent.transform.DOLookAt (off, 0);
-		Parent.transform.DOMove (off, 4).OnComplete (delegate() {
+		Parent.transform.DOLookAt (Param.gameObject.transform.position, 0);
+		Parent.transform.DOMove (Param.gameObject.transform.position, 4).OnComplete (delegate() {
 			_RuningState = AIRuningState.DefaultOver;
 			Manager.Check();
 		});
@@ -75,7 +75,7 @@ public class CatRunEatState : PetAIState
 
 		Vector3 vec1 = Parent.transform.position;
 		Vector3 vec2 = Param.gameObject.transform.position;
-		Vector3 off = new Vector3 (0.3f, 0, 0);
+		Vector3 off = new Vector3 (0.2f, 0, 0);
 		if (vec1.x > vec2.x) {
 			off.x = vec2.x + off.x;
 		} else {

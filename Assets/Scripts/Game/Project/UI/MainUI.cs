@@ -66,19 +66,30 @@ public class MainUI : MonoBehaviour
 			Vector3 touchPosInScreen = GameGuideManager.Instance.GetTouchPosition ();
 			Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position); 
 			Vector3 touchPosInWorld = Camera.main.ScreenToWorldPoint (new Vector3 (touchPosInScreen.x, touchPosInScreen.y, 1));
-			SceneCatLittle little = MapSceneManager.Instance.CreateSceneCatLittle (StorageUI.CurrentGoodiesData.GoodiesID, Vector3.zero, Quaternion.identity, false);
 			if (StorageUI.CurrentGoodiesData.GoodiesID == 105) {
-			//	little.thisT.rotation = new Quaternion (Camera.main.transform.rotation.x + Quaternion.Euler (-90, 0, 0).x, Camera.main.transform.rotation.y, Camera.main.transform.rotation.z, Camera.main.transform.rotation.w);
+				//	little.thisT.rotation = new Quaternion (Camera.main.transform.rotation.x + Quaternion.Euler (-90, 0, 0).x, Camera.main.transform.rotation.y, Camera.main.transform.rotation.z, Camera.main.transform.rotation.w);
+				SceneCatLittle little = MapSceneManager.Instance.CreateSceneCatLittle (StorageUI.CurrentGoodiesData.GoodiesID, Vector3.zero, Quaternion.identity, false);
 				little.thisT.rotation = Camera.main.transform.rotation;
+				little.thisT.position = touchPosInWorld;
+				#if !UNITY_EDITOR
+				TangoManager.Instance.SceneUnit2ARUnit (little);
+				#endif
+			} else if (StorageUI.CurrentGoodiesData.GoodiesID == 107) {
+				SceneCat little = MapSceneManager.Instance.CreateSceneCat (StorageUI.CurrentGoodiesData.GoodiesID, Vector3.zero, Quaternion.identity);
+				little.thisT.rotation = Camera.main.transform.rotation;
+				little.thisT.position = touchPosInWorld;
+				#if !UNITY_EDITOR
+				TangoManager.Instance.SceneUnit2ARUnit (little);
+				#endif
 			} else {
+				SceneCatLittle little = MapSceneManager.Instance.CreateSceneCatLittle (StorageUI.CurrentGoodiesData.GoodiesID, Vector3.zero, Quaternion.identity, false);
 				little.thisT.rotation = Camera.main.transform.rotation;
+				little.thisT.position = touchPosInWorld;
+				#if !UNITY_EDITOR
+				TangoManager.Instance.SceneUnit2ARUnit (little);
+				#endif
 			}
-			little.thisT.position = touchPosInWorld;
-			Debug.Log (touchPosInScreen);
-			Debug.Log (touchPosInWorld);
-			#if !UNITY_EDITOR
-			TangoManager.Instance.SceneUnit2ARUnit (little);
-			#endif
+
 			StorageUI.CurrentGoodiesData = null;
 		}
 	}
